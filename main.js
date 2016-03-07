@@ -67,7 +67,7 @@ function startNewGame(text){
 						} 
 						showPlayerStats(player) ;
 						console.log(player);
-						//mainGameLoop(player);
+						mainGameLoop(player);
 					})
  
  			})
