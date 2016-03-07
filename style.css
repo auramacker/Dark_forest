@@ -1,0 +1,167 @@
+html, body{
+	padding: 0;
+	margin: 0;
+	background-color: #000;
+}
+p, a, h1, h2, h3 ,h4, h5{
+	font-family: 'Inconsolata';
+	color: white;
+}
+#content{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-image: url(images/mainBackground.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-color: #000;
+	transition: all 1.5s linear;
+	-webkit-transition: all 1.5s linear; 
+	-moz-transition: all 1.5s linear; 
+	-o-transition: all 1.5s linear; 
+}
+#content .notify{
+	color: #fff;
+	position: absolute;
+	text-align: center;
+	font-size: 17px;
+	width: 450px;
+	left: calc(50% - 225px);
+	top: 40%;
+	border: 2px solid #fff;
+	padding: 10px;
+	opacity: 0;
+	transition: all 1.5s linear;
+	-webkit-transition: all 1.5s linear; 
+	-moz-transition: all 1.5s ease-in; 
+	-o-transition: all 1.5s ease-in;
+}
+#content .get-text, #content .get-text1{
+	color: #fff;
+	font-family: 'Inconsolata';
+	position: absolute;
+	text-align: center;
+	font-size: 17px;
+	width: 450px;
+	left: calc(50% - 225px);
+	top: 40%;
+	border: 2px solid #fff;
+	padding: 10px;
+	opacity: 0;
+	transition: all 1.5s linear;
+	-webkit-transition: all 1.5s linear; 
+	-moz-transition: all 1.5s ease-in; 
+	-o-transition: all 1.5s ease-in;
+}
+#content .get-text input{
+	background-color: #000;
+	color: #fff;
+	font-family: 'Inconsolata';
+	font-size: 15px;
+	padding: 2px 5px;
+}
+#content .main-text{
+	display: block; 
+	position: absolute; 
+	top: calc(50% - 100px); 
+	left: calc(50% - 300px);
+	color: #fff; 
+	text-align: center;
+	width: 600px;
+	font-family: 'IM Fell English SC', serif;
+	font-size: 85px;
+	text-shadow: -8px 0px 12px #fff;
+	letter-spacing: 2px;
+	transition: all 3.5s linear;
+	-webkit-transition: all 3.5s linear; 
+	-moz-transition: all 3.5s ease-in; 
+	-o-transition: all 3.5s ease-in; 
+}
+#content:hover .main-text{
+	text-shadow: 8px 0px 15px rgba(255,255,255,0.35);
+}
+#content .press-space{
+	width: 300px;
+	height: 100px; 
+	position: absolute; 
+	left: calc(50% - 150px);
+	top: 65%; 
+	text-align: center;
+}
+#content .press-space .hand{
+	margin: 0 auto; 
+	width: 35px;
+	height: 35px; 
+	background-image: url(images/hand.png);; 
+	background-size: 100%; 
+	transition: all 3.5s linear;
+	-webkit-transition: all 3.5s linear; 
+	-moz-transition: all 3.5s ease-in; 
+	-o-transition: all 3.5s ease-in; 
+	animation: topBottomHand 1.5s infinite;
+}
+
+#content .press-space .key{
+	margin: 0 auto;
+	border: 2px solid #fff;
+	position: absolute;
+	left: calc(50% - 35px);
+	top: 40%;
+	-webkit-transform: rotateX(40deg);
+	transform: rotateX(40deg);
+	border-radius: 4px;
+	width: 70px; 
+	height: 25px; 
+	animation: topBottomKey 1.5s 0.75s infinite;
+
+}
+#content .press-space span{
+	color: white;
+	display: block; 
+	position: absolute;
+	font-family: 'Inconsolata';
+}
+#content .press-space .left-part{
+	top: 45%;
+	left: 20%;
+}
+#content .press-space .right-part{
+	right: 10%; 
+	top: 45%;
+}
+@keyframes topBottomHand {
+	0%{
+		margin-top: -5px;
+	}
+	50%{
+		margin-top: 5px;
+	}
+	100%{
+		margin-top: -5px;
+	}
+}
+@keyframes topBottomKey {
+	0%{
+		background-color: #fff;
+	100%{
+		background-color: rgba(0,0,0,0);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
