@@ -74,7 +74,7 @@ function startNewGame(text){
 	}
 }
 function showInputBlock(block, text){
-	block += Math.round(Math.random() * 100); 
+	block += Math.round(Math.random() * 100); // every element is unical
 	$("#content").append("<div class='get-text " + block +"'><p>" + text + "</p><input type='text'><div class='ok'>ok</div></div>" ); // create new
  		setInterval(function(){
  				$("#content ." + block).css("opacity", "1");
