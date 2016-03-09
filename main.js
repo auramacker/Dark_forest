@@ -1,4 +1,4 @@
-// The game Dark forest
+// The game Dark forest v.001
 $(document).ready(function(){
 	var bg = new Audio(); // play background music
 	if (bg.canPlayType("audio/wav")){
