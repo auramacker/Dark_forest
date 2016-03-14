@@ -65,7 +65,6 @@ function startNewGame(text){
 							alert("Enter \"Warrior\" or \"Archer\"! "); 
 							location.reload();
 						} 
-						showPlayerStats(player) ;
 						console.log(player);
 						mainGameLoop(player);
 					})
@@ -247,6 +246,8 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 
 
 function mainGameLoop(player){
+	$("#content").css("backgroundImage", "url(images/mainBackground.png)");
+	showPlayerStats(player) ;
 	var chosenPath = choosePath(player);
 	switch(chosenPath){
 		case "forest":
@@ -647,16 +648,23 @@ function getWeatherEffects(area, player){
 		return demage; 
 	}
 	if (player.health <= 0) {
-		alert("You dead!"); 
+		alert("You dead!");  
 		startNewGame(); 
 	}
 }
 function showPlayerStats(player){
-	document.write(player.name + "<br />" + player.health + "<br />" + player.playerClass+ "<br />" + player.level + "<br />"); 
+	$("#content").append("<div class='playerInfo'><div class='playerPicture'></div><div class='stats'>" +
+		"<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + "</span>" + 
+		"<div class='health' style='width:"+ player.health +"px'>"  + "</div>" + player.level + player.weapon +"</div></div>");
 	if (player.inventory.length > 0){
 		for (var i = 0; i < player.inventory.length; i++){
-			document.write(player.inventory[i]); 
+			//document.write(player.inventory[i]); 
 		}
+	//setTimeout(function(){
+	//	$(".playerInfo").css("left", '80%');
+	//	$(".playerInfo").addClass("playerInfoScale");
+	//}, 3000)
+
 	}
 }
 function showEnemyStats(enemy){
@@ -680,8 +688,8 @@ function choosePath(){ // choose path from the start point
 		return choise; 
 	}
 	else{
-		document.write("You can see the forest, river, and the swamp. Where are you going to go?"); 
-		var choise = window.prompt("Forest, river or swamp? Or you want to \"Build a hovel\"?"); 
+		$("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>"); 
+		//var choise = window.prompt("Forest, river or swamp? Or you want to \"Build a hovel\"?"); 
 		return choise; 
 	}
 }

@@ -48,7 +48,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	font-size: 17px;
 	width: 450px;
 	left: calc(50% - 225px);
-	top: 40%;
+	top: 35%;
 	border: 2px solid #fff;
 	padding: 10px;
 	opacity: 0;
@@ -99,6 +99,57 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 #content:hover .main-text{
 	text-shadow: 8px 0px 15px rgba(255,255,255,0.35);
+}
+#content .playerInfo{
+	font-family: 'Inconsolata';
+	text-align: center;
+	color: #fff;
+	font-size: 15px;
+	width: 350px;
+	background: #000407;
+	padding: 25px 10px;
+	position: absolute;
+	left: calc(50% - 185px);
+	top: 20%;
+	transition: margin 0.7s ease-in-out;
+	-webkit-transition: margin 0.7s ease-in-out; 
+	-moz-transition: margin 0.7s ease-in-out; 
+	-o-transition: margin 0.7s ease-in-out; 
+}
+#content .playerInfoScale:hover{
+	left: 60%; 
+	transform: scale(1.1);
+}
+#content .playerInfoScale{
+	transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out; 
+	-moz-transition: all 0.3s ease-in-out; 
+	-o-transition: all 0.3s ease-in-out; 
+}
+#content .playerInfo .playerPicture{
+	margin: 0 auto;
+	width: 320px;
+	height: 320px;
+	background-image: url(images/player.png);
+	background-size: 100%; 
+	background-repeat: no-repeat;
+}
+#content .playerInfo .stats{
+	margin-top: 15px;
+}
+#content .playerInfo .health{
+	height: 7px; 
+	background-color: #961818;
+	margin: 10px 0px 5px 15px;
+	transition: all 1.5s linear;
+	-webkit-transition: all 1.5s linear; 
+	-moz-transition: all 1.5s ease-in; 
+	-o-transition: all 1.5s ease-in; 
+}
+#content .playerInfo .name{
+	text-transform: uppercase;
+	font-size: 19px; 
+	font-weight: bold;
 }
 #content .press-space{
 	width: 300px;
