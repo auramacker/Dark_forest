@@ -102,6 +102,8 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 #content .playerInfo{
 	font-family: 'Inconsolata';
+	opacity: 0;
+	border: 1px solid rgba(255,255,255,0.7);
 	text-align: center;
 	color: #fff;
 	font-size: 15px;
@@ -110,15 +112,18 @@ p, a, h1, h2, h3 ,h4, h5{
 	padding: 25px 10px;
 	position: absolute;
 	left: calc(50% - 185px);
-	top: 20%;
-	transition: margin 0.7s ease-in-out;
-	-webkit-transition: margin 0.7s ease-in-out; 
-	-moz-transition: margin 0.7s ease-in-out; 
-	-o-transition: margin 0.7s ease-in-out; 
+	top: 15%;
+	transition: all 0.7s ease-in-out;
+	-webkit-transition: all 0.7s ease-in-out; 
+	-moz-transition: all 0.7s ease-in-out; 
+	-o-transition: all 0.7s ease-in-out; 
 }
 #content .playerInfoScale:hover{
 	left: 60%; 
 	transform: scale(1.1);
+}
+#content .playerClass{
+	line-height: 25px;
 }
 #content .playerInfoScale{
 	transition: all 0.3s ease-in-out;
@@ -140,7 +145,7 @@ p, a, h1, h2, h3 ,h4, h5{
 #content .playerInfo .health{
 	height: 7px; 
 	background-color: #961818;
-	margin: 10px 0px 5px 15px;
+	margin: 10px 0px -10px 15px;
 	transition: all 1.5s linear;
 	-webkit-transition: all 1.5s linear; 
 	-moz-transition: all 1.5s ease-in; 

@@ -92,7 +92,7 @@ function hideInputBlock(block){
 function printNotification(text){ // function print notification 
 	if (arguments[0] !== undefined){ 
 		$("#content .notify").remove();
-			$("#content").append("<div class='notify'><p>" + text + "</p></div>"); // create new
+			$("#content").append("<div class='notify'><p>" + text + "</p><div class='ok'>ok</div></div>"); // create new
  			setInterval(function(){
  				$("#content .notify").css("opacity", "1");
  			}, 100);
@@ -247,266 +247,270 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 
 function mainGameLoop(player){
 	$("#content").css("backgroundImage", "url(images/mainBackground.png)");
-	showPlayerStats(player) ;
-	var chosenPath = choosePath(player);
-	switch(chosenPath){
-		case "forest":
-		weatherInit(forest, player); 
-		getWeatherEffects(forest, player);
-			var areaAction = chooseAreaAction();
-			switch (areaAction){
-				case "hunt":
-					var randChance = Math.random(); 
-					if ( randChance <= 0.75){
-						var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1); 
-						var randEnemy = forest.enemies[randEnemyIndex];
-						switch(randEnemy){
-							case "elk":
-								var forestElk = new CreateEnemy("Forest elk", "elk", player); 
-								forestElk.getEnemyProp(); 
-								showEnemyStats(forestElk); 
-								battle(forestElk, player); 
-							break; 
-							case "wolf":
-								var forestWolf = new CreateEnemy("Forest Wolf", "wolf", player); 
-								forestWolf.getEnemyProp(); 
-								showEnemyStats(forestWolf); 
-								battle(forestWolf, player); 
-							break; 
-							case "wild boar":
-								var forestBoar = new CreateEnemy("Forest boar", "wild boar", player); 
-								forestBoar.getEnemyProp(); 
-								showEnemyStats(forestBoar); 
-								battle(forestBoar, player); 
-							break; 
-						} 
+	printNotification("You need to find some food and find accommodation..."); 
+	$("#content .notify .ok").click(function(){	
+			var chosenPath = choosePath(player);
+			printNotification();
+			showPlayerStats(player) ;
+			switch(chosenPath){
+				case "forest":
+				weatherInit(forest, player); 
+				getWeatherEffects(forest, player);
+					var areaAction = chooseAreaAction();
+					switch (areaAction){
+						case "hunt":
+							var randChance = Math.random(); 
+							if ( randChance <= 0.75){
+								var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1); 
+								var randEnemy = forest.enemies[randEnemyIndex];
+								switch(randEnemy){
+									case "elk":
+										var forestElk = new CreateEnemy("Forest elk", "elk", player); 
+										forestElk.getEnemyProp(); 
+										showEnemyStats(forestElk); 
+										battle(forestElk, player); 
+									break; 
+									case "wolf":
+										var forestWolf = new CreateEnemy("Forest Wolf", "wolf", player); 
+										forestWolf.getEnemyProp(); 
+										showEnemyStats(forestWolf); 
+										battle(forestWolf, player); 
+									break; 
+									case "wild boar":
+										var forestBoar = new CreateEnemy("Forest boar", "wild boar", player); 
+										forestBoar.getEnemyProp(); 
+										showEnemyStats(forestBoar); 
+										battle(forestBoar, player); 
+									break; 
+								} 
+							}
+							else {
+								document.write("<br />Hunting failed! You can not find any animal."); 
+								mainGameLoop(player); 
+							}
+						break; 
+						case "look for food": 
+							searchFood(forest, player); 
+							mainGameLoop(player);
+						break; 
+						case "search healing herbs":
+							searchHerbs(forest, player); 
+							mainGameLoop(player);
+						break; 
+						case "search materials":
+							searchMaterials(forest, player); 
+							mainGameLoop(player);
+						break; 
+					 }
+				break; 
+				case "river": 
+					weatherInit(river, player);
+					getWeatherEffects(river, player);
+					var areaAction = chooseAreaAction();
+					switch (areaAction){
+						case "hunt":
+							var randChance = Math.random(); 
+							if ( randChance <= 0.75){
+								var randEnemyIndex = getRandomInt(0, river.enemies.length - 1); 
+								var randEnemy = river.enemies[randEnemyIndex];
+								switch(randEnemy){
+									case "wolf":
+										var riverWolf = new CreateEnemy("river wolf", "wolf", player); 
+										riverWolf.getEnemyProp(); 
+										showEnemyStats(riverWolf); 
+										battle(riverWolf, player); 
+									break; 
+									case "bear":
+										var riverBear = new CreateEnemy("river bear", "bear", player); 
+										riverBear.getEnemyProp(); 
+										showEnemyStats(riverBear); 
+										battle(riverBear, player); 
+									break; 
+									case "wild boar":
+										var riverBoar = new CreateEnemy("river boar", "wild boar", player); 
+										riverBoar.getEnemyProp(); 
+										showEnemyStats(riverBoar); 
+										battle(riverBoar, player); 
+									break; 
+								} 
+							}
+							else {
+								document.write("<br />Hunting failed! You can not find any animal."); 
+								mainGameLoop(player)
+							}
+						break; 
+						case "look for food": 
+							searchFood(river, player); 
+							mainGameLoop(player);
+						break; 
+						case "search healing herbs":
+							searchHerbs(river, player); 
+							mainGameLoop(player);
+						break; 
+						case "search materials":
+							searchMaterials(river, player); 
+							mainGameLoop(player);
+						break; 
+					 }
+				break; 
+				case "swamp":
+					weatherInit(swamp, player);
+					getWeatherEffects(swamp, player);
+					var areaAction = chooseAreaAction();
+					switch (areaAction){
+						case "hunt":
+							var randChance = Math.random(); 
+							if ( randChance <= 0.75){
+								var randEnemyIndex = getRandomInt(0, swamp.enemies.length - 1); 
+								var randEnemy = swamp.enemies[randEnemyIndex];
+								switch(randEnemy){
+									case "elk":
+										var swampElk = new CreateEnemy("swamp elk", "elk", player); 
+										swampElk.getEnemyProp(); 
+										showEnemyStats(swampElk); 
+										battle(swampElk, player); 
+									break; 
+								} 
+							}
+							else {
+								document.write("<br />Hunting failed! You can not find any animal."); 
+								mainGameLoop(player); 
+							}
+						break; 
+						case "look for food": 
+							searchFood(swamp, player); 
+							mainGameLoop(player);
+						break; 
+						case "search healing herbs":
+							searchHerbs(swamp, player); 
+							mainGameLoop(player);
+						break; 
+						case "search materials":
+							searchMaterials(swamp, player); 
+							mainGameLoop(player);
+						break; 
+					 }
+				break; 
+				case "cave":
+		
+				break; 
+				case "shelter": 
+		
+				break;
+				case "build a hovel": 
+					var qtOfWood = searchInventoryElem("wood", player); 
+					var qtOfLather = searchInventoryElem("lather", player); 
+					console.log(qtOfWood, qtOfLather);
+					if (qtOfLather >= 4 && qtOfWood >= 6){
+						hovel.available = true; 
+						alert("You've built a hovel!"); 
+						mainGameLoop(player);
 					}
 					else {
-						document.write("<br />Hunting failed! You can not find any animal."); 
+						alert("You need 4 lather and 6 wood to build a hovel!");
 						mainGameLoop(player); 
 					}
-				break; 
-				case "look for food": 
-					searchFood(forest, player); 
-					mainGameLoop(player);
-				break; 
-				case "search healing herbs":
-					searchHerbs(forest, player); 
-					mainGameLoop(player);
-				break; 
-				case "search materials":
-					searchMaterials(forest, player); 
-					mainGameLoop(player);
-				break; 
-			 }
-		break; 
-		case "river": 
-			weatherInit(river, player);
-			getWeatherEffects(river, player);
-			var areaAction = chooseAreaAction();
-			switch (areaAction){
-				case "hunt":
-					var randChance = Math.random(); 
-					if ( randChance <= 0.75){
-						var randEnemyIndex = getRandomInt(0, river.enemies.length - 1); 
-						var randEnemy = river.enemies[randEnemyIndex];
-						switch(randEnemy){
-							case "wolf":
-								var riverWolf = new CreateEnemy("river wolf", "wolf", player); 
-								riverWolf.getEnemyProp(); 
-								showEnemyStats(riverWolf); 
-								battle(riverWolf, player); 
-							break; 
-							case "bear":
-								var riverBear = new CreateEnemy("river bear", "bear", player); 
-								riverBear.getEnemyProp(); 
-								showEnemyStats(riverBear); 
-								battle(riverBear, player); 
-							break; 
-							case "wild boar":
-								var riverBoar = new CreateEnemy("river boar", "wild boar", player); 
-								riverBoar.getEnemyProp(); 
-								showEnemyStats(riverBoar); 
-								battle(riverBoar, player); 
-							break; 
-						} 
-					}
-					else {
-						document.write("<br />Hunting failed! You can not find any animal."); 
-						mainGameLoop(player)
-					}
-				break; 
-				case "look for food": 
-					searchFood(river, player); 
-					mainGameLoop(player);
-				break; 
-				case "search healing herbs":
-					searchHerbs(river, player); 
-					mainGameLoop(player);
-				break; 
-				case "search materials":
-					searchMaterials(river, player); 
-					mainGameLoop(player);
-				break; 
-			 }
-		break; 
-		case "swamp":
-			weatherInit(swamp, player);
-			getWeatherEffects(swamp, player);
-			var areaAction = chooseAreaAction();
-			switch (areaAction){
-				case "hunt":
-					var randChance = Math.random(); 
-					if ( randChance <= 0.75){
-						var randEnemyIndex = getRandomInt(0, swamp.enemies.length - 1); 
-						var randEnemy = swamp.enemies[randEnemyIndex];
-						switch(randEnemy){
-							case "elk":
-								var swampElk = new CreateEnemy("swamp elk", "elk", player); 
-								swampElk.getEnemyProp(); 
-								showEnemyStats(swampElk); 
-								battle(swampElk, player); 
-							break; 
-						} 
-					}
-					else {
-						document.write("<br />Hunting failed! You can not find any animal."); 
-						mainGameLoop(player); 
-					}
-				break; 
-				case "look for food": 
-					searchFood(swamp, player); 
-					mainGameLoop(player);
-				break; 
-				case "search healing herbs":
-					searchHerbs(swamp, player); 
-					mainGameLoop(player);
-				break; 
-				case "search materials":
-					searchMaterials(swamp, player); 
-					mainGameLoop(player);
-				break; 
-			 }
-		break; 
-		case "cave":
-
-		break; 
-		case "shelter": 
-
-		break;
-		case "build a hovel": 
-			var qtOfWood = searchInventoryElem("wood", player); 
-			var qtOfLather = searchInventoryElem("lather", player); 
-			console.log(qtOfWood, qtOfLather);
-			if (qtOfLather >= 4 && qtOfWood >= 6){
-				hovel.available = true; 
-				alert("You've built a hovel!"); 
-				mainGameLoop(player);
-			}
-			else {
-				alert("You need 4 lather and 6 wood to build a hovel!");
-				mainGameLoop(player); 
-			}
-		break;
-		case "hovel":
-			weatherInit(hovel, player); 
-			var choise = choseHovelActions(player); 
-			switch(choise){
-				case "sleep":
-					if (hovel.temperature <= 0 && hovel.safety !== true){
-						player.health -= 20; 
-						alert("It was very cold night. Your health has decreased...")
-						if (player.health <= 0) {
-							alert("You dead!"); 
-							startNewGame();
-						} 
-					}
-					else {
-						player.health = player.maxHealth;  // set health to maxhealth 
-						alert ("You slept very well. Health fully restored!"); 
-					}
-					hovel.safety = false; 
-					mainGameLoop(player);
-				break; 
-				case "eat": 
-					var eatResult = deleteInvenotryElem("meat", player);
-					if (eatResult !== 0){
-						player.health += 30; 
-						if (player.health > player.maxHealth) player.health = player.maxHealth; 
-						alert("Your health has been increaced!"); 
-						showPlayerStats(player); 
-					}
-					else {
-						alert("You have not enought meat..."); 
-					}
-					console.log(player);
-					mainGameLoop(player); 
-				break; 
-				case "heal": 
-					var healResult = deleteInvenotryElem("medical berries", player); 
-					if (healResult == 0){
-						var herbResult = deleteInvenotryElem("herb", player); 
-						if (herbResult !== 0){
-							player.health += 40; 
-							if (player.health > player.maxHealth) player.health = player.maxHealth; 
-						}
-						else alert("You have nothing to be threated...")
-					}
-					else {
-						player.health += 40; 
-						if (player.health > player.maxHealth) player.health = player.maxHealth; 
-					}
-				break; 
-				case "create weapon":
-					var createWeapon = choiseWeaponToCreate(player); 
-					if (player.playerClass == "warrior" && createWeapon == "Y"){
-						var qtOfRocks = searchInventoryElem("rock", player); 
-						var qtOfWood = searchInventoryElem("wood", player)
-						if (qtOfWood >= 2 && qtOfRocks >= 2){
-							//for (var i = 0; i < 2; i++){
-								deleteInvenotryElem("rock", player, 2); 
-								deleteInvenotryElem("wood", player);
-							//}
-							player.weapon = "ax"; 
-							player.getPlayerWeapon(); 
-							alert("You made the ax! Your streight increaced!");
+				break;
+				case "hovel":
+					weatherInit(hovel, player); 
+					var choise = choseHovelActions(player); 
+					switch(choise){
+						case "sleep":
+							if (hovel.temperature <= 0 && hovel.safety !== true){
+								player.health -= 20; 
+								alert("It was very cold night. Your health has decreased...")
+								if (player.health <= 0) {
+									alert("You dead!"); 
+									startNewGame();
+								} 
+							}
+							else {
+								player.health = player.maxHealth;  // set health to maxhealth 
+								alert ("You slept very well. Health fully restored!"); 
+							}
+							hovel.safety = false; 
+							mainGameLoop(player);
+						break; 
+						case "eat": 
+							var eatResult = deleteInvenotryElem("meat", player);
+							if (eatResult !== 0){
+								player.health += 30; 
+								if (player.health > player.maxHealth) player.health = player.maxHealth; 
+								alert("Your health has been increaced!"); 
+								showPlayerStats(player); 
+							}
+							else {
+								alert("You have not enought meat..."); 
+							}
 							console.log(player);
 							mainGameLoop(player); 
-						}
-						else {
-							alert("You have not enought materials! To create the ax you need: rock x2 and wood x2."); 
-							mainGameLoop(player); 
-						}
-
-					}
-					else if (player.playerClass == "archer" && createWeapon == "Y"){
-						var qtOfWood = searchInventoryElem("wood", player); 
-						var qtOfLather = searchInventoryElem("lather", player); 
-						if (qtOfWood >= 3 && qtOfLather >= 4){
-							var i = 0; 
-							var j = 0; 
-							deleteInvenotryElem("wood", player, 3); 
-							deleteInvenotryElem("lather", player, 4);
-							player.weapon = "bow";
-							player.getPlayerWeapon(); 
-							alert("You made the bow! Your streight increaced!");
-							console.log(player); 
+						break; 
+						case "heal": 
+							var healResult = deleteInvenotryElem("medical berries", player); 
+							if (healResult == 0){
+								var herbResult = deleteInvenotryElem("herb", player); 
+								if (herbResult !== 0){
+									player.health += 40; 
+									if (player.health > player.maxHealth) player.health = player.maxHealth; 
+								}
+								else alert("You have nothing to be threated...")
+							}
+							else {
+								player.health += 40; 
+								if (player.health > player.maxHealth) player.health = player.maxHealth; 
+							}
+						break; 
+						case "create weapon":
+							var createWeapon = choiseWeaponToCreate(player); 
+							if (player.playerClass == "warrior" && createWeapon == "Y"){
+								var qtOfRocks = searchInventoryElem("rock", player); 
+								var qtOfWood = searchInventoryElem("wood", player)
+								if (qtOfWood >= 2 && qtOfRocks >= 2){
+									//for (var i = 0; i < 2; i++){
+										deleteInvenotryElem("rock", player, 2); 
+										deleteInvenotryElem("wood", player);
+									//}
+									player.weapon = "ax"; 
+									player.getPlayerWeapon(); 
+									alert("You made the ax! Your streight increaced!");
+									console.log(player);
+									mainGameLoop(player); 
+								}
+								else {
+									alert("You have not enought materials! To create the ax you need: rock x2 and wood x2."); 
+									mainGameLoop(player); 
+								}
+		
+							}
+							else if (player.playerClass == "archer" && createWeapon == "Y"){
+								var qtOfWood = searchInventoryElem("wood", player); 
+								var qtOfLather = searchInventoryElem("lather", player); 
+								if (qtOfWood >= 3 && qtOfLather >= 4){
+									var i = 0; 
+									var j = 0; 
+									deleteInvenotryElem("wood", player, 3); 
+									deleteInvenotryElem("lather", player, 4);
+									player.weapon = "bow";
+									player.getPlayerWeapon(); 
+									alert("You made the bow! Your streight increaced!");
+									console.log(player); 
+									mainGameLoop(player);
+								}
+								else {
+									alert("You have not enought materials! To create the bow you need: wood x3 and lather x4. "); 
+									mainGameLoop(player); 
+								}
+							}
+						break; 
+						case "exit": 
 							mainGameLoop(player);
-						}
-						else {
-							alert("You have not enought materials! To create the bow you need: wood x3 and lather x4. "); 
-							mainGameLoop(player); 
-						}
+						break; 
 					}
 				break; 
-				case "exit": 
-					mainGameLoop(player);
-				break; 
-			}
-		break; 
-	}
+				}
+			})
+};		
 
-};
 function choiseWeaponToCreate(player){
 	var result; 
 	if (player.playerClass == "warrior"){
@@ -654,16 +658,22 @@ function getWeatherEffects(area, player){
 }
 function showPlayerStats(player){
 	$("#content").append("<div class='playerInfo'><div class='playerPicture'></div><div class='stats'>" +
-		"<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + "</span>" + 
-		"<div class='health' style='width:"+ player.health +"px'>"  + "</div>" + player.level + player.weapon +"</div></div>");
+		"<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + " " +
+		 player.level + "<span> level</span></span>" + 
+		"<div class='health' style='width:"+ player.health +"px'</div></div><p>" + player.health +" HP</p><span class='streight'> Streight: " +
+		player.streight + "</span><br /><span class='weapon'> Weapon: " 
+		+ player.weapon +"</span></div></div>");
 	if (player.inventory.length > 0){
 		for (var i = 0; i < player.inventory.length; i++){
 			//document.write(player.inventory[i]); 
 		}
-	//setTimeout(function(){
-	//	$(".playerInfo").css("left", '80%');
-	//	$(".playerInfo").addClass("playerInfoScale");
-	//}, 3000)
+	setTimeout(function(){
+		$("#content .playerInfo").css("opacity", "1");
+	}, 500);
+	setTimeout(function(){
+		$(".playerInfo").css("left", '80%');
+		$(".playerInfo").addClass("playerInfoScale");
+	}, 2000)
 
 	}
 }
@@ -689,9 +699,7 @@ function choosePath(){ // choose path from the start point
 	}
 	else{
 		$("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>"); 
-		//var choise = window.prompt("Forest, river or swamp? Or you want to \"Build a hovel\"?"); 
-		return choise; 
-	}
+			}
 }
 function chooseAreaAction(){ 
 	var action = window.prompt("You can hunt, look for food, search healing herbs or search materials"); 
