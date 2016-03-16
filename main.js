@@ -671,7 +671,7 @@ function showPlayerStats(player){
 		$("#content .playerInfo").css("opacity", "1");
 	}, 500);
 	setTimeout(function(){
-		$(".playerInfo").css("left", '80%');
+		$(".playerInfo").css("top", '80%');
 		$(".playerInfo").addClass("playerInfoScale");
 	}, 2000)
 
@@ -699,7 +699,9 @@ function choosePath(){ // choose path from the start point
 	}
 	else{
 		$("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>"); 
-			}
+		var height = $(window).height(); 
+		$("#choise .forest, #choise .river, #choise .swamp, #choise .buildHovel, #choise").css("height", height);
+		}
 }
 function chooseAreaAction(){ 
 	var action = window.prompt("You can hunt, look for food, search healing herbs or search materials"); 

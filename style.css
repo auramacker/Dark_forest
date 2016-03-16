@@ -118,9 +118,8 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.7s ease-in-out; 
 	-o-transition: all 0.7s ease-in-out; 
 }
-#content .playerInfoScale:hover{
-	left: 60%; 
-	transform: scale(1.1);
+#content .playerInfo:hover{
+	top: 50% !important; 
 }
 #content .playerClass{
 	line-height: 25px;
@@ -151,6 +150,70 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 1.5s ease-in; 
 	-o-transition: all 1.5s ease-in; 
 }
+#choise{
+	width: 100%; 
+}
+#choise div {
+	width: 24%;
+	transform: rotateZ(-5deg);
+	float: left;
+	box-shadow: 0px 25px 25px; 
+	margin: 4px;
+}
+#choise .forest:after{
+	content: 'Go to the forest';
+}
+#choise .river:after{
+	content: 'Go to the river';
+}
+#choise .swamp:after{
+	content: 'Go to the swamp';
+}
+#choise .buildHovel:after{
+	content: 'Try to build a hovel';
+}
+.forest:after, .river:after, .swamp:after, .buildHovel:after{
+	display: block; 
+	opacity: 0;
+	padding: 70% 30%; 
+	width: 112%; 
+	margin-left: -25%;
+	height: 100%; 
+	background-color: rgba(0,0,0,0.6);
+	transform: rotateZ(5deg);
+	color: #fff; 
+	font-size: 22px; 
+	font-family: 'Inconsolata';
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in; 
+	cursor: pointer;
+}
+.forest:hover:after, .river:hover:after, .swamp:hover:after, .buildHovel:hover:after{
+	opacity: 1;
+}
+.forest, .river, .swamp, .buildHovel{
+	background-repeat: no-repeat;
+	background-position-x: 15% ;
+	overflow:hidden;
+}
+#choise .forest{
+	background-image: url(images/forest.png);
+	margin-left: 4%;
+}
+#choise .river{
+	background-image:  url(images/river.png); 
+	margin-left: -7px; 
+	}
+#choise .swamp{
+	background-image:  url(images/swamp.png); 
+	margin-left: -9px; 
+	}
+#choise .buildHovel{
+	background-image:  url(images/buildHovel.png); 
+	margin-left: -11px;
+	}
 #content .playerInfo .name{
 	text-transform: uppercase;
 	font-size: 19px; 
