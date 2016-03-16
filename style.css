@@ -175,12 +175,13 @@ p, a, h1, h2, h3 ,h4, h5{
 .forest:after, .river:after, .swamp:after, .buildHovel:after{
 	display: block; 
 	opacity: 0;
-	padding: 70% 30%; 
+	padding: 70% 0%; 
 	width: 112%; 
-	margin-left: -25%;
+	margin-left: -20%;
 	height: 100%; 
 	background-color: rgba(0,0,0,0.6);
 	transform: rotateZ(5deg);
+	text-align: center;
 	color: #fff; 
 	font-size: 22px; 
 	font-family: 'Inconsolata';
