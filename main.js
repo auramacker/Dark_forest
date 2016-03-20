@@ -249,14 +249,18 @@ function mainGameLoop(player){
 	$("#content").css("backgroundImage", "url(images/mainBackground.png)");
 	printNotification("You need to find some food and find accommodation..."); 
 	$("#content .notify .ok").click(function(){	
-			var chosenPath = choosePath(player);
+			choosePath(player);
 			printNotification();
 			showPlayerStats(player) ;
-			switch(chosenPath){
-				case "forest":
+			$("#content .forest").click(function() {
+				$("#content #choise").css("opacity", 0); 
+				setTimeout(function(){
+					$("#content #choise").remove(); 
+
+				}, 500);
 				weatherInit(forest, player); 
 				getWeatherEffects(forest, player);
-					var areaAction = chooseAreaAction();
+					//var areaAction = chooseAreaAction();
 					switch (areaAction){
 						case "hunt":
 							var randChance = Math.random(); 
@@ -302,7 +306,9 @@ function mainGameLoop(player){
 							mainGameLoop(player);
 						break; 
 					 }
-				break; 
+			});
+			switch(chosenPath){
+
 				case "river": 
 					weatherInit(river, player);
 					getWeatherEffects(river, player);
@@ -569,8 +575,10 @@ function searchInventoryElem(element, player){ // returns qt of searched element
 function weatherInit(area, player){
 	area.setTemperature(); // set weather in zone 
 	area.setWeather(); 
-	document.write("<br />Temperature here is: " + area.temperature + " degrees Celsius");
-	document.write("<br />Weather: " + area.weather + "<br />"); 
+	$("content .weather").remove();
+	$("#content .playerInfo").append("<div class='weather'><div class='" + area.weather + "'></div><br /><div class='info'><span class='t0'>" + 
+		area.temperature + "°C</span><br /><span class='title'>" + area.weather + "</span></div></div>");
+	$("#content .weather").css("opacity", 1); 
 }
 
 function searchMaterials(area, player){ // searching for materials
@@ -593,7 +601,6 @@ function searchMaterials(area, player){ // searching for materials
 			alert("You find nothing...");
 	}
 }
-
 function searchHerbs(area, player){ // searching for healing herbs 
 	var meetEnemy = Math.random(); // random enemy 
 	if (meetEnemy <= 0.1){
@@ -639,15 +646,13 @@ function getWeatherEffects(area, player){
 	var demage = false;  
 	if (area.temperature <= 0 && area.weather == "snow"){
 		player.health -= 20; 
-		alert("It's snow... You're cold! Health has decreased."); 
-		showPlayerStats(player); 
+		$("#content .health").css("width", player.health); 
 		demage = true; 
 		return demage; 
 	}
 	else if (area.temperature >= 20 && area.weather == "heat"){
 		player.health -= 20; 
-		alert("It's to heat! Health has decreased."); 
-		showPlayerStats(player); 
+		$("#content .health").css("width", player.health); 
 		demage = true; 
 		return demage; 
 	}
@@ -701,6 +706,9 @@ function choosePath(){ // choose path from the start point
 		$("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>"); 
 		var height = $(window).height(); 
 		$("#choise .forest, #choise .river, #choise .swamp, #choise .buildHovel, #choise").css("height", height);
+		setTimeout(function(){
+			$("#content #choise").css("opacity", 1);
+		}, 2700);
 		}
 }
 function chooseAreaAction(){ 

@@ -57,7 +57,8 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 1.5s ease-in; 
 	-o-transition: all 1.5s ease-in;
 }
-#content .get-text .ok{
+#content .get-text .ok, #content .notify .ok{
+	font-family: 'Inconsolata';
 	width: 40px; 
 	border: 1px solid #fff;
 	margin: 0 auto;
@@ -152,6 +153,11 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 #choise{
 	width: 100%; 
+	opacity: 0; 
+	transition: all 0.5s linear;
+	-webkit-transition: all 0.5s linear; 
+	-moz-transition: all 0.5s ease-in; 
+	-o-transition: all 0.5s ease-in; 
 }
 #choise div {
 	width: 24%;
@@ -159,6 +165,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	float: left;
 	box-shadow: 0px 25px 25px; 
 	margin: 4px;
+
 }
 #choise .forest:after{
 	content: 'Go to the forest';
@@ -176,9 +183,10 @@ p, a, h1, h2, h3 ,h4, h5{
 	display: block; 
 	opacity: 0;
 	padding: 70% 0%; 
-	width: 112%; 
+	width: 120%; 
 	margin-left: -20%;
 	height: 100%; 
+	margin-top: -10%;
 	background-color: rgba(0,0,0,0.6);
 	transform: rotateZ(5deg);
 	text-align: center;
@@ -287,7 +295,359 @@ p, a, h1, h2, h3 ,h4, h5{
 		background-color: rgba(0,0,0,0);
 	}
 }
+}
 
+/*********** weather ******** / 
+/* SUNNY */
+.weather{
+	position: absolute;
+	top:0 ;
+	left: 0 ;
+	opacity: 0;
+	text-align:center;
+	margin-top: -60px; 
+	transition: all 0.5s linear;
+	-webkit-transition: all 0.5s linear; 
+	-moz-transition: all 0.5s ease-in; 
+	-o-transition: all 0.5s ease-in; 
+}
+.weather .info{
+	background-color: #000; 
+	margin-left:-20px;
+	margin-top:-15px;
+	padding: 10px; 
+	border: 1px solid #fff;
+}
+.sunny { 
+	animation: sunny 15s linear infinite;
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); 
+	height: 140px;
+	width: 20px; 
+}
+.sunny:before {
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+	content: ''; 
+	height: 140px; 
+	width: 20px;
+	opacity: 1; 
+	position: absolute;
+	bottom: 0px;
+	left: 0px; 
+	transform: rotate(90deg);
+}
+.sunny:after {
+	background: #FFEE44; 
+	border-radius: 50%; 
+	box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
+	content: '';  
+	height: 80px;
+	width: 80px;  
+	position: absolute; 
+	left: -30px; 
+	top: 30px;
+}
+@keyframes sunny { 
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+/* HEAT */ 
+.heat { 
+	animation: heat 15s linear infinite;
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); 
+	height: 140px;
+	width: 20px; 
+}
+.heat:before {
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+	content: ''; 
+	height: 140px; 
+	width: 20px;
+	opacity: 1; 
+	position: absolute;
+	bottom: 0px;
+	left: 0px; 
+	transform: rotate(90deg);
+}
+.heat:after {
+	background: #FFEE44; 
+	border-radius: 50%; 
+	box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
+	content: '';  
+	height: 80px;
+	width: 80px;  
+	position: absolute; 
+	left: -30px; 
+	top: 30px;
+}
+@keyframes heat { 
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* CLOUDY */
+.cloudy {
+	animation: cloudy 5s ease-in-out infinite;
+	background: #FFFFFF;
+	border-radius: 50%;
+	box-shadow: 
+		#FFFFFF 65px -15px 0 -5px, 
+		#FFFFFF 25px -25px, 
+		#FFFFFF 30px 10px, 
+		#FFFFFF 60px 15px 0 -10px, 
+		#FFFFFF 85px 5px 0 -5px;
+	height: 50px;
+	margin:45px 0px 45px -40px;
+	width: 50px; 
+}
+@keyframes cloudy {
+	50% { transform: translateY(-20px); }
+}
+
+/* rain */
+.rain {
+	animation: rain 5s ease-in-out infinite 1s;
+	background: #CCCCCC; 
+	border-radius: 50%;
+	box-shadow: 
+		#CCCCCC 65px -15px 0 -5px, 
+		#CCCCCC 25px -25px, 
+		#CCCCCC 30px 10px, 
+		#CCCCCC 60px 15px 0 -10px, 
+		#CCCCCC 85px 5px 0 -5px;
+	display: block;
+	height: 50px;
+	margin:45px 0px 45px -40px;
+	width: 50px;
+
+}
+.rain:before {
+	animation: rain_rain .7s infinite linear;
+	content: '';
+	background: #CCCCCC;
+	border-radius: 50%;
+	display: block;
+	height: 6px;
+	width: 3px;
+	opacity: 0.3;
+	transform: scale(.9);
+}
+@keyframes rain {
+	50% { transform: translateY(-20px); }
+}
+
+@keyframes rain_rain {
+	0% {  
+		box-shadow: 
+			rgba(0,0,0,0) 30px 30px, 
+			rgba(0,0,0,0) 40px 40px,  
+			#000 50px 75px, 
+			#000 55px 50px, 
+			#000 70px 100px, 
+			#000 80px 95px, 
+			#000 110px 45px, 
+			#000 90px 35px; 
+	}
+	25% {  
+	  	box-shadow: 
+			#000 30px 45px,
+			#000 40px 60px,
+			#000 50px 90px,
+			#000 55px 65px,
+			rgba(0,0,0,0) 70px 120px,
+			rgba(0,0,0,0) 80px 120px,
+			#000 110px 70px,
+			#000 90px 60px;
+	}
+	26% {  
+		box-shadow:
+			#000 30px 45px,
+			#000 40px 60px,
+			#000 50px 90px,
+			#000 55px 65px,
+			rgba(0,0,0,0) 70px 40px,
+			rgba(0,0,0,0) 80px 20px,
+			#000 110px 70px,
+			#000 90px 60px; 
+	}
+	50% { 
+		box-shadow:
+			#000 30px 70px,
+			#000 40px 80px,
+			rgba(0,0,0,0) 50px 100px,
+			#000 55px 80px,
+			#000 70px 60px,
+			#000 80px 45px,
+			#000 110px 95px,
+			#000 90px 85px;
+	}
+	51% {
+		box-shadow:
+			#000 30px 70px,
+			#000 40px 80px,
+			rgba(0,0,0,0) 50px 45px,
+			#000 55px 80px,
+			#000 70px 60px,
+			#000 80px 45px,
+			#000 110px 95px,
+			#000 90px 85px;
+	}
+	75% {
+		box-shadow:
+			#000 30px 95px,
+			#000 40px 100px,
+			#000 50px 60px,
+			rgba(0,0,0,0) 55px 95px,
+			#000 70px 80px,
+			#000 80px 70px,
+			rgba(0,0,0,0) 110px 120px,
+			rgba(0,0,0,0) 90px 110px;
+	}
+	76% {
+		box-shadow:
+			#000 30px 95px,
+			#000 40px 100px,
+			#000 50px 60px,
+			rgba(0,0,0,0) 55px 35px,
+			#000 70px 80px,
+			#000 80px 70px,
+			rgba(0,0,0,0) 110px 25px,
+			rgba(0,0,0,0) 90px 15px;
+	}
+	100% {
+		box-shadow:
+			rgba(0,0,0,0) 30px 120px,
+			rgba(0,0,0,0) 40px 120px,
+			#000 50px 75px,
+			#000 55px 50px,
+			#000 70px 100px,
+			#000 80px 95px,
+			#000 110px 45px,
+			#000 90px 35px;
+	}
+}
+
+/* snow */
+.snow {
+	animation: snow 5s ease-in-out infinite 1s;
+	background: #FFFFFF; 
+	border-radius: 50%;
+	box-shadow: 
+		#FFFFFF 65px -15px 0 -5px, 
+		#FFFFFF 25px -25px, 
+		#FFFFFF 30px 10px, 
+		#FFFFFF 60px 15px 0 -10px, 
+		#FFFFFF 85px 5px 0 -5px;
+	display: block;
+	height: 50px;
+	width: 50px;
+	margin:45px 0px 45px -40px;
+
+}
+.snow:before {
+	animation: snow_snow 2s infinite linear;
+	content: '';
+	border-radius: 50%;
+	display: block;
+	height: 7px;
+	width: 7px;
+	opacity: 0.8;
+	transform: scale(.9);
+}
+@keyframes snow {
+	50% { transform: translateY(-20px); }
+}
+@keyframes snow_snow {
+	0% {  
+		box-shadow: 
+			rgba(238,238,238,0) 30px 30px, 
+			rgba(238,238,238,0) 40px 40px,  
+			#EEEEEE 50px 75px, 
+			#EEEEEE 55px 50px, 
+			#EEEEEE 70px 100px, 
+			#EEEEEE 80px 95px, 
+			#EEEEEE 110px 45px, 
+			#EEEEEE 90px 35px; 
+	}
+	25% {  
+	  	box-shadow: 
+			#EEEEEE 30px 45px,
+			#EEEEEE 40px 60px,
+			#EEEEEE 50px 90px,
+			#EEEEEE 55px 65px,
+			rgba(238,238,238,0) 70px 120px,
+			rgba(238,238,238,0) 80px 120px,
+			#EEEEEE 110px 70px,
+			#EEEEEE 90px 60px;
+	}
+	26% {  
+		box-shadow:
+			#EEEEEE 30px 45px,
+			#EEEEEE 40px 60px,
+			#EEEEEE 50px 90px,
+			#EEEEEE 55px 65px,
+			rgba(238,238,238,0) 70px 40px,
+			rgba(238,238,238,0) 80px 20px,
+			#EEEEEE 110px 70px,
+			#EEEEEE 90px 60px; 
+	}
+	50% { 
+		box-shadow:
+			#EEEEEE 30px 70px,
+			#EEEEEE 40px 80px,
+			rgba(238,238,238,0) 50px 100px,
+			#EEEEEE 55px 80px,
+			#EEEEEE 70px 60px,
+			#EEEEEE 80px 45px,
+			#EEEEEE 110px 95px,
+			#EEEEEE 90px 85px;
+	}
+	51% {
+		box-shadow:
+			#EEEEEE 30px 70px,
+			#EEEEEE 40px 80px,
+			rgba(238,238,238,0) 50px 45px,
+			#EEEEEE 55px 80px,
+			#EEEEEE 70px 60px,
+			#EEEEEE 80px 45px,
+			#EEEEEE 110px 95px,
+			#EEEEEE 90px 85px;
+	}
+	75% {
+		box-shadow:
+			#EEEEEE 30px 95px,
+			#EEEEEE 40px 100px,
+			#EEEEEE 50px 60px,
+			rgba(238,238,238,0) 55px 95px,
+			#EEEEEE 70px 80px,
+			#EEEEEE 80px 70px,
+			rgba(238,238,238,0) 110px 120px,
+			rgba(238,238,238,0) 90px 110px;
+	}
+	76% {
+		box-shadow:
+			#EEEEEE 30px 95px,
+			#EEEEEE 40px 100px,
+			#EEEEEE 50px 60px,
+			rgba(238,238,238,0) 55px 35px,
+			#EEEEEE 70px 80px,
+			#EEEEEE 80px 70px,
+			rgba(238,238,238,0) 110px 25px,
+			rgba(238,238,238,0) 90px 15px;
+	}
+	100% {
+		box-shadow:
+			rgba(238,238,238,0) 30px 120px,
+			rgba(238,238,238,0) 40px 120px,
+			#EEEEEE 50px 75px,
+			#EEEEEE 55px 50px,
+			#EEEEEE 70px 100px,
+			#EEEEEE 80px 95px,
+			#EEEEEE 110px 45px,
+			#EEEEEE 90px 35px;
+	}
+}
+
+/*********** weather ******** / 
 
 
 
