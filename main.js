@@ -260,7 +260,8 @@ function mainGameLoop(player){
 				}, 500);
 				weatherInit(forest, player); 
 				getWeatherEffects(forest, player);
-					//var areaAction = chooseAreaAction();
+				$("#content").css("background-image", "url(images/forestBg.png)"); 
+				chooseAreaAction("forest");
 					switch (areaAction){
 						case "hunt":
 							var randChance = Math.random(); 
@@ -579,6 +580,10 @@ function weatherInit(area, player){
 	$("#content .playerInfo").append("<div class='weather'><div class='" + area.weather + "'></div><br /><div class='info'><span class='t0'>" + 
 		area.temperature + "°C</span><br /><span class='title'>" + area.weather + "</span></div></div>");
 	$("#content .weather").css("opacity", 1); 
+	$("#content .playerInfo").css("top", "40%"); 
+	setInterval(function(){
+		$("#content .playerInfo").css("top", "80%"); 
+	}, 2000); 
 }
 
 function searchMaterials(area, player){ // searching for materials
@@ -646,13 +651,21 @@ function getWeatherEffects(area, player){
 	var demage = false;  
 	if (area.temperature <= 0 && area.weather == "snow"){
 		player.health -= 20; 
+		$("#content .playerInfo").css("top", "40%"); 
 		$("#content .health").css("width", player.health); 
+		setInterval(function(){
+			$("#content .playerInfo").css("top", "80%"); 
+		}, 2000); 
 		demage = true; 
 		return demage; 
 	}
 	else if (area.temperature >= 20 && area.weather == "heat"){
 		player.health -= 20; 
+		$("#content .playerInfo").css("top", "40%"); 
 		$("#content .health").css("width", player.health); 
+		setInterval(function(){
+			$("#content .playerInfo").css("top", "80%"); 
+		}, 2000); 
 		demage = true; 
 		return demage; 
 	}
@@ -711,10 +724,22 @@ function choosePath(){ // choose path from the start point
 		}, 2700);
 		}
 }
-function chooseAreaAction(){ 
-	var action = window.prompt("You can hunt, look for food, search healing herbs or search materials"); 
-	return action; 
-
+function chooseAreaAction(area){ 
+	$("#content .areaAction").remove(); 
+	$("#content").append("<div class='areaAction'></div>"); 
+	switch(area){
+		case "forest":
+			$("#content .areaAction").addClass("forestActions"); 
+			$("#content .areaAction").css("background-image", "url(images/forestMain.png)"); 
+			$("#content .forestActions").append("<div class='hunt'></div><div class='healingHerbs'></div><div class='lookForFood'></div><div class='searchMaterials'></div>"); 
+		break; 
+		case "river":
+		break; 
+		case "swamp":
+		break; 
+		case "buildHovel":
+		break; 
+	}
 }
 function battle(enemy, player){
 	console.log(enemy);

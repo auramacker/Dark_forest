@@ -102,6 +102,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	text-shadow: 8px 0px 15px rgba(255,255,255,0.35);
 }
 #content .playerInfo{
+	z-index: 999;
 	font-family: 'Inconsolata';
 	opacity: 0;
 	border: 1px solid rgba(255,255,255,0.7);
@@ -120,7 +121,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	-o-transition: all 0.7s ease-in-out; 
 }
 #content .playerInfo:hover{
-	top: 50% !important; 
+	top: 40% !important; 
 }
 #content .playerClass{
 	line-height: 25px;
@@ -223,6 +224,84 @@ p, a, h1, h2, h3 ,h4, h5{
 	background-image:  url(images/buildHovel.png); 
 	margin-left: -11px;
 	}
+#content .areaAction{
+	width: 1024px; 
+	height: 600px; 
+	margin: 0 auto;
+	background-repeat: no-repeat;
+	background-size: 100%; 
+}
+.hunt, .healingHerbs, .lookForFood, .searchMaterials{
+	position: absolute;
+	border-radius: 100px;
+	background-color: rgba(0,0,0,0.8);
+	width: 85px;
+	height: 85px;
+	background-repeat: no-repeat;
+	background-size: 70%;
+	background-position: 50%;
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in; 
+	cursor: pointer;
+}
+.hunt{
+	background-image: url(images/hunting_icon.png);
+	margin-left: 190px;
+	margin-top: 200px;
+}
+.healingHerbs{
+	background-image: url(images/herb.png);
+	background-size: 100% !important;
+	margin-top: 400px;
+	margin-left: 100px;
+}
+.lookForFood{
+	background-image: url(images/food.png);
+	margin-left: 550px;
+	margin-top: 350px;
+}
+.searchMaterials{
+	background-image: url(images/materials.png);
+	margin-left: 650px;
+	margin-top: 150px;
+}
+
+.hunt:after, .healingHerbs:after, .lookForFood:after, .searchMaterials:after{
+	display: block; 
+	opacity: 0; 
+	margin-left: 100px; 
+	font-family: 'Inconsolata';
+	color: #fff;
+	width: 200px;
+	font-size: 17px; 
+	margin-top: 35px;
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in; 
+	cursor: pointer;
+}
+.hunt:after{
+	content: 'Try to hunt';
+}
+.healingHerbs:after{
+	content: 'Search Healing Herbs';
+}
+.lookForFood:after{
+	content: 'Look for food';
+}
+.searchMaterials:after{
+	content: 'Search some materials';
+}
+
+.hunt:hover, .healingHerbs:hover, .lookForFood:hover, .searchMaterials:hover {
+	box-shadow: 0px 0px 34px 1px rgba(0,0,0,0.9);
+}
+.hunt:hover:after, .healingHerbs:hover:after, .lookForFood:hover:after, .searchMaterials:hover:after{
+	opacity: 1; 
+}
 #content .playerInfo .name{
 	text-transform: uppercase;
 	font-size: 19px; 
