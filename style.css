@@ -24,6 +24,18 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 1.5s linear; 
 	-o-transition: all 1.5s linear; 
 }
+#hide{
+	width: 100%; 
+	opacity: 0; 
+	visibility: hidden;
+	z-index: 1000; 
+	background-color: #000;
+	position: absolute;
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in;
+}
 #content .notify{
 	color: #fff;
 	position: absolute;
@@ -120,8 +132,12 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.7s ease-in-out; 
 	-o-transition: all 0.7s ease-in-out; 
 }
-#content .playerInfo:hover{
+#content .playerInfoScale:hover{
 	top: 40% !important; 
+}
+#content .inBattle{
+	top: 15% !important; 
+	left: 65% !important;
 }
 #content .playerClass{
 	line-height: 25px;
@@ -143,7 +159,7 @@ p, a, h1, h2, h3 ,h4, h5{
 #content .playerInfo .stats{
 	margin-top: 15px;
 }
-#content .playerInfo .health{
+#content .playerInfo .health, .enemyInfo .health{
 	height: 7px; 
 	background-color: #961818;
 	margin: 10px 0px -10px 15px;
@@ -230,6 +246,10 @@ p, a, h1, h2, h3 ,h4, h5{
 	margin: 0 auto;
 	background-repeat: no-repeat;
 	background-size: 100%; 
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in; 
 }
 .hunt, .healingHerbs, .lookForFood, .searchMaterials{
 	position: absolute;
@@ -267,7 +287,20 @@ p, a, h1, h2, h3 ,h4, h5{
 	margin-left: 650px;
 	margin-top: 150px;
 }
-
+#content .choiseAttack{
+	opacity: 0;
+	width: 200px; 
+	height: 100px; 
+	position: absolute; 
+	top: 45%; 
+	left: calc(50% - 100px); 
+	background-color: red;
+	text-align: center;
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in; 
+}
 .hunt:after, .healingHerbs:after, .lookForFood:after, .searchMaterials:after{
 	display: block; 
 	opacity: 0; 
@@ -306,6 +339,32 @@ p, a, h1, h2, h3 ,h4, h5{
 	text-transform: uppercase;
 	font-size: 19px; 
 	font-weight: bold;
+}
+#content .enemyInfo{
+	z-index: 1001;
+	font-family: 'Inconsolata';
+	opacity: 0;
+	border: 1px solid rgba(255,255,255,0.7);
+	text-align: center;
+	color: #fff;
+	font-size: 15px;
+	width: 350px;
+	background: #000407;
+	padding: 25px 10px;
+	position: absolute;
+	left: calc(50% - 185px);
+	top: 15%;
+	transition: all 0.4s ease-in-out;
+	-webkit-transition: all 0.4s ease-in-out; 
+	-moz-transition: all 0.4s ease-in-out; 
+	-o-transition: all 0.4s ease-in-out; 
+}
+.enemyInfo .enemyPicture{
+	margin: 0 auto;
+	width: 320px;
+	height: 320px;
+	background-size: 100%; 
+	background-repeat: no-repeat;
 }
 #content .press-space{
 	width: 300px;

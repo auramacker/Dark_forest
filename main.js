@@ -1,5 +1,7 @@
 // The game Dark forest v.001
 $(document).ready(function(){
+	var height = $( window) .height(); 
+	$("#hide").css('height', height); 
 	var bg = new Audio(); // play background music
 	if (bg.canPlayType("audio/wav")){
 		bg.src = "audio/background.wav"; 
@@ -207,22 +209,26 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 	this.getEnemyProp = function(){
 		switch(enemyClass){
 			case "bear":
-				this.health = (player.level/1.5) * defaultBearHealth; 
+				this.image = "url(images/bear.png)"; 
+				this.health = Math.round((player.level/1.5) * defaultBearHealth); 
 				this.inventory = ["meat x5", "lather x4"]; 
 				this.streight = (player.level/2.5) * defaultBearStreight; 
 			break; 
 			case "wolf":
-				this.health = (player.level/1.5) * defaultWolfHealth; 
+				this.image = "url(images/bear.png)"; 
+				this.health = Math.round((player.level/1.5) * defaultWolfHealth); 
 				this.inventory = ["meat x3", "lather x2"]; 
 				this.streight = (player.level/2.5) * defaultWolfStreight;
 			break; 
 			case "wild boar":
-				this.health = (player.level/1.5) * defaultBoarHealth; 
+				this.image = "url(images/bear.png)"; 
+				this.health = Math.round((player.level/1.5) * defaultBoarHealth); 
 				this.inventory = ["meat x3", "lather x3"]; 
 				this.streight = (player.level/2.5) * defaultBoarStreight;
 			break; 
 			case "elk":
-				this.health = (player.level/1.5) * defaultElkHealth; 
+				this.image = "url(images/bear.png)"; 
+				this.health = Math.round((player.level/1.5) * defaultElkHealth); 
 				this.inventory = ["meat x4", "lather x4"]; 
 				this.streight = (player.level/2.5) * defaultElkStreight;
 			break; 
@@ -262,52 +268,52 @@ function mainGameLoop(player){
 				getWeatherEffects(forest, player);
 				$("#content").css("background-image", "url(images/forestBg.png)"); 
 				chooseAreaAction("forest");
-					switch (areaAction){
-						case "hunt":
-							var randChance = Math.random(); 
-							if ( randChance <= 0.75){
-								var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1); 
-								var randEnemy = forest.enemies[randEnemyIndex];
-								switch(randEnemy){
-									case "elk":
-										var forestElk = new CreateEnemy("Forest elk", "elk", player); 
-										forestElk.getEnemyProp(); 
-										showEnemyStats(forestElk); 
-										battle(forestElk, player); 
-									break; 
-									case "wolf":
-										var forestWolf = new CreateEnemy("Forest Wolf", "wolf", player); 
-										forestWolf.getEnemyProp(); 
-										showEnemyStats(forestWolf); 
-										battle(forestWolf, player); 
-									break; 
-									case "wild boar":
-										var forestBoar = new CreateEnemy("Forest boar", "wild boar", player); 
-										forestBoar.getEnemyProp(); 
-										showEnemyStats(forestBoar); 
-										battle(forestBoar, player); 
-									break; 
-								} 
-							}
-							else {
-								document.write("<br />Hunting failed! You can not find any animal."); 
-								mainGameLoop(player); 
-							}
-						break; 
-						case "look for food": 
-							searchFood(forest, player); 
-							mainGameLoop(player);
-						break; 
-						case "search healing herbs":
-							searchHerbs(forest, player); 
-							mainGameLoop(player);
-						break; 
-						case "search materials":
-							searchMaterials(forest, player); 
-							mainGameLoop(player);
-						break; 
-					 }
-			});
+					$(".forestActions .hunt").click(function(){
+						var randChance = Math.random(); 
+						if ( randChance <= 0.75){
+							var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1); 
+							var randEnemy = forest.enemies[randEnemyIndex];
+							switch(randEnemy){
+								case "elk":
+									var forestElk = new CreateEnemy("Forest elk", "elk", player); 
+									forestElk.getEnemyProp(); 
+									showEnemyStats(forestElk); 
+									battle(forestElk, player); 
+								break; 
+								case "wolf":
+									var forestWolf = new CreateEnemy("Forest Wolf", "wolf", player); 
+									forestWolf.getEnemyProp(); 
+									showEnemyStats(forestWolf); 
+									battle(forestWolf, player); 
+								break; 
+								case "wild boar":
+									var forestBoar = new CreateEnemy("Forest boar", "wild boar", player); 
+									forestBoar.getEnemyProp(); 
+									showEnemyStats(forestBoar); 
+									battle(forestBoar, player); 
+								break; 
+							} 
+						}
+						else {
+							document.write("<br />Hunting failed! You can not find any animal."); 
+							mainGameLoop(player); 
+						}
+					})
+
+						// case "look for food": 
+						// 	searchFood(forest, player); 
+						// 	mainGameLoop(player);
+						// break; 
+						// case "search healing herbs":
+						// 	searchHerbs(forest, player); 
+						// 	mainGameLoop(player);
+						// break; 
+						// case "search materials":
+						// 	searchMaterials(forest, player); 
+						// 	mainGameLoop(player);
+						// break; 
+					 });
+
 			switch(chosenPath){
 
 				case "river": 
@@ -325,19 +331,19 @@ function mainGameLoop(player){
 										var riverWolf = new CreateEnemy("river wolf", "wolf", player); 
 										riverWolf.getEnemyProp(); 
 										showEnemyStats(riverWolf); 
-										battle(riverWolf, player); 
+										battle(riverWolf, player, true); 
 									break; 
 									case "bear":
 										var riverBear = new CreateEnemy("river bear", "bear", player); 
 										riverBear.getEnemyProp(); 
 										showEnemyStats(riverBear); 
-										battle(riverBear, player); 
+										battle(riverBear, player, true); 
 									break; 
 									case "wild boar":
 										var riverBoar = new CreateEnemy("river boar", "wild boar", player); 
 										riverBoar.getEnemyProp(); 
 										showEnemyStats(riverBoar); 
-										battle(riverBoar, player); 
+										battle(riverBoar, player, true); 
 									break; 
 								} 
 							}
@@ -582,7 +588,7 @@ function weatherInit(area, player){
 	$("#content .weather").css("opacity", 1); 
 	$("#content .playerInfo").css("top", "40%"); 
 	setInterval(function(){
-		$("#content .playerInfo").css("top", "80%"); 
+		$("#content .playerInfo").css("top", "60%"); 
 	}, 2000); 
 }
 
@@ -654,7 +660,7 @@ function getWeatherEffects(area, player){
 		$("#content .playerInfo").css("top", "40%"); 
 		$("#content .health").css("width", player.health); 
 		setInterval(function(){
-			$("#content .playerInfo").css("top", "80%"); 
+			$("#content .playerInfo").css("top", "60%"); 
 		}, 2000); 
 		demage = true; 
 		return demage; 
@@ -664,7 +670,7 @@ function getWeatherEffects(area, player){
 		$("#content .playerInfo").css("top", "40%"); 
 		$("#content .health").css("width", player.health); 
 		setInterval(function(){
-			$("#content .playerInfo").css("top", "80%"); 
+			$("#content .playerInfo").css("top", "60%"); 
 		}, 2000); 
 		demage = true; 
 		return demage; 
@@ -689,14 +695,22 @@ function showPlayerStats(player){
 		$("#content .playerInfo").css("opacity", "1");
 	}, 500);
 	setTimeout(function(){
-		$(".playerInfo").css("top", '80%');
+		$(".playerInfo").css("top", '60%');
 		$(".playerInfo").addClass("playerInfoScale");
 	}, 2000)
 
 	}
 }
+
 function showEnemyStats(enemy){
-	document.write(enemy.name + "<br />" + "HP: " + enemy.health + "<br />" + "Streight: " + enemy.streight + " points <br />"); 
+	$("#content").append("<div class='enemyInfo'><div class='enemyPicture'></div><div class='stats'><span class='name'>" + enemy.name +
+		"</span><br /><div class='health' style='width:" + enemy.health +"px'</div></div><p>" + enemy.health + " HP</p><span class='streight'>Streight: " + enemy.streight 
+		+ " points</span></div>") ; 
+	$(".enemyInfo .enemyPicture").css("background-image", enemy.image); 
+	$(".enemyInfo").css("opacity", 1);
+	setTimeout(function(){
+		$(".enemyInfo").css("left", "10%");
+	}, 2000); 
 }
 
 function choosePath(){ // choose path from the start point 
@@ -741,13 +755,24 @@ function chooseAreaAction(area){
 		break; 
 	}
 }
-function battle(enemy, player){
-	console.log(enemy);
-	var choise = window.prompt("You can \"attack\" or you can \"run\" "); 
-	
-//*************** attack block ****************// 
+function battle(enemy, player, iteration){ // if iteration == true its a first call. If false else 
+		$("#content .areaAction").css("opacity", 0); 
+		setTimeout(function(){
+			$("#content .areaAction").remove(); 
+		}, 500); 
+		$(".playerInfo").css("opacity", 0); 
+		setTimeout(function(){
+			$(".playerInfo").addClass("inBattle"); 
+			$(".playerInfo").css("opacity", 1); 
+			$(".playerInfo").removeClass("playerInfoScale");
+		}, 2000); 
+		setTimeout(function(){
+			$("#content").append("<div class='choiseAttack'><div class='attack'></div></div class='run'></div></div>")
+			$(".choiseAttack").css("opacity", 1);
+		}, 1500); 
 
-	if (choise == "attack"){  
+//*************** attack block ****************// 
+	$(".choiseAttack").click(function(){
 		var chanceToHit = 0; 
 		var chanceToEnemyHit = 0; 
 		if (player.playerClass == "warrior"){
@@ -792,39 +817,40 @@ function battle(enemy, player){
 		else {
 			battle(enemy, player);
 		}
-	}
+	})
+
 
 //*************** end attack block ****************// 
 
 //*************** run block *******************// 
 
-	else if (choise == "run"){
-		var chanceToRun = 0; 
-		var randRun = Math.random(); 
-		if (player.playerClass == "warrior"){ // set chance to run for warrior 
-			chanceToRun = 0.70; 
-		}
-		else if (player.playerClass == "archer"){ // set chance to run for archer 
-			chanceToRun = 0.80; 
-		}
-		if (randRun <= chanceToRun){
-			document.write("You have successfully escaped!<br />")
-			mainGameLoop(player); 
-		}
-		else {
-			var enemyRunHitPoints = enemy.streight * getRandomInt(4, 5); 
-			player.health -= enemyRunHitPoints; 
-			if (player.health <= 0){
-				alert("You dead!"); 
-				startNewGame(); 
-			}
-			else{
-			document.write("The enemy caught up with you!<br />")
-			showPlayerStats(player); 
-			battle(enemy, player); 
-			}
-		}
-	}
+	// else if (choise == "run"){
+	// 	var chanceToRun = 0; 
+	// 	var randRun = Math.random(); 
+	// 	if (player.playerClass == "warrior"){ // set chance to run for warrior 
+	// 		chanceToRun = 0.70; 
+	// 	}
+	// 	else if (player.playerClass == "archer"){ // set chance to run for archer 
+	// 		chanceToRun = 0.80; 
+	// 	}
+	// 	if (randRun <= chanceToRun){
+	// 		document.write("You have successfully escaped!<br />")
+	// 		mainGameLoop(player); 
+	// 	}
+	// 	else {
+	// 		var enemyRunHitPoints = enemy.streight * getRandomInt(4, 5); 
+	// 		player.health -= enemyRunHitPoints; 
+	// 		if (player.health <= 0){
+	// 			alert("You dead!"); 
+	// 			startNewGame(); 
+	// 		}
+	// 		else{
+	// 		document.write("The enemy caught up with you!<br />")
+	// 		showPlayerStats(player); 
+	// 		battle(enemy, player); 
+	// 		}
+	// 	}
+	//}
 
 	//*************** end run block *******************// 
 
