@@ -273,26 +273,13 @@ function mainGameLoop(player){
 						if ( randChance <= 0.75){
 							var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1); 
 							var randEnemy = forest.enemies[randEnemyIndex];
-							switch(randEnemy){
-								case "elk":
-									var forestElk = new CreateEnemy("Forest elk", "elk", player); 
-									forestElk.getEnemyProp(); 
-									showEnemyStats(forestElk); 
-									battle(forestElk, player); 
-								break; 
-								case "wolf":
-									var forestWolf = new CreateEnemy("Forest Wolf", "wolf", player); 
-									forestWolf.getEnemyProp(); 
-									showEnemyStats(forestWolf); 
-									battle(forestWolf, player); 
-								break; 
-								case "wild boar":
-									var forestBoar = new CreateEnemy("Forest boar", "wild boar", player); 
-									forestBoar.getEnemyProp(); 
-									showEnemyStats(forestBoar); 
-									battle(forestBoar, player); 
-								break; 
-							} 
+							var enemy = new CreateEnemy(randEnemy, randEnemy, player); 
+							enemy.getEnemyProp(); 
+							showEnemyStats(enemy); 
+							battleInterface(enemy, player);
+							$("#content .attack").click(function(){
+								attack(enemy, player); 
+							}); 
 						}
 						else {
 							document.write("<br />Hunting failed! You can not find any animal."); 
@@ -755,7 +742,7 @@ function chooseAreaAction(area){
 		break; 
 	}
 }
-function battle(enemy, player, iteration){ // if iteration == true its a first call. If false else 
+function battleInterface(enemy, player, iteration){ // if iteration == true its a first call. If false else 
 		$("#content .areaAction").css("opacity", 0); 
 		setTimeout(function(){
 			$("#content .areaAction").remove(); 
@@ -770,91 +757,92 @@ function battle(enemy, player, iteration){ // if iteration == true its a first c
 			$("#content").append("<div class='choiseAttack'><div class='attack'></div></div class='run'></div></div>")
 			$(".choiseAttack").css("opacity", 1);
 		}, 1500); 
+}
 
-//*************** attack block ****************// 
-	$(".choiseAttack").click(function(){
-		var chanceToHit = 0; 
-		var chanceToEnemyHit = 0; 
-		if (player.playerClass == "warrior"){
-			chanceToHit = 0.80; 
-			chanceToEnemyHit = 0.65; 
-		}
-		else if (player.playerClass == "archer"){
-			chanceToHit = 0.70; 
-			chanceToEnemyHit = 0.55; 
-		}
+function attack(enemy, player){
+	//*************** attack block ****************// 
+	 	var chanceToHit = 0; 
+	 	var chanceToEnemyHit = 0; 
+	 	if (player.playerClass == "warrior"){
+	 		chanceToHit = 0.80; 
+	 		chanceToEnemyHit = 0.65; 
+	 	}
+	 	else if (player.playerClass == "archer"){
+	 		chanceToHit = 0.70; 
+	 		chanceToEnemyHit = 0.55; 
+	 	}
  
-		var randToHit = Math.random(); 
-		if (randToHit <= chanceToHit){
-			var hitPoints = player.streight * getRandomInt(5,7);
-			enemy.health -= hitPoints; 
-			document.write("You hit enemy: -" + hitPoints + "<br />" ); 
-			//showEnemyStats(enemy); 
-		}
-		else document.write("You missed!" + "<br />"); 
-		var randToEnemyHit = Math.random(); 
-		if (randToEnemyHit <= chanceToEnemyHit){
-			var enemyHitPoints = enemy.streight * getRandomInt(4, 6);
-			player.health -= enemyHitPoints; 
-			document.write("Enemy hit you: -" + enemyHitPoints + "<br />");  
-			showPlayerStats(player); 
-		}
-		else document.write("Enemy missed!" + "<br />"); 
-		if (enemy.health <= 0){
-			for (var i = 0; i < enemy.inventory.length; i++){
-				player.inventory.push(enemy.inventory[i]); 
-			}
-			delete enemy; 
-			player.getNewLevel();
-			console.log(player);
-			showPlayerStats(player);
-			mainGameLoop(player); 
-		}
-		else if (player.health <= 0 ){
-			alert("You dead!"); 
-			startNewGame();
-		}
-		else {
-			battle(enemy, player);
-		}
-	})
-
+	 	var randToHit = Math.random(); 
+	 	if (randToHit <= chanceToHit){
+	 		var hitPoints = player.streight * getRandomInt(5,7);
+	 		enemy.health -= hitPoints; 
+	 		document.write("You hit enemy: -" + hitPoints + "<br />" ); 
+	 		//showEnemyStats(enemy); 
+	 	}
+	 	else document.write("You missed!" + "<br />"); 
+	 	var randToEnemyHit = Math.random(); 
+	 	if (randToEnemyHit <= chanceToEnemyHit){
+	 		var enemyHitPoints = enemy.streight * getRandomInt(4, 6);
+	 		player.health -= enemyHitPoints; 
+	 		document.write("Enemy hit you: -" + enemyHitPoints + "<br />");  
+	 		showPlayerStats(player); 
+	 	}
+	 	else document.write("Enemy missed!" + "<br />"); 
+	 	if (enemy.health <= 0){
+	 		for (var i = 0; i < enemy.inventory.length; i++){
+	 			player.inventory.push(enemy.inventory[i]); 
+	 		}
+	 		delete enemy; 
+	 		player.getNewLevel();
+	 		console.log(player);
+	 		showPlayerStats(player);
+	 		mainGameLoop(player); 
+	 	}
+	 	else if (player.health <= 0 ){
+	 		alert("You dead!"); 
+	 		startNewGame();
+	 	}
+	 	else {
+	 		battle(enemy, player);
+	 	}
+	 }
 
 //*************** end attack block ****************// 
 
-//*************** run block *******************// 
+// //*************** run block *******************// 
 
-	// else if (choise == "run"){
-	// 	var chanceToRun = 0; 
-	// 	var randRun = Math.random(); 
-	// 	if (player.playerClass == "warrior"){ // set chance to run for warrior 
-	// 		chanceToRun = 0.70; 
-	// 	}
-	// 	else if (player.playerClass == "archer"){ // set chance to run for archer 
-	// 		chanceToRun = 0.80; 
-	// 	}
-	// 	if (randRun <= chanceToRun){
-	// 		document.write("You have successfully escaped!<br />")
-	// 		mainGameLoop(player); 
-	// 	}
-	// 	else {
-	// 		var enemyRunHitPoints = enemy.streight * getRandomInt(4, 5); 
-	// 		player.health -= enemyRunHitPoints; 
-	// 		if (player.health <= 0){
-	// 			alert("You dead!"); 
-	// 			startNewGame(); 
-	// 		}
-	// 		else{
-	// 		document.write("The enemy caught up with you!<br />")
-	// 		showPlayerStats(player); 
-	// 		battle(enemy, player); 
-	// 		}
-	// 	}
-	//}
+// 	 else if (choise == "run"){
+// 	 	var chanceToRun = 0; 
+// 	 	var randRun = Math.random(); 
+// 	 	if (player.playerClass == "warrior"){ // set chance to run for warrior 
+// 	 		chanceToRun = 0.70; 
+// 	 	}
+// 	 	else if (player.playerClass == "archer"){ // set chance to run for archer 
+// 	 		chanceToRun = 0.80; 
+// 	 	}
+// 	 	if (randRun <= chanceToRun){
+// 	 		document.write("You have successfully escaped!<br />")
+// 	 		mainGameLoop(player); 
+// 	 	}
+// 	 	else {
+// 	 		var enemyRunHitPoints = enemy.streight * getRandomInt(4, 5); 
+// 	 		player.health -= enemyRunHitPoints; 
+// 	 		if (player.health <= 0){
+// 	 			alert("You dead!"); 
+// 	 			startNewGame(); 
+// 	 		}
+// 	 		else{
+// 	 		document.write("The enemy caught up with you!<br />")
+// 	 		showPlayerStats(player); 
+// 	 		battle(enemy, player); 
+// 	 		}
+// 	 	}
+// 	}
+
+
 
 	//*************** end run block *******************// 
 
-}
 
 
 
