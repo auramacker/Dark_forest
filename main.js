@@ -277,8 +277,8 @@ function mainGameLoop(player){
 							enemy.getEnemyProp(); 
 							showEnemyStats(enemy); 
 							battleInterface(enemy, player);
-							$("#content .attack").click(function(){
-								attack(enemy, player); 
+							$("#content .choiseAttack").click(function(){
+								alert("You hit a bear"); 
 							}); 
 						}
 						else {
