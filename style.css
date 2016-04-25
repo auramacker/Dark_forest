@@ -294,7 +294,6 @@ p, a, h1, h2, h3 ,h4, h5{
 	position: absolute; 
 	top: 45%; 
 	left: calc(50% - 100px); 
-	background-color: red;
 	text-align: center;
 	transition: all 0.3s linear;
 	-webkit-transition: all 0.3s linear; 
@@ -400,6 +399,34 @@ p, a, h1, h2, h3 ,h4, h5{
 	height: 25px; 
 	animation: topBottomKey 1.5s 0.75s infinite;
 
+}
+.attack, .run{
+	width: 85px; 
+	display: inline-block;
+	background-color: #000;
+	height: 85px;
+	background-size: 70%; 
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: #000; 
+	border-radius: 50px; 
+	opacity: 0.95;
+	cursor: pointer;
+	transition: all 0.3s linear;
+	-webkit-transition: all 0.3s linear; 
+	-moz-transition: all 0.3s ease-in; 
+	-o-transition: all 0.3s ease-in; 
+}
+.attack:hover, .run:hover{
+	box-shadow: 0px 0px 34px 1px rgba(0,0,0,0.9);
+}
+.attack{
+	background-image: url(images/attack.png);
+	float: left;
+}
+.run{
+	background-image: url(images/run.png);
+	float: right;
 }
 #content .press-space span{
 	color: white;

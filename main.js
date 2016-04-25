@@ -270,7 +270,7 @@ function mainGameLoop(player){
 				chooseAreaAction("forest");
 					$(".forestActions .hunt").click(function(){
 						var randChance = Math.random(); 
-						if ( randChance <= 0.75){
+						if ( randChance <= 1){
 							var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1); 
 							var randEnemy = forest.enemies[randEnemyIndex];
 							var enemy = new CreateEnemy(randEnemy, randEnemy, player); 
@@ -278,8 +278,12 @@ function mainGameLoop(player){
 							showEnemyStats(enemy); 
 							battleInterface(enemy, player);
 							$("#content .choiseAttack").click(function(){
-								alert("You hit a bear"); 
-							}); 
+								if (player.health > 0 ) {
+									attack(enemy, player); 
+								}
+								else alert("You dead!");
+							})
+
 						}
 						else {
 							document.write("<br />Hunting failed! You can not find any animal."); 
@@ -753,57 +757,64 @@ function battleInterface(enemy, player, iteration){ // if iteration == true its 
 			$(".playerInfo").css("opacity", 1); 
 			$(".playerInfo").removeClass("playerInfoScale");
 		}, 2000); 
-		setTimeout(function(){
-			$("#content").append("<div class='choiseAttack'><div class='attack'></div></div class='run'></div></div>")
-			$(".choiseAttack").css("opacity", 1);
-		}, 1500); 
-}
+			$("#content").append("<div class='choiseAttack'><div class='attack'></div><div class='run'></div></div>")
+			$(".choiseAttack").css("opacity", 1);}
 
 function attack(enemy, player){
 	//*************** attack block ****************// 
-	 	var chanceToHit = 0; 
-	 	var chanceToEnemyHit = 0; 
+	 	var chanceToHit;
+	 	var chanceToEnemyHit;
+	 	var randToEnemyHit = Math.random(); 
+	 	var randToHit = Math.random(); 
+	 	var hitPoints = player.streight * getRandomInt(5,7);
+	 	var enemyHitPoints = enemy.streight * getRandomInt(4, 6);
+
 	 	if (player.playerClass == "warrior"){
-	 		chanceToHit = 0.80; 
-	 		chanceToEnemyHit = 0.65; 
+	 		chanceToHit = 0.5; 
+	 		chanceToEnemyHit = 0.5; 
 	 	}
 	 	else if (player.playerClass == "archer"){
 	 		chanceToHit = 0.70; 
 	 		chanceToEnemyHit = 0.55; 
 	 	}
  
-	 	var randToHit = Math.random(); 
 	 	if (randToHit <= chanceToHit){
-	 		var hitPoints = player.streight * getRandomInt(5,7);
 	 		enemy.health -= hitPoints; 
-	 		document.write("You hit enemy: -" + hitPoints + "<br />" ); 
+	 		console.log(enemy.health); 
+	 		$(".enemyInfo .health").css("width", enemy.health + "px"); 
+	 		return;  
 	 		//showEnemyStats(enemy); 
 	 	}
-	 	else document.write("You missed!" + "<br />"); 
-	 	var randToEnemyHit = Math.random(); 
+	 	 else {
+	 	 	console.log("You missed!" + "<br />");
+	 	 } 
 	 	if (randToEnemyHit <= chanceToEnemyHit){
-	 		var enemyHitPoints = enemy.streight * getRandomInt(4, 6);
 	 		player.health -= enemyHitPoints; 
-	 		document.write("Enemy hit you: -" + enemyHitPoints + "<br />");  
-	 		showPlayerStats(player); 
+	 		console.log(player.health)
+	 		$(".playerInfo .health").css("width", player.health + "px");  
+	 		return ;  
 	 	}
-	 	else document.write("Enemy missed!" + "<br />"); 
+	 	else {
+	 		console.log("Enemy missed!" + "<br />"); 
+	 		return;
+	 	}
 	 	if (enemy.health <= 0){
 	 		for (var i = 0; i < enemy.inventory.length; i++){
 	 			player.inventory.push(enemy.inventory[i]); 
 	 		}
 	 		delete enemy; 
+	 		console.log("enemy is dead!"); 
 	 		player.getNewLevel();
 	 		console.log(player);
 	 		showPlayerStats(player);
+	 		return true; 
 	 		mainGameLoop(player); 
 	 	}
 	 	else if (player.health <= 0 ){
-	 		alert("You dead!"); 
-	 		startNewGame();
+	 		return true; 
 	 	}
 	 	else {
-	 		battle(enemy, player);
+	 		return false; 
 	 	}
 	 }
 
