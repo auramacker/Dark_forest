@@ -215,19 +215,19 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 				this.streight = (player.level/2.5) * defaultBearStreight; 
 			break; 
 			case "wolf":
-				this.image = "url(images/bear.png)"; 
+				this.image = "url(images/boar.png)"; 
 				this.health = Math.round((player.level/1.5) * defaultWolfHealth); 
 				this.inventory = ["meat x3", "lather x2"]; 
 				this.streight = (player.level/2.5) * defaultWolfStreight;
 			break; 
 			case "wild boar":
-				this.image = "url(images/bear.png)"; 
+				this.image = "url(images/boar.png)"; 
 				this.health = Math.round((player.level/1.5) * defaultBoarHealth); 
 				this.inventory = ["meat x3", "lather x3"]; 
 				this.streight = (player.level/2.5) * defaultBoarStreight;
 			break; 
 			case "elk":
-				this.image = "url(images/bear.png)"; 
+				this.image = "url(images/elk.png)"; 
 				this.health = Math.round((player.level/1.5) * defaultElkHealth); 
 				this.inventory = ["meat x4", "lather x4"]; 
 				this.streight = (player.level/2.5) * defaultElkStreight;
@@ -252,6 +252,7 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 
 
 function mainGameLoop(player){
+	$("#content div").remove() ;
 	$("#content").css("backgroundImage", "url(images/mainBackground.png)");
 	printNotification("You need to find some food and find accommodation..."); 
 	$("#content .notify .ok").click(function(){	
@@ -281,7 +282,7 @@ function mainGameLoop(player){
 								if (player.health > 0 ) {
 									attack(enemy, player); 
 								}
-								else alert("You dead!");
+								isDead(player, enemy); 
 							})
 
 						}
@@ -762,6 +763,7 @@ function battleInterface(enemy, player, iteration){ // if iteration == true its 
 
 function attack(enemy, player){
 	//*************** attack block ****************// 
+
 	 	var chanceToHit;
 	 	var chanceToEnemyHit;
 	 	var randToEnemyHit = Math.random(); 
@@ -782,7 +784,6 @@ function attack(enemy, player){
 	 		enemy.health -= hitPoints; 
 	 		console.log(enemy.health); 
 	 		$(".enemyInfo .health").css("width", enemy.health + "px"); 
-	 		return;  
 	 		//showEnemyStats(enemy); 
 	 	}
 	 	 else {
@@ -798,25 +799,23 @@ function attack(enemy, player){
 	 		console.log("Enemy missed!" + "<br />"); 
 	 		return;
 	 	}
-	 	if (enemy.health <= 0){
-	 		for (var i = 0; i < enemy.inventory.length; i++){
-	 			player.inventory.push(enemy.inventory[i]); 
-	 		}
-	 		delete enemy; 
-	 		console.log("enemy is dead!"); 
-	 		player.getNewLevel();
-	 		console.log(player);
-	 		showPlayerStats(player);
-	 		return true; 
-	 		mainGameLoop(player); 
+}
+function isDead(player, enemy) {
+	if (enemy.health <= 0){
+	 	for (var i = 0; i < enemy.inventory.length; i++){
+	 		player.inventory.push(enemy.inventory[i]); 
+	 	}
+	 	delete enemy; 
+	 	alert("enemy is dead!"); 
+	 	player.getNewLevel();
+	 	console.log(player);
+	 	mainGameLoop(player); 
 	 	}
 	 	else if (player.health <= 0 ){
-	 		return true; 
+	 		alert("You are dead!"); 
 	 	}
-	 	else {
-	 		return false; 
-	 	}
-	 }
+	 	else return false; 
+}
 
 //*************** end attack block ****************// 
 
