@@ -20,20 +20,20 @@ p, a, h1, h2, h3 ,h4, h5{
 	background-size: 100%;
 	background-color: #000;
 	transition: all 1.5s linear;
-	-webkit-transition: all 1.5s linear; 
-	-moz-transition: all 1.5s linear; 
-	-o-transition: all 1.5s linear; 
+	-webkit-transition: all 1.5s linear;
+	-moz-transition: all 1.5s linear;
+	-o-transition: all 1.5s linear;
 }
 #hide{
-	width: 100%; 
-	opacity: 0; 
+	width: 100%;
+	opacity: 0;
 	visibility: hidden;
-	z-index: 1000; 
+	z-index: 1000;
 	background-color: #000;
 	position: absolute;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
 	-o-transition: all 0.3s ease-in;
 }
 #content .notify{
@@ -48,8 +48,8 @@ p, a, h1, h2, h3 ,h4, h5{
 	padding: 10px;
 	opacity: 0;
 	transition: all 1.5s linear;
-	-webkit-transition: all 1.5s linear; 
-	-moz-transition: all 1.5s ease-in; 
+	-webkit-transition: all 1.5s linear;
+	-moz-transition: all 1.5s ease-in;
 	-o-transition: all 1.5s ease-in;
 }
 #content .get-text{
@@ -65,20 +65,20 @@ p, a, h1, h2, h3 ,h4, h5{
 	padding: 10px;
 	opacity: 0;
 	transition: all 1.5s linear;
-	-webkit-transition: all 1.5s linear; 
-	-moz-transition: all 1.5s ease-in; 
+	-webkit-transition: all 1.5s linear;
+	-moz-transition: all 1.5s ease-in;
 	-o-transition: all 1.5s ease-in;
 }
 #content .get-text .ok, #content .notify .ok{
 	font-family: 'Inconsolata';
-	width: 40px; 
+	width: 40px;
 	border: 1px solid #fff;
 	margin: 0 auto;
-	margin-top: 10px; 
+	margin-top: 10px;
 	cursor: pointer;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
 	-o-transition: all 0.3s ease-in;
 }
 #content .get-text .ok:hover{
@@ -94,11 +94,11 @@ p, a, h1, h2, h3 ,h4, h5{
 	padding: 2px 5px;
 }
 #content .main-text{
-	display: block; 
-	position: absolute; 
-	top: calc(50% - 100px); 
+	display: block;
+	position: absolute;
+	top: calc(50% - 100px);
 	left: calc(50% - 300px);
-	color: #fff; 
+	color: #fff;
 	text-align: center;
 	width: 600px;
 	font-family: 'IM Fell English SC', serif;
@@ -106,9 +106,9 @@ p, a, h1, h2, h3 ,h4, h5{
 	text-shadow: -8px 0px 12px #fff;
 	letter-spacing: 2px;
 	transition: all 3.5s linear;
-	-webkit-transition: all 3.5s linear; 
-	-moz-transition: all 3.5s ease-in; 
-	-o-transition: all 3.5s ease-in; 
+	-webkit-transition: all 3.5s linear;
+	-moz-transition: all 3.5s ease-in;
+	-o-transition: all 3.5s ease-in;
 }
 #content:hover .main-text{
 	text-shadow: 8px 0px 15px rgba(255,255,255,0.35);
@@ -128,15 +128,15 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: calc(50% - 185px);
 	top: 15%;
 	transition: all 0.7s ease-in-out;
-	-webkit-transition: all 0.7s ease-in-out; 
-	-moz-transition: all 0.7s ease-in-out; 
-	-o-transition: all 0.7s ease-in-out; 
+	-webkit-transition: all 0.7s ease-in-out;
+	-moz-transition: all 0.7s ease-in-out;
+	-o-transition: all 0.7s ease-in-out;
 }
 #content .playerInfoScale:hover{
-	top: 40% !important; 
+	top: 40% !important;
 }
 #content .inBattle{
-	top: 15% !important; 
+	top: 15% !important;
 	left: 65% !important;
 }
 #content .playerClass{
@@ -144,57 +144,61 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 #content .playerInfoScale{
 	transition: all 0.3s ease-in-out;
-	-webkit-transition: all 0.3s ease-in-out; 
-	-moz-transition: all 0.3s ease-in-out; 
-	-o-transition: all 0.3s ease-in-out; 
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
 }
 #content .playerInfo .playerPicture{
 	margin: 0 auto;
 	width: 320px;
 	height: 320px;
 	background-image: url(images/player.png);
-	background-size: 100%; 
+	background-size: 100%;
 	background-repeat: no-repeat;
 }
 #content .playerInfo .stats{
 	margin-top: 15px;
 }
 #content .playerInfo .health, .enemyInfo .health{
-	height: 7px; 
+	height: 7px;
 	background-color: #961818;
 	margin-top: 5px;
 	width: 100%;
 	transition: all 0.7s linear;
-	-webkit-transition: all 0.7s linear; 
-	-moz-transition: all 0.7s ease-in; 
-	-o-transition: all 0.7s ease-in; 
+	-webkit-transition: all 0.7s linear;
+	-moz-transition: all 0.7s ease-in;
+	-o-transition: all 0.7s ease-in;
+}
+.enemyInfo .wrapper {
+	width: 100px;
+	height: 100px;
 }
 .playerPicture .hitPoints, .enemyPicture .hitPoints {
 	animation: hitPoints 1s linear;
-	position: absolute; 
-	height: 100px; 
-	width: 100px; 
+	position: absolute;
+	height: 100px;
+	width: 100px;
 	left: calc( 50% - 50px);
 	top: calc(40% - 50px);
 }
 .hitPoints p {
-	font-size: 30px; 
-	color: #961818; 
+	font-size: 30px;
+	color: #961818;
 	text-shadow: 0px 0px 3px;
 }
 #choise{
-	width: 100%; 
-	opacity: 0; 
+	width: 100%;
+	opacity: 0;
 	transition: all 0.5s linear;
-	-webkit-transition: all 0.5s linear; 
-	-moz-transition: all 0.5s ease-in; 
-	-o-transition: all 0.5s ease-in; 
+	-webkit-transition: all 0.5s linear;
+	-moz-transition: all 0.5s ease-in;
+	-o-transition: all 0.5s ease-in;
 }
 #choise div {
 	width: 24%;
 	transform: rotateZ(-5deg);
 	float: left;
-	box-shadow: 0px 25px 25px; 
+	box-shadow: 0px 25px 25px;
 	margin: 4px;
 
 }
@@ -211,23 +215,23 @@ p, a, h1, h2, h3 ,h4, h5{
 	content: 'Try to build a hovel';
 }
 .forest:after, .river:after, .swamp:after, .buildHovel:after{
-	display: block; 
+	display: block;
 	opacity: 0;
-	padding: 70% 0%; 
-	width: 120%; 
+	padding: 70% 0%;
+	width: 120%;
 	margin-left: -20%;
-	height: 100%; 
+	height: 100%;
 	margin-top: -10%;
 	background-color: rgba(0,0,0,0.6);
 	transform: rotateZ(5deg);
 	text-align: center;
-	color: #fff; 
-	font-size: 22px; 
+	color: #fff;
+	font-size: 22px;
 	font-family: 'Inconsolata';
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
-	-o-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
 	cursor: pointer;
 }
 .forest:hover:after, .river:hover:after, .swamp:hover:after, .buildHovel:hover:after{
@@ -243,35 +247,35 @@ p, a, h1, h2, h3 ,h4, h5{
 	margin-left: 4%;
 }
 #choise .river{
-	background-image:  url(images/river.png); 
-	margin-left: -7px; 
+	background-image:  url(images/river.png);
+	margin-left: -7px;
 	}
 #choise .swamp{
-	background-image:  url(images/swamp.png); 
-	margin-left: -9px; 
+	background-image:  url(images/swamp.png);
+	margin-left: -9px;
 	}
 #choise .buildHovel{
-	background-image:  url(images/buildHovel.png); 
+	background-image:  url(images/buildHovel.png);
 	margin-left: -11px;
 	}
 #content .areaAction{
-	width: 1024px; 
-	height: 600px; 
+	width: 1024px;
+	height: 600px;
 	margin: 0 auto;
 	background-repeat: no-repeat;
-	background-size: 100%; 
+	background-size: 100%;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
-	-o-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
 }
 .enemyInfo .backface{
-	position: absolute; 
+	position: absolute;
 	backface-visibility: hidden ;
 	-webkit-backface-visibility: hidden;
 	font-size: 30px;
-	color: #fff; 
-	top: 5%; 
+	color: #fff;
+	top: 5%;
 	left: 88px;
 	font-family: 'IM Fell English SC', serif;
 	transform: rotateX(-30deg);
@@ -287,9 +291,9 @@ p, a, h1, h2, h3 ,h4, h5{
 	background-size: 70%;
 	background-position: 50%;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
-	-o-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
 	cursor: pointer;
 }
 .hunt{
@@ -315,30 +319,30 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 #content .choiseAttack{
 	opacity: 0;
-	width: 200px; 
-	height: 100px; 
-	position: absolute; 
-	top: 45%; 
-	left: calc(50% - 100px); 
+	width: 200px;
+	height: 100px;
+	position: absolute;
+	top: 45%;
+	left: calc(50% - 100px);
 	text-align: center;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
-	-o-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
 }
 .hunt:after, .healingHerbs:after, .lookForFood:after, .searchMaterials:after{
-	display: block; 
-	opacity: 0; 
-	margin-left: 100px; 
+	display: block;
+	opacity: 0;
+	margin-left: 100px;
 	font-family: 'Inconsolata';
 	color: #fff;
 	width: 200px;
-	font-size: 17px; 
+	font-size: 17px;
 	margin-top: 35px;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
-	-o-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
 	cursor: pointer;
 }
 .hunt:after{
@@ -358,16 +362,16 @@ p, a, h1, h2, h3 ,h4, h5{
 	box-shadow: 0px 0px 34px 1px rgba(0,0,0,0.9);
 }
 .hunt:hover:after, .healingHerbs:hover:after, .lookForFood:hover:after, .searchMaterials:hover:after{
-	opacity: 1; 
+	opacity: 1;
 }
 #content .playerInfo .name{
 	text-transform: uppercase;
-	font-size: 19px; 
+	font-size: 19px;
 	font-weight: bold;
 }
 #content .enemyInfo *, #content .enemyInfo span {
-	backface-visibility: hidden; 
-	-webkit-backface-visibility: hidden; 
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 }
 .enemyInfo .streight, .playerInfo .streight{
 	position: relative;
@@ -387,40 +391,40 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: calc(50% - 185px);
 	top: 15%;
 
-	transform-style: preserve-3d; 
+	transform-style: preserve-3d;
 	transition: all 0.4s ease-in-out;
-	-webkit-transition: all 0.4s ease-in-out; 
-	-moz-transition: all 0.4s ease-in-out; 
-	-o-transition: all 0.4s ease-in-out; 
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
 }
-.enemyInfo, .playerInfo { 
-	transform-style: preserve-3d; 
+.enemyInfo, .playerInfo {
+	transform-style: preserve-3d;
 }
 .enemyInfo .enemyPicture{
 	margin: 0 auto;
 	width: 320px;
 	height: 320px;
-	background-size: 100%; 
+	background-size: 100%;
 	background-repeat: no-repeat;
 }
 #content .press-space{
 	width: 300px;
-	height: 100px; 
-	position: absolute; 
+	height: 100px;
+	position: absolute;
 	left: calc(50% - 150px);
-	top: 65%; 
+	top: 65%;
 	text-align: center;
 }
 #content .press-space .hand{
-	margin: 0 auto; 
+	margin: 0 auto;
 	width: 35px;
-	height: 35px; 
-	background-image: url(images/hand.png);; 
-	background-size: 100%; 
+	height: 35px;
+	background-image: url(images/hand.png);;
+	background-size: 100%;
 	transition: all 3.5s linear;
-	-webkit-transition: all 3.5s linear; 
-	-moz-transition: all 3.5s ease-in; 
-	-o-transition: all 3.5s ease-in; 
+	-webkit-transition: all 3.5s linear;
+	-moz-transition: all 3.5s ease-in;
+	-o-transition: all 3.5s ease-in;
 	animation: topBottomHand 1.5s infinite;
 }
 
@@ -433,27 +437,27 @@ p, a, h1, h2, h3 ,h4, h5{
 	-webkit-transform: rotateX(40deg);
 	transform: rotateX(40deg);
 	border-radius: 4px;
-	width: 70px; 
-	height: 25px; 
+	width: 70px;
+	height: 25px;
 	animation: topBottomKey 1.5s 0.75s infinite;
 
 }
 .attack, .run{
-	width: 85px; 
+	width: 85px;
 	display: inline-block;
 	background-color: #000;
 	height: 85px;
-	background-size: 70%; 
+	background-size: 70%;
 	background-repeat: no-repeat;
 	background-position: center;
-	background-color: #000; 
-	border-radius: 50px; 
+	background-color: #000;
+	border-radius: 50px;
 	opacity: 0.95;
 	cursor: pointer;
 	transition: all 0.3s linear;
-	-webkit-transition: all 0.3s linear; 
-	-moz-transition: all 0.3s ease-in; 
-	-o-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s linear;
+	-moz-transition: all 0.3s ease-in;
+	-o-transition: all 0.3s ease-in;
 }
 .attack:hover, .run:hover{
 	box-shadow: 0px 0px 34px 1px rgba(0,0,0,0.9);
@@ -468,7 +472,7 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 #content .press-space span{
 	color: white;
-	display: block; 
+	display: block;
 	position: absolute;
 	font-family: 'Inconsolata';
 }
@@ -477,7 +481,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: 20%;
 }
 #content .press-space .right-part{
-	right: 10%; 
+	right: 10%;
 	top: 45%;
 }
 
@@ -514,7 +518,7 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 }
 
-/*********** weather ******** / 
+/*********** weather ******** /
 /* SUNNY */
 .weather{
 	position: absolute;
@@ -522,81 +526,81 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: 0 ;
 	opacity: 0;
 	text-align:center;
-	margin-top: -60px; 
+	margin-top: -60px;
 	transition: all 0.5s linear;
-	-webkit-transition: all 0.5s linear; 
-	-moz-transition: all 0.5s ease-in; 
-	-o-transition: all 0.5s ease-in; 
+	-webkit-transition: all 0.5s linear;
+	-moz-transition: all 0.5s ease-in;
+	-o-transition: all 0.5s ease-in;
 }
 .weather .info{
-	background-color: #000; 
+	background-color: #000;
 	margin-left:-20px;
 	margin-top:-15px;
-	padding: 10px; 
+	padding: 10px;
 	border: 1px solid #fff;
 }
-.sunny { 
+.sunny {
 	animation: sunny 15s linear infinite;
-	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); 
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
 	height: 140px;
-	width: 20px; 
+	width: 20px;
 }
 .sunny:before {
 	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-	content: ''; 
-	height: 140px; 
+	content: '';
+	height: 140px;
 	width: 20px;
-	opacity: 1; 
+	opacity: 1;
 	position: absolute;
 	bottom: 0px;
-	left: 0px; 
+	left: 0px;
 	transform: rotate(90deg);
 }
 .sunny:after {
-	background: #FFEE44; 
-	border-radius: 50%; 
+	background: #FFEE44;
+	border-radius: 50%;
 	box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
-	content: '';  
+	content: '';
 	height: 80px;
-	width: 80px;  
-	position: absolute; 
-	left: -30px; 
+	width: 80px;
+	position: absolute;
+	left: -30px;
 	top: 30px;
 }
-@keyframes sunny { 
+@keyframes sunny {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
 }
-/* HEAT */ 
-.heat { 
+/* HEAT */
+.heat {
 	animation: heat 15s linear infinite;
-	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); 
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
 	height: 140px;
-	width: 20px; 
+	width: 20px;
 }
 .heat:before {
 	background-image: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-	content: ''; 
-	height: 140px; 
+	content: '';
+	height: 140px;
 	width: 20px;
-	opacity: 1; 
+	opacity: 1;
 	position: absolute;
 	bottom: 0px;
-	left: 0px; 
+	left: 0px;
 	transform: rotate(90deg);
 }
 .heat:after {
-	background: #FFEE44; 
-	border-radius: 50%; 
+	background: #FFEE44;
+	border-radius: 50%;
 	box-shadow: rgba(255,255,0,0.2) 0 0 0 15px;
-	content: '';  
+	content: '';
 	height: 80px;
-	width: 80px;  
-	position: absolute; 
-	left: -30px; 
+	width: 80px;
+	position: absolute;
+	left: -30px;
 	top: 30px;
 }
-@keyframes heat { 
+@keyframes heat {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
 }
@@ -606,15 +610,15 @@ p, a, h1, h2, h3 ,h4, h5{
 	animation: cloudy 5s ease-in-out infinite;
 	background: #FFFFFF;
 	border-radius: 50%;
-	box-shadow: 
-		#FFFFFF 65px -15px 0 -5px, 
-		#FFFFFF 25px -25px, 
-		#FFFFFF 30px 10px, 
-		#FFFFFF 60px 15px 0 -10px, 
+	box-shadow:
+		#FFFFFF 65px -15px 0 -5px,
+		#FFFFFF 25px -25px,
+		#FFFFFF 30px 10px,
+		#FFFFFF 60px 15px 0 -10px,
 		#FFFFFF 85px 5px 0 -5px;
 	height: 50px;
 	margin:45px 0px 45px -40px;
-	width: 50px; 
+	width: 50px;
 }
 @keyframes cloudy {
 	50% { transform: translateY(-20px); }
@@ -623,13 +627,13 @@ p, a, h1, h2, h3 ,h4, h5{
 /* rain */
 .rain {
 	animation: rain 5s ease-in-out infinite 1s;
-	background: #CCCCCC; 
+	background: #CCCCCC;
 	border-radius: 50%;
-	box-shadow: 
-		#CCCCCC 65px -15px 0 -5px, 
-		#CCCCCC 25px -25px, 
-		#CCCCCC 30px 10px, 
-		#CCCCCC 60px 15px 0 -10px, 
+	box-shadow:
+		#CCCCCC 65px -15px 0 -5px,
+		#CCCCCC 25px -25px,
+		#CCCCCC 30px 10px,
+		#CCCCCC 60px 15px 0 -10px,
 		#CCCCCC 85px 5px 0 -5px;
 	display: block;
 	height: 50px;
@@ -653,19 +657,19 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 
 @keyframes rain_rain {
-	0% {  
-		box-shadow: 
-			rgba(0,0,0,0) 30px 30px, 
-			rgba(0,0,0,0) 40px 40px,  
-			#000 50px 75px, 
-			#000 55px 50px, 
-			#000 70px 100px, 
-			#000 80px 95px, 
-			#000 110px 45px, 
-			#000 90px 35px; 
+	0% {
+		box-shadow:
+			rgba(0,0,0,0) 30px 30px,
+			rgba(0,0,0,0) 40px 40px,
+			#000 50px 75px,
+			#000 55px 50px,
+			#000 70px 100px,
+			#000 80px 95px,
+			#000 110px 45px,
+			#000 90px 35px;
 	}
-	25% {  
-	  	box-shadow: 
+	25% {
+	  	box-shadow:
 			#000 30px 45px,
 			#000 40px 60px,
 			#000 50px 90px,
@@ -675,7 +679,7 @@ p, a, h1, h2, h3 ,h4, h5{
 			#000 110px 70px,
 			#000 90px 60px;
 	}
-	26% {  
+	26% {
 		box-shadow:
 			#000 30px 45px,
 			#000 40px 60px,
@@ -684,9 +688,9 @@ p, a, h1, h2, h3 ,h4, h5{
 			rgba(0,0,0,0) 70px 40px,
 			rgba(0,0,0,0) 80px 20px,
 			#000 110px 70px,
-			#000 90px 60px; 
+			#000 90px 60px;
 	}
-	50% { 
+	50% {
 		box-shadow:
 			#000 30px 70px,
 			#000 40px 80px,
@@ -746,13 +750,13 @@ p, a, h1, h2, h3 ,h4, h5{
 /* snow */
 .snow {
 	animation: snow 5s ease-in-out infinite 1s;
-	background: #FFFFFF; 
+	background: #FFFFFF;
 	border-radius: 50%;
-	box-shadow: 
-		#FFFFFF 65px -15px 0 -5px, 
-		#FFFFFF 25px -25px, 
-		#FFFFFF 30px 10px, 
-		#FFFFFF 60px 15px 0 -10px, 
+	box-shadow:
+		#FFFFFF 65px -15px 0 -5px,
+		#FFFFFF 25px -25px,
+		#FFFFFF 30px 10px,
+		#FFFFFF 60px 15px 0 -10px,
 		#FFFFFF 85px 5px 0 -5px;
 	display: block;
 	height: 50px;
@@ -774,19 +778,19 @@ p, a, h1, h2, h3 ,h4, h5{
 	50% { transform: translateY(-20px); }
 }
 @keyframes snow_snow {
-	0% {  
-		box-shadow: 
-			rgba(238,238,238,0) 30px 30px, 
-			rgba(238,238,238,0) 40px 40px,  
-			#EEEEEE 50px 75px, 
-			#EEEEEE 55px 50px, 
-			#EEEEEE 70px 100px, 
-			#EEEEEE 80px 95px, 
-			#EEEEEE 110px 45px, 
-			#EEEEEE 90px 35px; 
+	0% {
+		box-shadow:
+			rgba(238,238,238,0) 30px 30px,
+			rgba(238,238,238,0) 40px 40px,
+			#EEEEEE 50px 75px,
+			#EEEEEE 55px 50px,
+			#EEEEEE 70px 100px,
+			#EEEEEE 80px 95px,
+			#EEEEEE 110px 45px,
+			#EEEEEE 90px 35px;
 	}
-	25% {  
-	  	box-shadow: 
+	25% {
+	  	box-shadow:
 			#EEEEEE 30px 45px,
 			#EEEEEE 40px 60px,
 			#EEEEEE 50px 90px,
@@ -796,7 +800,7 @@ p, a, h1, h2, h3 ,h4, h5{
 			#EEEEEE 110px 70px,
 			#EEEEEE 90px 60px;
 	}
-	26% {  
+	26% {
 		box-shadow:
 			#EEEEEE 30px 45px,
 			#EEEEEE 40px 60px,
@@ -805,9 +809,9 @@ p, a, h1, h2, h3 ,h4, h5{
 			rgba(238,238,238,0) 70px 40px,
 			rgba(238,238,238,0) 80px 20px,
 			#EEEEEE 110px 70px,
-			#EEEEEE 90px 60px; 
+			#EEEEEE 90px 60px;
 	}
-	50% { 
+	50% {
 		box-shadow:
 			#EEEEEE 30px 70px,
 			#EEEEEE 40px 80px,
@@ -864,17 +868,4 @@ p, a, h1, h2, h3 ,h4, h5{
 	}
 }
 
-/*********** weather ******** / 
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*********** weather ******** /

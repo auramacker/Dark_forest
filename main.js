@@ -173,7 +173,7 @@ function CreatePlayer(name, playerClass){ // player constructor function
 	this.weapon = "none";
 	this.maxHealth = 0;
 	this.playerClass = playerClass;
-	this.inventory = ["lather x2", "rock x2", "lather x2", "wood x3", "wood x3"];
+	this.inventory = ["leather x2", "rock x2", "leather x2", "wood x3", "wood x3"];
 	this.getPlayerWeapon = function(){
 		if (this.weapon == "ax"){
 			this.streight += 4;
@@ -206,34 +206,46 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 	this.health = 0;
 	this.inventory = [];
 	this.streight = 0;
+	this.getInventory = function(loot, number) { // get invetory for out enemies
+			switch(loot) {
+				case "meat":
+					var lootTitle = loot + "x" + number;
+					return [lootTitle, "images/meat.png"];
+				break;
+				case "leather":
+					var lootTitle = loot + "x" + number;
+					return [lootTitle, "images/leather.png"];
+				break;
+			}
+	}
 	this.getEnemyProp = function(){
 		switch(enemyClass){
 			case "bear":
 				this.image = "url(images/bear.png)";
 				this.health = Math.round((player.level/1.5) * defaultBearHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultBearHealth);
-				this.inventory = ["meat x5", "lather x4"];
+				this.inventory = this.getInventory("meat", 3);
 				this.streight = (player.level/2.5) * defaultBearStreight;
 			break;
 			case "wolf":
 				this.image = "url(images/boar.png)";
 				this.health = Math.round((player.level/1.5) * defaultWolfHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultWolfHealth);
-				this.inventory = ["meat x3", "lather x2"];
+				this.inventory = this.getInventory("leather", 2);
 				this.streight = (player.level/2.5) * defaultWolfStreight;
 			break;
 			case "wild boar":
 				this.image = "url(images/boar.png)";
 				this.health = Math.round((player.level/1.5) * defaultBoarHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultBoarHealth);
-				this.inventory = ["meat x3", "lather x3"];
+				this.inventory = this.getInventory("meat", 2);
 				this.streight = (player.level/2.5) * defaultBoarStreight;
 			break;
 			case "elk":
 				this.image = "url(images/elk.png)";
 				this.health = Math.round((player.level/1.5) * defaultElkHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultElkHealth);
-				this.inventory = ["meat x4", "lather x4"];
+				this.inventory = this.getInventory("leather", 3);
 				this.streight = (player.level/2.5) * defaultElkStreight;
 			break;
 			default:
@@ -248,7 +260,7 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 	var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", "bear", "wild boar"]);
 	var swamp = new GameArea(true, false, ["rise", "water"], ["bushwood", "wood"], ["medical berries", "herb"], ["elk"]);
 	var cave = new GameArea(false, false, [], [], [], [], []);
-	var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["lather"], ["medical berries"], []);
+	var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["leather"], ["medical berries"], []);
 	var hovel = new GameArea(false, true, [], [], [], [], []);
 
 
@@ -408,15 +420,15 @@ function mainGameLoop(player){
 				break;
 				case "build a hovel":
 					var qtOfWood = searchInventoryElem("wood", player);
-					var qtOfLather = searchInventoryElem("lather", player);
-					console.log(qtOfWood, qtOfLather);
-					if (qtOfLather >= 4 && qtOfWood >= 6){
+					var qtOfleather = searchInventoryElem("leather", player);
+					console.log(qtOfWood, qtOfleather);
+					if (qtOfleather >= 4 && qtOfWood >= 6){
 						hovel.available = true;
 						alert("You've built a hovel!");
 						mainGameLoop(player);
 					}
 					else {
-						alert("You need 4 lather and 6 wood to build a hovel!");
+						alert("You need 4 leather and 6 wood to build a hovel!");
 						mainGameLoop(player);
 					}
 				break;
@@ -493,12 +505,12 @@ function mainGameLoop(player){
 							}
 							else if (player.playerClass == "archer" && createWeapon == "Y"){
 								var qtOfWood = searchInventoryElem("wood", player);
-								var qtOfLather = searchInventoryElem("lather", player);
-								if (qtOfWood >= 3 && qtOfLather >= 4){
+								var qtOfleather = searchInventoryElem("leather", player);
+								if (qtOfWood >= 3 && qtOfleather >= 4){
 									var i = 0;
 									var j = 0;
 									deleteInvenotryElem("wood", player, 3);
-									deleteInvenotryElem("lather", player, 4);
+									deleteInvenotryElem("leather", player, 4);
 									player.weapon = "bow";
 									player.getPlayerWeapon();
 									alert("You made the bow! Your streight increaced!");
@@ -506,7 +518,7 @@ function mainGameLoop(player){
 									mainGameLoop(player);
 								}
 								else {
-									alert("You have not enought materials! To create the bow you need: wood x3 and lather x4. ");
+									alert("You have not enought materials! To create the bow you need: wood x3 and leather x4. ");
 									mainGameLoop(player);
 								}
 							}
@@ -798,7 +810,7 @@ function attack(enemy, player){
 	 	}
 	 	if (randToHit <= chanceToHit){
 	 		enemy.health -= hitPoints;
-	 		console.log(enemy.health); 
+	 		console.log(enemy.health);
 	 		showDamage("enemy", enemy, hitPoints);
 	 		//showEnemyStats(enemy);
 	 	}
@@ -882,15 +894,16 @@ function showDamage(charType, character, hitPoints) {
 }
 function displayInventory(characterType, character) {
 	if (characterType === "enemy") {
-		for (var i = 0; i < character.inventory.length; i++) {
-			$(".enemyInfo .winnedInventory").append("<div class='wra'" + character.inventory[i] + "</div>");
+			$(".enemyInfo .winnedInventory").append("<div class='wrapper'><span class='title'>"
+			 + character.inventory[0] + "</span></div>");
+			$(".enemyInfo .wrapper").append($("<img />").attr('src', 'images/meat.png'));
 		}
-	}
 }
 function isDead(player, enemy) {
 	if (enemy.health <= 0){
 	 	for (var i = 0; i < enemy.inventory.length; i++){
 	 		player.inventory.push(enemy.inventory[i]);
+			console.log(enemy.inventory[i]);
 	 	}
 	 	displayInventory("enemy", enemy);
 	 	delete enemy;
