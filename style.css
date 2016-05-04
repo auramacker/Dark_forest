@@ -162,11 +162,25 @@ p, a, h1, h2, h3 ,h4, h5{
 #content .playerInfo .health, .enemyInfo .health{
 	height: 7px; 
 	background-color: #961818;
-	margin: 10px 0px -10px 15px;
-	transition: all 1.5s linear;
-	-webkit-transition: all 1.5s linear; 
-	-moz-transition: all 1.5s ease-in; 
-	-o-transition: all 1.5s ease-in; 
+	margin-top: 5px;
+	width: 100%;
+	transition: all 0.7s linear;
+	-webkit-transition: all 0.7s linear; 
+	-moz-transition: all 0.7s ease-in; 
+	-o-transition: all 0.7s ease-in; 
+}
+.playerPicture .hitPoints, .enemyPicture .hitPoints {
+	animation: hitPoints 1s linear;
+	position: absolute; 
+	height: 100px; 
+	width: 100px; 
+	left: calc( 50% - 50px);
+	top: calc(40% - 50px);
+}
+.hitPoints p {
+	font-size: 30px; 
+	color: #961818; 
+	text-shadow: 0px 0px 3px;
 }
 #choise{
 	width: 100%; 
@@ -250,6 +264,18 @@ p, a, h1, h2, h3 ,h4, h5{
 	-webkit-transition: all 0.3s linear; 
 	-moz-transition: all 0.3s ease-in; 
 	-o-transition: all 0.3s ease-in; 
+}
+.enemyInfo .backface{
+	position: absolute; 
+	backface-visibility: hidden ;
+	-webkit-backface-visibility: hidden;
+	font-size: 30px;
+	color: #fff; 
+	top: 5%; 
+	left: 88px;
+	font-family: 'IM Fell English SC', serif;
+	transform: rotateX(-30deg);
+	transform: rotateY(180deg);
 }
 .hunt, .healingHerbs, .lookForFood, .searchMaterials{
 	position: absolute;
@@ -339,6 +365,13 @@ p, a, h1, h2, h3 ,h4, h5{
 	font-size: 19px; 
 	font-weight: bold;
 }
+#content .enemyInfo *, #content .enemyInfo span {
+	backface-visibility: hidden; 
+	-webkit-backface-visibility: hidden; 
+}
+.enemyInfo .streight, .playerInfo .streight{
+	position: relative;
+}
 #content .enemyInfo{
 	z-index: 1001;
 	font-family: 'Inconsolata';
@@ -353,10 +386,15 @@ p, a, h1, h2, h3 ,h4, h5{
 	position: absolute;
 	left: calc(50% - 185px);
 	top: 15%;
+
+	transform-style: preserve-3d; 
 	transition: all 0.4s ease-in-out;
 	-webkit-transition: all 0.4s ease-in-out; 
 	-moz-transition: all 0.4s ease-in-out; 
 	-o-transition: all 0.4s ease-in-out; 
+}
+.enemyInfo, .playerInfo { 
+	transform-style: preserve-3d; 
 }
 .enemyInfo .enemyPicture{
 	margin: 0 auto;
@@ -442,6 +480,20 @@ p, a, h1, h2, h3 ,h4, h5{
 	right: 10%; 
 	top: 45%;
 }
+
+/************** hitPoints Animation ************/
+@keyframes hitPoints {
+	0% {
+		margin-top: calc(40% - 50px);
+		opacity: 1;
+	}
+	100% {
+		margin-top: calc(10% -50px);
+		opacity: 0;
+	}
+}
+/************** hitPoints Animation ************/
+
 @keyframes topBottomHand {
 	0%{
 		margin-top: -5px;
