@@ -40,6 +40,7 @@ var defaultBoarStreight = 13;
 var defaultElkHealth = 350;
 var defaultElkStreight = 11;
 
+var _imgPath = "images/";
 // functions block
 
 // ********************** visualization **********************
@@ -206,47 +207,35 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 	this.health = 0;
 	this.inventory = [];
 	this.streight = 0;
-	this.getInventory = function(loot, number) { // get invetory for out enemies
-			switch(loot) {
-				case "meat":
-					var lootTitle = loot + "x" + number;
-					return [lootTitle, "images/meat.png"];
-				break;
-				case "leather":
-					var lootTitle = loot + "x" + number;
-					return [lootTitle, "images/leather.png"];
-				break;
-			}
-	}
 	this.getEnemyProp = function(){
 		switch(enemyClass){
 			case "bear":
 				this.image = "url(images/bear.png)";
 				this.health = Math.round((player.level/1.5) * defaultBearHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultBearHealth);
-				this.inventory = this.getInventory("meat", 3);
 				this.streight = (player.level/2.5) * defaultBearStreight;
+				this.inventory = ['lather','meat'];
 			break;
 			case "wolf":
 				this.image = "url(images/boar.png)";
 				this.health = Math.round((player.level/1.5) * defaultWolfHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultWolfHealth);
-				this.inventory = this.getInventory("leather", 2);
 				this.streight = (player.level/2.5) * defaultWolfStreight;
+				this.inventory = ['lather','meat'];
 			break;
 			case "wild boar":
 				this.image = "url(images/boar.png)";
 				this.health = Math.round((player.level/1.5) * defaultBoarHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultBoarHealth);
-				this.inventory = this.getInventory("meat", 2);
 				this.streight = (player.level/2.5) * defaultBoarStreight;
+				this.inventory = ['lather','meat'];
 			break;
 			case "elk":
 				this.image = "url(images/elk.png)";
 				this.health = Math.round((player.level/1.5) * defaultElkHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultElkHealth);
-				this.inventory = this.getInventory("leather", 3);
 				this.streight = (player.level/2.5) * defaultElkStreight;
+				this.inventory = ['lather','meat'];
 			break;
 			default:
 				throw ("Incorrect entered value enemyClass!");
@@ -830,7 +819,7 @@ function attack(enemy, player){
 	 		return;
 	 	}
 }
-function showDamage(charType, character, hitPoints) {
+function showDamage(charType, character, hitPoints) { // controll flow for "missed" or not missed
 	var convertResult;
 	tryConvert = isNaN(hitPoints)
 	if (!tryConvert) {
@@ -893,11 +882,15 @@ function showDamage(charType, character, hitPoints) {
 	}
 }
 function displayInventory(characterType, character) {
-	if (characterType === "enemy") {
-			$(".enemyInfo .winnedInventory").append("<div class='wrapper'><span class='title'>"
-			 + character.inventory[0] + "</span></div>");
-			$(".enemyInfo .wrapper").append($("<img />").attr('src', 'images/meat.png'));
+	if (characterType == "enemy") {
+		var i;
+		var invLength = character.inventory.length;
+		for (i = invLength; i--;) {
+			console.log(character);
+			$(".enemyInfo .winnedInventory").append("<p>" +	character.inventory[i] + "</p>");
 		}
+		$(".enemyInfo .winnedInventory").append("")
+	}
 }
 function isDead(player, enemy) {
 	if (enemy.health <= 0){
@@ -905,7 +898,7 @@ function isDead(player, enemy) {
 	 		player.inventory.push(enemy.inventory[i]);
 			console.log(enemy.inventory[i]);
 	 	}
-	 	displayInventory("enemy", enemy);
+		displayInventory("enemy", enemy);
 	 	delete enemy;
 	 	$(".enemyInfo").css("transform", "perspective(900px) rotate3d(0,1,0,-180deg)");
 	 	alert("enemy is dead!");
