@@ -214,28 +214,68 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 				this.health = Math.round((player.level/1.5) * defaultBearHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultBearHealth);
 				this.streight = (player.level/2.5) * defaultBearStreight;
-				this.inventory = ['lather','meat'];
+				this.inventory = [];
+				this.inventory[0] = {
+					name: "leather",
+					number: "3",
+					src: "images/leather.png"
+				}
+				this.inventory[1] = {
+					name: "meat",
+					number: "2",
+					src: "images/meat.png"
+				}
 			break;
 			case "wolf":
 				this.image = "url(images/boar.png)";
 				this.health = Math.round((player.level/1.5) * defaultWolfHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultWolfHealth);
 				this.streight = (player.level/2.5) * defaultWolfStreight;
-				this.inventory = ['lather','meat'];
+				this.inventory = [];
+				this.inventory[0] = {
+					name: "leather",
+					number: "3",
+					src: "images/leather.png"
+				}
+				this.inventory[1] = {
+					name: "meat",
+					number: "2",
+					src: "images/meat.png"
+				}
 			break;
 			case "wild boar":
 				this.image = "url(images/boar.png)";
 				this.health = Math.round((player.level/1.5) * defaultBoarHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultBoarHealth);
 				this.streight = (player.level/2.5) * defaultBoarStreight;
-				this.inventory = ['lather','meat'];
+				this.inventory = [];
+				this.inventory[0] = {
+					name: "leather",
+					number: "3",
+					src: "images/leather.png"
+				}
+				this.inventory[1] = {
+					name: "meat",
+					number: "2",
+					src: "images/meat.png"
+				}
 			break;
 			case "elk":
 				this.image = "url(images/elk.png)";
 				this.health = Math.round((player.level/1.5) * defaultElkHealth);
 				this.maxHealth = Math.round((player.level/1.5) * defaultElkHealth);
 				this.streight = (player.level/2.5) * defaultElkStreight;
-				this.inventory = ['lather','meat'];
+				this.inventory = [];
+				this.inventory[0] = {
+					name: "leather",
+					number: "3",
+					src: "images/leather.png"
+				}
+				this.inventory[1] = {
+					name: "meat",
+					number: "2",
+					src: "images/meat.png"
+				}
 			break;
 			default:
 				throw ("Incorrect entered value enemyClass!");
@@ -883,13 +923,17 @@ function showDamage(charType, character, hitPoints) { // controll flow for "miss
 }
 function displayInventory(characterType, character) {
 	if (characterType == "enemy") {
-		var i;
-		var invLength = character.inventory.length;
-		for (i = invLength; i--;) {
-			console.log(character);
-			$(".enemyInfo .winnedInventory").append("<p>" +	character.inventory[i] + "</p>");
+		if ($(".enemyInfo .inventory-block").length) {
+			$(".enemyInfo .inventory-block div").remove();
 		}
-		$(".enemyInfo .winnedInventory").append("")
+		else {
+			$(".enemyInfo .backface").append("<div class='inventory-block'></div>");
+		}
+		var inventory = character.inventory;
+		for (var i = 0; i < inventory.length; i++) {
+			$(".enemyInfo .inventory-block").append("<div class='" + inventory[i].name + "'></div>");
+			console.log(inventory[i].name);
+		}
 	}
 }
 function isDead(player, enemy) {
