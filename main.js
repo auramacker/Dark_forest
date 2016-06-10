@@ -174,7 +174,7 @@ function CreatePlayer(name, playerClass){ // player constructor function
 	this.weapon = "none";
 	this.maxHealth = 0;
 	this.playerClass = playerClass;
-	this.inventory = ["leather x2", "rock x2", "leather x2", "wood x3", "wood x3"];
+	this.inventory = [];
 	this.getPlayerWeapon = function(){
 		if (this.weapon == "ax"){
 			this.streight += 4;
@@ -191,7 +191,7 @@ function CreatePlayer(name, playerClass){ // player constructor function
 		}
 		else if (this.playerClass == "warrior") {
 			this.streight = 12;
-			this.health = 250;
+			this.health = 650;
 			this.maxHealth = 250;
 		}
 	}
@@ -234,12 +234,12 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 				this.inventory = [];
 				this.inventory[0] = {
 					name: "leather",
-					number: "3",
+					number: 3,
 					src: "images/leather.png"
 				}
 				this.inventory[1] = {
 					name: "meat",
-					number: "2",
+					number: 3,
 					src: "images/meat.png"
 				}
 			break;
@@ -251,12 +251,12 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 				this.inventory = [];
 				this.inventory[0] = {
 					name: "leather",
-					number: "3",
+					number: 3,
 					src: "images/leather.png"
 				}
 				this.inventory[1] = {
 					name: "meat",
-					number: "2",
+					number: 2,
 					src: "images/meat.png"
 				}
 			break;
@@ -268,12 +268,12 @@ function CreateEnemy(name, enemyClass, player){ // enemies constructor
 				this.inventory = [];
 				this.inventory[0] = {
 					name: "leather",
-					number: "3",
+					number: 3,
 					src: "images/leather.png"
 				}
 				this.inventory[1] = {
 					name: "meat",
-					number: "2",
+					number: 2,
 					src: "images/meat.png"
 				}
 			break;
@@ -694,8 +694,9 @@ function getWeatherEffects(area, player){
 	var demage = false;
 	var damagePercents;
 	if (area.temperature <= 0 && area.weather == "snow"){
+		debugger;
 		player.health -= 20;
-		if (character.health > 0) {
+		if (player.health > 0) {
 			$(".playerInfo .text-health").empty();
 			$(".playerInfo .text-health").append(player.health + " HP");
 		}
@@ -738,9 +739,14 @@ function showPlayerStats(player){
 		+ player.weapon +"</span></div></div>");
 	$(".health").css("width", healthPercents + "%");
 	if (player.inventory.length > 0){
+		$(".playerInfo .player-inventory").remove();
+		$(".playerInfo").append("<div class='player-inventory'></div>");
 		for (var i = 0; i < player.inventory.length; i++){
-			//document.write(player.inventory[i]);
+			$(".playerInfo .player-inventory").append("<div class='item-block'><div class='" +
+		  player.inventory[i].name	+"'><div class='number'>" + player.inventory[i].number
+			 + "</div></div></div></div>")
 		}
+	};
 	setTimeout(function(){
 		$("#content .playerInfo").css("opacity", "1");
 	}, 500);
@@ -749,13 +755,12 @@ function showPlayerStats(player){
 		$(".playerInfo").addClass("playerInfoScale");
 	}, 2000)
 
-	}
 }
 
 function showEnemyStats(enemy){
 	$("#content").append("<div class='enemyInfo'><div class='enemyPicture'></div><div class='stats'><span class='name'>" + enemy.name +
 		"</span><br /><div class='health' ></div></div><p class='text-health'>" + enemy.health + " HP</p><span class='streight'>Streight: " + enemy.streight
-		+ " points</span> <div class='backface'>DEFEATED!<div class='winnedInventory'></div></div></div>") ;
+		+ " points</span> <div class='backface'>DEFEATED!</div></div></div>") ;
 	$(".enemyInfo .enemyPicture").css("background-image", enemy.image);
 	$(".enemyInfo").css("opacity", 1);
 	setTimeout(function(){
@@ -817,7 +822,9 @@ function battleInterface(enemy, player, iteration){ // if iteration == true its 
 			$(".playerInfo").removeClass("playerInfoScale");
 		}, 2000);
 			$("#content").append("<div class='choiseAttack'><div class='attack'></div><div class='run'></div></div>")
-			$(".choiseAttack").css("opacity", 1);}
+			$(".choiseAttack").css("opacity", 1);
+			displayInventory("enemy", enemy);
+		}
 
 function attack(enemy, player){
 	//*************** attack block ****************//
@@ -923,26 +930,34 @@ function showDamage(charType, character, hitPoints) { // controll flow for "miss
 }
 function displayInventory(characterType, character) {
 	if (characterType == "enemy") {
-		if ($(".enemyInfo .inventory-block").length) {
-			$(".enemyInfo .inventory-block div").remove();
+		if ($(".enemyInfo .inventory-wrapper").length) {
+			$(".enemyInfo .inventory-wrapper div").remove();
 		}
 		else {
-			$(".enemyInfo .backface").append("<div class='inventory-block'></div>");
+			$(".enemyInfo .backface").append("<div class='inventory-wrapper'></div>");
 		}
 		var inventory = character.inventory;
-		for (var i = 0; i < inventory.length; i++) {
-			$(".enemyInfo .inventory-block").append("<div class='" + inventory[i].name + "'></div>");
-			console.log(inventory[i].name);
-		}
+			for (var i = 0; i < inventory.length; i++) {
+				$(".enemyInfo .inventory-wrapper").append("<div class='inventory-block'><div class='" + inventory[i].name + "'><div class='number'>" +
+				inventory[i].number +"</div></div><span class='name'>" + inventory[i].name + "</span></div>");
+			}
 	}
 }
 function isDead(player, enemy) {
 	if (enemy.health <= 0){
-	 	for (var i = 0; i < enemy.inventory.length; i++){
-	 		player.inventory.push(enemy.inventory[i]);
-			console.log(enemy.inventory[i]);
+		var isset = false;
+	 	for (var i = 0; i < enemy.inventory.length; i++) {
+			for (var j = 0; j < player.inventory.length; j++) {
+				if (player.inventory[j].name == enemy.inventory[i].name) {
+					isset = true;
+					 player.inventory[j].number += enemy.inventory[i].number;
+				}
+			}
+			if (!isset) {
+				player.inventory.push(enemy.inventory[i]);
+			}
+			isset = false;
 	 	}
-		displayInventory("enemy", enemy);
 	 	delete enemy;
 	 	$(".enemyInfo").css("transform", "perspective(900px) rotate3d(0,1,0,-180deg)");
 	 	alert("enemy is dead!");
