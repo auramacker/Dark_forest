@@ -219,7 +219,7 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 }
                 break;
             case "wolf":
-                this.image = "url(images/wolf .png)";
+                this.image = "url(images/wolf.png)";
                 this.health = Math.round((player.level / 1.5) * defaultWolfHealth);
                 this.maxHealth = Math.round((player.level / 1.5) * defaultWolfHealth);
                 this.streight = (player.level / 2.5) * defaultWolfStreight;
@@ -286,9 +286,6 @@ var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["leather"]
 var hovel = new GameArea(false, true, [], [], [], [], []);
 
 
-
-
-
 function mainGameLoop(player) {
     $("#content div").remove();
     $("#content").css("backgroundImage", "url(images/mainBackground.png)");
@@ -329,7 +326,7 @@ function mainGameLoop(player) {
                 }
             })
             $(".forestActions .searchMaterials").click(function() {
-							adsf
+
             })
         });
 
@@ -735,7 +732,9 @@ function showEnemyStats(enemy) {
         $(".enemyInfo").css("left", "10%");
     }, 2000);
 }
+function showMaterialsClicker() {
 
+}
 function choosePath() { // choose path from the start point
     if (cave.available == true) {
         document.write("You can see the forest, river, swamp and the cave. Where are you going to go?");
@@ -906,7 +905,7 @@ function displayInventory(characterType, character) {
 function isDead(player, enemy) {
     if (enemy.health <= 0) {
         var isset = false;
-        for (var i = 0; i < enemy.inventory.length; i++) {
+        for (var i = 0; i < enemy.inventory.length; i++) { // player get enemy inventory
             for (var j = 0; j < player.inventory.length; j++) {
                 if (player.inventory[j].name == enemy.inventory[i].name) {
                     isset = true;
@@ -920,12 +919,16 @@ function isDead(player, enemy) {
         }
         delete enemy;
         $(".enemyInfo").css("transform", "perspective(900px) rotate3d(0,1,0,-180deg)");
-        alert("enemy is dead!");
         player.getNewLevel();
         console.log(player);
-        mainGameLoop(player);
+        setTimeout(function(){
+          mainGameLoop(player)
+        }, 2000);
     } else if (player.health <= 0) {
-        alert("You are dead!");
+      printNotification("You are unable to survive");
+      setTimeout(function(){
+        location.reload();
+      }, 2500)
     } else return false;
 }
 
