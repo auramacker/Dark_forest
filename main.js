@@ -306,20 +306,26 @@ function mainGameLoop(player) {
             chooseAreaAction("forest");
             $(".forestActions .hunt").click(function() {
                 var randChance = Math.random();
-                if (randChance <= 1) {
+                if (randChance <= 0.75) {
                     var randEnemyIndex = getRandomInt(0, forest.enemies.length - 1);
                     var randEnemy = forest.enemies[randEnemyIndex];
                     var enemy = new CreateEnemy(randEnemy, randEnemy, player);
                     enemy.getEnemyProp();
                     showEnemyStats(enemy);
                     battleInterface(enemy, player);
-                    $("#content .choiseAttack").click(function() {
+                    $("#content .choiseAttack").click(function() { // if coise attack enemy
                         if (player.health > 0) {
                             attack(enemy, player);
                         }
                         isDead(player, enemy);
                     })
-
+                    $("#content .run").click(function(){ // if coise run from battle area
+                      printNotification("You have successfully escaped");
+                      delete enemy;
+                      setTimeout(function(){
+                        mainGameLoop(player);
+                      }, 3000);
+                    })
                 } else {
                     document.write("<br />Hunting failed! You can not find any animal.");
                     mainGameLoop(player);
@@ -921,14 +927,15 @@ function isDead(player, enemy) {
         $(".enemyInfo").css("transform", "perspective(900px) rotate3d(0,1,0,-180deg)");
         player.getNewLevel();
         console.log(player);
+        printNotification("You defeated opponent!");
         setTimeout(function(){
           mainGameLoop(player)
-        }, 2000);
+        }, 3000);
     } else if (player.health <= 0) {
       printNotification("You are unable to survive");
       setTimeout(function(){
         location.reload();
-      }, 2500)
+      }, 3500)
     } else return false;
 }
 
