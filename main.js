@@ -20,7 +20,7 @@ $(document).ready(function() {
             }, 500);
             press.play(); // audio effect
             bg.pause();
-            $("#content").css("backgroundImage", "url(images/clear.png)");
+            $("#content").css("backgroundImage", "url(" + _imgPath + "clear.png)");
             setTimeout('printNotification("You woke up in the woods with a terrible pain in the head. Trying to recall something failed.")', 1700);
             setTimeout('startNewGame("What is your name?:")', 4500); // print intro and start game
         }
@@ -202,7 +202,7 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
     this.getEnemyProp = function() {
         switch (enemyClass) {
             case "bear":
-                this.image = "url(images/bear.png)";
+                this.image = "url(" + _imgPath + "bear.png)";
                 this.health = Math.round((player.level / 1.5) * defaultBearHealth);
                 this.maxHealth = Math.round((player.level / 1.5) * defaultBearHealth);
                 this.streight = (player.level / 2.5) * defaultBearStreight;
@@ -210,16 +210,16 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: "3",
-                    src: "images/leather.png"
+                    src: _imgPath + "leather.png"
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: "2",
-                    src: "images/meat.png"
+                    src: _imgPath + "meat.png"
                 }
                 break;
             case "wolf":
-                this.image = "url(images/wolf.png)";
+                this.image = "url(" + _imgPath +"wolf.png)";
                 this.health = Math.round((player.level / 1.5) * defaultWolfHealth);
                 this.maxHealth = Math.round((player.level / 1.5) * defaultWolfHealth);
                 this.streight = (player.level / 2.5) * defaultWolfStreight;
@@ -227,16 +227,16 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: 3,
-                    src: "images/leather.png"
+                    src: _imgPath + "leather.png"
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: 3,
-                    src: "images/meat.png"
+                    src: _imgPath + "meat.png"
                 }
                 break;
             case "wild boar":
-                this.image = "url(images/boar.png)";
+                this.image = "url(" + _imgPath + "boar.png)";
                 this.health = Math.round((player.level / 1.5) * defaultBoarHealth);
                 this.maxHealth = Math.round((player.level / 1.5) * defaultBoarHealth);
                 this.streight = (player.level / 2.5) * defaultBoarStreight;
@@ -244,16 +244,16 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: 3,
-                    src: "images/leather.png"
+                    src: _imgPath + "leather.png"
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: 2,
-                    src: "images/meat.png"
+                    src: _imgPath + "meat.png"
                 }
                 break;
             case "elk":
-                this.image = "url(images/elk.png)";
+                this.image = "url(" + _imgPath + "elk.png)";
                 this.health = Math.round((player.level / 1.5) * defaultElkHealth);
                 this.maxHealth = Math.round((player.level / 1.5) * defaultElkHealth);
                 this.streight = (player.level / 2.5) * defaultElkStreight;
@@ -261,12 +261,12 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: 3,
-                    src: "images/leather.png"
+                    src: _imgPath + "leather.png"
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: 2,
-                    src: "images/meat.png"
+                    src: _imgPath + "meat.png"
                 }
                 break;
             default:
@@ -288,7 +288,7 @@ var hovel = new GameArea(false, true, [], [], [], [], []);
 
 function mainGameLoop(player) {
     $("#content div").remove();
-    $("#content").css("backgroundImage", "url(images/mainBackground.png)");
+    $("#content").css("backgroundImage", "url(" + _imgPath + "mainBackground.png)");
     printNotification("You need to find some food and find accommodation...");
     $("#content .notify .ok").click(function() {
         choosePath(player);
@@ -302,7 +302,7 @@ function mainGameLoop(player) {
             }, 500);
             weatherInit(forest, player);
             getWeatherEffects(forest, player);
-            $("#content").css("background-image", "url(images/forestBg.png)");
+            $("#content").css("background-image", "url(" + _imgPath + "forestBg.png)");
             chooseAreaAction("forest");
             $(".forestActions .hunt").click(function() {
                 var randChance = Math.random();
@@ -332,7 +332,8 @@ function mainGameLoop(player) {
                 }
             })
             $(".forestActions .searchMaterials").click(function() {
-
+              var randMaterial = getRandomInt(0, forest.materials.length-1);
+              showMaterial(forest);
             })
         });
 
@@ -738,7 +739,7 @@ function showEnemyStats(enemy) {
         $(".enemyInfo").css("left", "10%");
     }, 2000);
 }
-function showMaterialsClicker() {
+function showMaterials() {
 
 }
 function choosePath() { // choose path from the start point
@@ -770,7 +771,7 @@ function chooseAreaAction(area) {
     switch (area) {
         case "forest":
             $("#content .areaAction").addClass("forestActions");
-            $("#content .areaAction").css("background-image", "url(images/forestMain.png)");
+            $("#content .areaAction").css("background-image", "url(" + _imgPath + "forestMain.png)");
             $("#content .forestActions").append("<div class='hunt'></div><div class='healingHerbs'></div><div class='lookForFood'></div><div class='searchMaterials'></div>");
             break;
         case "river":
