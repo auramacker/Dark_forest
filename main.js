@@ -1,5 +1,6 @@
 // The game Dark forest v.001
 $(document).ready(function() {
+    var gameStarted = false;
     var height = $(window).height();
     $("#hide").css('height', height);
     var bg = new Audio(); // play background music
@@ -13,6 +14,7 @@ $(document).ready(function() {
         press.volume = 0.1;
     }
     $(document).keydown(function(eventObject) { // on press space start new game
+      if (!gameStarted) {
         if (eventObject.which == 32) {
             $("#content *").fadeOut(500);
             setTimeout(function() {
@@ -23,7 +25,9 @@ $(document).ready(function() {
             $("#content").css("backgroundImage", "url(" + _imgPath + "clear.png)");
             setTimeout('printNotification("You woke up in the woods with a terrible pain in the head. Trying to recall something failed.")', 1700);
             setTimeout('startNewGame("What is your name?:")', 4500); // print intro and start game
+            gameStarted = true;
         }
+      }
     })
 
 })
@@ -969,6 +973,7 @@ function isDead(player, enemy) {
     } else if (player.health <= 0) {
       printNotification("You are unable to survive");
       setTimeout(function(){
+        gameStarted = false;
         location.reload();
       }, 3500)
     } else return false;
