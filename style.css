@@ -37,6 +37,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	-o-transition: all 0.3s ease-in;
 }
 #content .notify{
+	background-color: #000;
 	color: #fff;
 	position: absolute;
 	text-align: center;
@@ -159,7 +160,7 @@ p, a, h1, h2, h3 ,h4, h5{
 #content .playerInfo .stats{
 	margin-top: 15px;
 }
-#content .playerInfo .health, .enemyInfo .health{
+#content .playerInfo .health, .enemyInfo .health, .materialInfo .health{
 	height: 7px;
 	background-color: #961818;
 	margin-top: 5px;
@@ -169,7 +170,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.7s ease-in;
 	-o-transition: all 0.7s ease-in;
 }
-.enemyInfo .wrapper {
+.enemyInfo .wrapper, .materialInfo .wrapper {
 	width: 100px;
 	height: 100px;
 }
@@ -269,14 +270,14 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.3s ease-in;
 	-o-transition: all 0.3s ease-in;
 }
-.enemyInfo .backface{
+.enemyInfo .backface, .materialInfo .backface{
 	position: absolute;
 	backface-visibility: hidden ;
 	-webkit-backface-visibility: hidden;
 	font-size: 30px;
 	color: #fff;
 	top: 5%;
-	left: 88px;
+	width: 100%;
 	font-family: 'IM Fell English SC', serif;
 	transform: rotateX(-30deg);
 	transform: rotateY(180deg);
@@ -369,14 +370,14 @@ p, a, h1, h2, h3 ,h4, h5{
 	font-size: 19px;
 	font-weight: bold;
 }
-#content .enemyInfo *, #content .enemyInfo span {
+#content .enemyInfo *, #content .enemyInfo span, #content .materialInfo *, #content .materialInfo span {
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
 }
 .enemyInfo .streight, .playerInfo .streight{
 	position: relative;
 }
-#content .enemyInfo{
+#content .enemyInfo, #content .materialInfo{
 	z-index: 1001;
 	font-family: 'Inconsolata';
 	opacity: 0;
@@ -397,10 +398,10 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.4s ease-in-out;
 	-o-transition: all 0.4s ease-in-out;
 }
-.enemyInfo, .playerInfo {
+.enemyInfo, .playerInfo, .materialInfo {
 	transform-style: preserve-3d;
 }
-.enemyInfo .enemyPicture{
+.enemyInfo .enemyPicture, .materialInfo .materialPicture{
 	margin: 0 auto;
 	width: 320px;
 	height: 320px;
@@ -484,7 +485,11 @@ p, a, h1, h2, h3 ,h4, h5{
 	right: 10%;
 	top: 45%;
 }
-
+#content .materialInfo .collect-status {
+	height: 10px;
+	width: 0%;
+	background-color: red;
+}
 /************** hitPoints Animation ************/
 @keyframes hitPoints {
 	0% {
@@ -589,19 +594,90 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: 0px;
 	transform: rotate(90deg);
 }
-.enemyInfo .inventory-block div {
+.enemyInfo .inventory-wrapper{
+	width: 80% ;
+	margin: 0 auto;
+}
+.enemyInfo .inventory-block {
 	display: inline-block;
+	background-color: #000 !important;
+	border: none !important;
+	margin: 20px 25px 10px 30px;
+}
+.enemyInfo .inventory-block .name {
+	margin-left: -5px;
+	font-size: 18px;
+}
+.enemyInfo .inventory-wrapper div {
+	background-color: #fff;
 	border: 1px solid #fff;
-	margin: 5px;
+	position: relative;
+	background-size: 100%;
 	width: 50px;
 	height: 50px;
 }
+.enemyInfo .inventory-block .number {
+	position: absolute;
+	font-size: 20px;
+	height: 30px;
+	width: 30px;
+	margin: -17px 35px;
+	padding: 0px;
+	color: #fff;
+	border: 1px solid #fff;
+	background-color: #000;
+}
 .enemyInfo .inventory-block .leather {
-	background-color: red;
 	background-image: url(images/leather.png);
 }
 .enemyInfo .inventory-block .meat {
-	background-color: yellow;
+	background-image: url(images/meat.jpg);
+}
+.playerInfo .player-inventory {
+	position: absolute;
+	top: 45px;
+	right: -25px;
+}
+.playerInfo .player-inventory .item-block {
+	margin-top: 25px;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	background-size: 100%;
+}
+.playerInfo .player-inventory .item-block .description {
+	position: absolute;
+	left: -85px;
+	width: 100px;
+	margin-top: -19px;
+	background-color: rgba(0,0,0,0.8);
+	padding: 7px 15px;
+	border: none;
+	width: 80px;
+	height: auto;
+	transition: all 0.5s linear;
+}
+.playerInfo .player-inventory .item-block > div {
+	background-size: 100%;
+	background-color: #fff;
+	border: 1px solid #fff;
+	width: 50px;
+	height: 50px;
+}
+.playerInfo .player-inventory .number {
+	position: absolute;
+	background-color: #000;
+	border: 1px solid;
+	width: 25px;
+	height: 25px;
+	top: -15px;
+	right: -15px;
+	line-height: 25px;
+}
+.playerInfo .player-inventory .leather {
+	background-image: url(images/leather.png);
+}
+.playerInfo .player-inventory .meat {
 	background-image: url(images/meat.jpg);
 }
 .heat:after {
