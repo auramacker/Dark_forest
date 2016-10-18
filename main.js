@@ -112,7 +112,15 @@ function GameArea(available, safety, food, materials, medicaments, enemies) { //
     this.available = available;
     this.safety = safety;
     this.food = food;
-    this.materials = materials;
+    this.materials = [];
+    this.getMaterials = function() {
+      for (var i = 0; i < materials.length; i++) {
+        this.materials[i] = {
+          name: materials[i],
+          image: "url(" + _imgPath + materials[i] + ".png" + ")"
+        }
+      }
+    }
     this.medicaments = medicaments;
     this.enemies = enemies;
 }
@@ -276,11 +284,14 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
     };
 }
 //set game areas
-var forest = new GameArea(true, false, ["berries", "potato"], ["bushwood", "wood"], ["medical berries", "herb"], ["elk",
+var forest = new GameArea(true, false, ["berries", "potato"], ["branch", "wood"], ["medical berries", "herb"], ["elk",
     "wild boar", "wolf"
 ]);
+  forest.getMaterials();
 var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", "bear", "wild boar"]);
-var swamp = new GameArea(true, false, ["rise", "water"], ["bushwood", "wood"], ["medical berries", "herb"], ["elk"]);
+  river.getMaterials();
+var swamp = new GameArea(true, false, ["rise", "water"], ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
+  swamp.getMaterials();
 var cave = new GameArea(false, false, [], [], [], [], []);
 var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["leather"], ["medical berries"], []);
 var hovel = new GameArea(false, true, [], [], [], [], []);
@@ -327,13 +338,16 @@ function mainGameLoop(player) {
                       }, 3000);
                     })
                 } else {
-                    document.write("<br />Hunting failed! You can not find any animal.");
-                    mainGameLoop(player);
+                    printNotification("Hunting failed! You could not find any animal ...");
+                    setTimeout(function(){
+                      mainGameLoop(player);
+                    }, 3000);
                 }
             })
             $(".forestActions .searchMaterials").click(function() {
-              var randMaterial = getRandomInt(0, forest.materials.length-1);
-              showMaterial(forest);
+              var randMaterialIndex = getRandomInt(0, forest.materials.length-1);
+              showMaterial(forest.materials[randMaterialIndex]);
+              collectMaterialInterface(forest.materials[randMaterialIndex], player);
             })
         });
 
@@ -739,8 +753,28 @@ function showEnemyStats(enemy) {
         $(".enemyInfo").css("left", "10%");
     }, 2000);
 }
-function showMaterials() {
-
+function showMaterial(material) {
+  $("#content").append("<div class='materialInfo'><div class='materialPicture'></div><div class='stats'><span class='name'>" + material.name +
+      "</span><br /><div class='collect-status' ></div></div><div class='backface'>COLLECTED!</div></div></div>");
+  $(".materialInfo .materialPicture").css("background-image", material.image);
+  $(".materialInfo").css("opacity", 1);
+  setTimeout(function() {
+      $(".materialInfo").css("left", "10%");
+  }, 2000);
+}
+function collectMaterialInterface(material, player) {
+    $("#content .areaAction").css("opacity", 0);
+    setTimeout(function() {
+        $("#content .areaAction").remove();
+    }, 500);
+    $(".playerInfo").css("opacity", 0);
+    setTimeout(function() {
+        $(".playerInfo").addClass("inBattle");
+        $(".playerInfo").css("opacity", 1);
+        $(".playerInfo").removeClass("playerInfoScale");
+    }, 2000);
+    $("#content").append("<div class='choiseAttack'><div class='attack'></div><div class='run'></div></div>")
+    $(".choiseAttack").css("opacity", 1);
 }
 function choosePath() { // choose path from the start point
     if (cave.available == true) {
