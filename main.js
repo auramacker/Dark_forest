@@ -1,6 +1,7 @@
 // The game Dark forest v.001
 $(document).ready(function() {
     var gameStarted = false;
+    pressedKey = null;
     var height = $(window).height();
     $("#hide").css('height', height);
     var bg = new Audio(); // play background music
@@ -13,7 +14,11 @@ $(document).ready(function() {
         press.src = "audio/spacepress.wav";
         press.volume = 0.1;
     }
+    $(document).keyup(function(eventObject){
+      pressedKey = null;
+    });
     $(document).keydown(function(eventObject) { // on press space start new game
+      pressedKey = eventObject.which;
       if (!gameStarted) {
         if (eventObject.which == 32) {
             $("#content *").fadeOut(500);
@@ -97,10 +102,15 @@ function hideInputBlock(block) {
 
 }
 
-function printNotification(text) { // function print notification
+function printNotification(text, id) { // function print notification
     if (arguments[0] !== undefined) {
-        $("#content .notify").remove();
+      $("#content .notify").remove();
+      if (id === undefined) {
         $("#content").append("<div class='notify'><p>" + text + "</p><div class='ok'>ok</div></div>"); // create new
+      }
+      else {
+        $("#content").append("<div class='notify' id='" + id + "'><p>" + text + "</p><div class='ok'>ok</div></div>"); // create new
+      }
         setInterval(function() {
             $("#content .notify").css("opacity", "1");
         }, 100);
@@ -349,6 +359,23 @@ function mainGameLoop(player) {
                 }
             })
             $(".forestActions .searchMaterials").click(function() {
+              var gameGoes, collectingTimer, collectingResult;
+              setTimeout(function(){
+                printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
+                $("#materialHelp .ok").click(function(){
+                  printNotification();
+                  gameGoes = setGameTime(30);
+                  collectingTimer = setInterval(function(){
+                    console.log(gameGoes);
+                    if (gameGoes === undefined) {
+                      collectingResult = collectGame()
+                    }
+                    else {
+                      clearInterval(collectingTimer);
+                    }
+                  }, 100);
+                })
+              }, 2500);
               var randMaterialIndex = getRandomInt(0, forest.materials.length-1);
               showMaterial(forest.materials[randMaterialIndex]);
               collectMaterialInterface(forest.materials[randMaterialIndex], player);
@@ -554,7 +581,46 @@ function mainGameLoop(player) {
         }
     })
 };
-
+function collectGame() {
+  var currentWidth = $(".materialInfo .collect-status").width(), minimWidth, currentWidth;
+  if (currentWidth > 0 ) {
+    minimWidth = currentWidth - 5;
+    $(".materialInfo .collect-status").css("width", minimWidth );
+  }
+  if (pressedKey == 32) {
+    var newWidth, numWidth;
+    console.log(currentWidth);
+    if (currentWidth >= 350) {
+      printNotification("You collect material!");
+    }
+    else {
+      newWidth = currentWidth + 30;
+      $(".materialInfo .collect-status").css("width", newWidth );
+    }
+  }
+}
+function setGameTime(seconds) {
+  var sec = seconds;
+  var time = "00:" + sec;
+  if ($("#gameTimer")) {
+    $("#gameTimer").remove();
+    $("#content").append("<div id='gameTimer'></div>");
+    $("#gameTimer").html(time);
+  }
+  else {
+  $("#content").append("<div id='gameTimer'></div>");
+  $("#gameTimer").html(time);
+  }
+  if (sec > 0) {
+    var mainTimer = setTimeout(function(){
+      setGameTime(sec-1);
+    }, 1000)
+  }
+  else {
+    clearTimeout(mainTimer);
+    return false
+  }
+}
 function choiseWeaponToCreate(player) {
     var result;
     if (player.playerClass == "warrior") {
@@ -685,7 +751,6 @@ function getWeatherEffects(area, player) {
     var demage = false;
     var damagePercents;
     if (area.temperature <= 0 && area.weather == "snow") {
-        debugger;
         player.health -= 20;
         if (player.health > 0) {
             $(".playerInfo .text-health").empty();
@@ -777,7 +842,7 @@ function collectMaterialInterface(material, player) {
         $(".playerInfo").css("opacity", 1);
         $(".playerInfo").removeClass("playerInfoScale");
     }, 2000);
-    $("#content").append("<div class='choiseAttack'><div class='attack'></div><div class='run'></div></div>")
+    $("#content").append("<div class='hiting-circle'><div id='line'></div></div>")
     $(".choiseAttack").css("opacity", 1);
 }
 function choosePath() { // choose path from the start point
