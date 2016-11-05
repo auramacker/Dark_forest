@@ -207,6 +207,15 @@ p, a, h1, h2, h3 ,h4, h5{
 	margin-left: -1px;
 	animation: rotateHitLine 4s infinite ease-in-out;
 }
+#content .hiting-circle #first-limit, #content .hiting-circle #second-limit {
+	width: 2px;
+	height: 250px;
+	background-color: #174d0e;
+	position: absolute;
+	left: 50%;
+	margin-left: -1px;
+	transition: all 0.3s linear;
+}
 #content #gameTimer {
 	font-size: 47px;
 	height: 100px;
