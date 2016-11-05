@@ -359,26 +359,32 @@ function mainGameLoop(player) {
                 }
             })
             $(".forestActions .searchMaterials").click(function() {
-              var gameGoes, collectingTimer, collectingResult;
+              var collectingTimer, collectingResult, changeLines, changeLineTimer;
+              var randMaterialIndex = getRandomInt(0, forest.materials.length-1);
+              showMaterial(forest.materials[randMaterialIndex]);
+              var linesPosition = collectMaterialInterface(forest.materials[randMaterialIndex], player);
               setTimeout(function(){
                 printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
                 $("#materialHelp .ok").click(function(){
                   printNotification();
-                  gameGoes = setGameTime(30);
+                  setGameTime(30);
+                  // lineTimeReload = setInterval(function(){
+                  //   changeLineTimer = getRandomInt(1000, 5000);
+                  // }, 3000);
+                  changeLines = setInterval(function(){
+                    linesPosition = changeLinesPos();
+                  }, 3000);
+                  setTimeout(function(){
+                    clearInterval(collectingTimer);
+                    // clearInterval(lineTimeReload);
+                    clearInterval(changeLines);
+                    printNotification("Time is over!")
+                  }, 30000);
                   collectingTimer = setInterval(function(){
-                    console.log(gameGoes);
-                    if (gameGoes === undefined) {
-                      collectingResult = collectGame()
-                    }
-                    else {
-                      clearInterval(collectingTimer);
-                    }
+                      collectingResult = collectGame(linesPosition);
                   }, 100);
                 })
               }, 2500);
-              var randMaterialIndex = getRandomInt(0, forest.materials.length-1);
-              showMaterial(forest.materials[randMaterialIndex]);
-              collectMaterialInterface(forest.materials[randMaterialIndex], player);
             })
         });
 
@@ -581,21 +587,40 @@ function mainGameLoop(player) {
         }
     })
 };
-function collectGame() {
-  var currentWidth = $(".materialInfo .collect-status").width(), minimWidth, currentWidth;
+function collectGame(linesPos) {
+  var currentWidth = $(".materialInfo .collect-status").width(), minimWidth, currentWidth, tansform, degree;
   if (currentWidth > 0 ) {
     minimWidth = currentWidth - 5;
     $(".materialInfo .collect-status").css("width", minimWidth );
   }
   if (pressedKey == 32) {
-    var newWidth, numWidth;
-    console.log(currentWidth);
-    if (currentWidth >= 350) {
-      printNotification("You collect material!");
+    transform = $("#content .hiting-circle #line").css("transform");
+    var values = transform.split('(')[1].split(')')[0].split(',');
+    var a = values[0], b = values[1];
+    degree = Math.round(Math.atan2(b, a) * (180/Math.PI));
+    if (linesPos[0] > linesPos[1]) {
+      if (degree < linesPos[0] && degree > linesPos[1]) {
+        var newWidth, numWidth;
+        if (currentWidth >= 350) {
+          printNotification("You collect material!");
+        }
+        else {
+          newWidth = currentWidth + 100; // status line grows
+          $(".materialInfo .collect-status").css("width", newWidth );
+        }
+      }
     }
-    else {
-      newWidth = currentWidth + 30;
-      $(".materialInfo .collect-status").css("width", newWidth );
+    else if (linesPos[0] < linesPos[1]) {
+      if (degree > linesPos[0] && degree < linesPos[1]) {
+        var newWidth, numWidth;
+        if (currentWidth >= 350) {
+          printNotification("You collect material!");
+        }
+        else {
+          newWidth = currentWidth + 100; // status line grows
+          $(".materialInfo .collect-status").css("width", newWidth );
+        }
+      }
     }
   }
 }
@@ -617,7 +642,6 @@ function setGameTime(seconds) {
     }, 1000)
   }
   else {
-    clearTimeout(mainTimer);
     return false
   }
 }
@@ -831,7 +855,53 @@ function showMaterial(material) {
       $(".materialInfo").css("left", "10%");
   }, 2000);
 }
+function changeLinesPos() {
+  var rndDeg, firstLine, secondLine, firstLineDeg, secondLineDeg,result;
+  rndDeg = getRandomInt(-90, 90);
+  firstLine = rndDeg;
+  if (rndDeg >= -60 && rndDeg <= 45) {
+    var plusMinus = getRandomInt(0 ,1 );
+    if (plusMinus) {
+      secondLine = rndDeg + 45;
+    }
+    else {
+      secondLine = rndDeg - 45;
+    }
+  }
+  else if (rndDeg < -45) {
+    secondLine = rndDeg + 45;
+  }
+  else {
+    secondLine = rndDeg - 45;
+  }
+  firstLineDeg = firstLine + "deg";
+  secondLineDeg = secondLine + "deg";
+  $("#content .hiting-circle #first-limit").css("transform", "rotateZ(" + firstLineDeg + ")");
+  $("#content .hiting-circle #second-limit").css("transform", "rotateZ(" + secondLineDeg + ")");
+  result = [firstLine, secondLine];
+  return result
+}
 function collectMaterialInterface(material, player) {
+    var rndDeg, firstLine, secondLine, firstLineDeg, secondLineDeg,result;
+    rndDeg = getRandomInt(-90, 90);
+    firstLine = rndDeg;
+    if (rndDeg >= -60 && rndDeg <= 45) {
+      var plusMinus = getRandomInt(0 ,1 );
+      if (plusMinus) {
+        secondLine = rndDeg + 45;
+      }
+      else {
+        secondLine = rndDeg - 45;
+      }
+    }
+    else if (rndDeg < -45) {
+      secondLine = rndDeg + 45;
+    }
+    else {
+      secondLine = rndDeg - 45;
+    }
+    firstLineDeg = firstLine + "deg";
+    secondLineDeg = secondLine + "deg";
     $("#content .areaAction").css("opacity", 0);
     setTimeout(function() {
         $("#content .areaAction").remove();
@@ -842,8 +912,12 @@ function collectMaterialInterface(material, player) {
         $(".playerInfo").css("opacity", 1);
         $(".playerInfo").removeClass("playerInfoScale");
     }, 2000);
-    $("#content").append("<div class='hiting-circle'><div id='line'></div></div>")
+    $("#content").append("<div class='hiting-circle'><div id='first-limit'></div><div id='second-limit'></div><div id='line'></div></div>");
+    $("#content .hiting-circle #first-limit").css("transform", "rotateZ(" + firstLineDeg + ")");
+    $("#content .hiting-circle #second-limit").css("transform", "rotateZ(" + secondLineDeg + ")");
     $(".choiseAttack").css("opacity", 1);
+    result = [firstLine, secondLine];
+    return result
 }
 function choosePath() { // choose path from the start point
     if (cave.available == true) {
