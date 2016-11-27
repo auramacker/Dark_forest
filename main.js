@@ -131,7 +131,9 @@ function GameArea(available, safety, food, materials, medicaments, enemies) { //
       for (var i = 0; i < materials.length; i++) {
         this.materials[i] = {
           name: materials[i],
-          image: "url(" + _imgPath + materials[i] + ".png" + ")"
+          image: "url(" + _imgPath + materials[i] + ".png)",
+          number: 1,
+          src: "url(" + _imgPath + materials[i] + "Inv.png)"
         }
       }
     }
@@ -359,7 +361,7 @@ function mainGameLoop(player) {
                 }
             })
             $(".forestActions .searchMaterials").click(function() {
-              var collectingTimer, collectingResult, changeLines, changeLineTimer;
+              var collectingTimer, collectingResult, changeLines;
               var randMaterialIndex = getRandomInt(0, forest.materials.length-1);
               showMaterial(forest.materials[randMaterialIndex]);
               var linesPosition = collectMaterialInterface(forest.materials[randMaterialIndex], player);
@@ -368,20 +370,28 @@ function mainGameLoop(player) {
                 $("#materialHelp .ok").click(function(){
                   printNotification();
                   setGameTime(30);
-                  // lineTimeReload = setInterval(function(){
-                  //   changeLineTimer = getRandomInt(1000, 5000);
-                  // }, 3000);
                   changeLines = setInterval(function(){
                     linesPosition = changeLinesPos();
                   }, 3000);
                   setTimeout(function(){
                     clearInterval(collectingTimer);
-                    // clearInterval(lineTimeReload);
                     clearInterval(changeLines);
-                    printNotification("Time is over!")
+                    printNotification("Time is over!");
+                    setTimeout(function(){
+                      mainGameLoop(player);
+                    }, 2000);
                   }, 30000);
                   collectingTimer = setInterval(function(){
-                      collectingResult = collectGame(linesPosition);
+                      if (!collectingResult) {
+                        collectingResult = collectGame(linesPosition);
+                      }
+                      else {
+                        addToPlayer(forest.materials[randMaterialIndex], player);
+                        hideMaterial();
+                        randMaterialIndex = getRandomInt(0, forest.materials.length-1);
+                        showMaterial(forest.materials[randMaterialIndex]);
+                        collectingResult = undefined;
+                      }
                   }, 100);
                 })
               }, 2500);
@@ -587,8 +597,23 @@ function mainGameLoop(player) {
         }
     })
 };
+function hideMaterial(){
+    $("#content .materialInfo").remove();
+}
+function addToPlayer(loot, player) {
+  var i = 0, j = player.inventory.length, analogFound;
+  for (i; i < j; i++) {
+    if (player.inventory[i].name == loot.name) {
+      player.inventory[i].number++;
+      analogFound = true;
+    }
+  }
+  if (!analogFound) {
+    player.inventory.push(loot);
+  }
+}
 function collectGame(linesPos) {
-  var currentWidth = $(".materialInfo .collect-status").width(), minimWidth, currentWidth, tansform, degree;
+  var currentWidth = $(".materialInfo .collect-status").width(), minimWidth, currentWidth, tansform, degree; // collect indicator position
   if (currentWidth > 0 ) {
     minimWidth = currentWidth - 5;
     $(".materialInfo .collect-status").css("width", minimWidth );
@@ -602,24 +627,32 @@ function collectGame(linesPos) {
       if (degree < linesPos[0] && degree > linesPos[1]) {
         var newWidth, numWidth;
         if (currentWidth >= 350) {
-          printNotification("You collect material!");
+          return true
         }
         else {
           newWidth = currentWidth + 100; // status line grows
           $(".materialInfo .collect-status").css("width", newWidth );
         }
       }
+      else if (degree > linesPos[0] || degree < linesPos[1] && currentWidth > 50) { // if line not in the area
+        newWidth = currentWidth - 50; // status line decrease
+        $(".materialInfo .collect-status").css("width", newWidth );
+      }
     }
     else if (linesPos[0] < linesPos[1]) {
       if (degree > linesPos[0] && degree < linesPos[1]) {
         var newWidth, numWidth;
         if (currentWidth >= 350) {
-          printNotification("You collect material!");
+          return true
         }
         else {
           newWidth = currentWidth + 100; // status line grows
           $(".materialInfo .collect-status").css("width", newWidth );
         }
+      }
+      else if (degree < linesPos[0] || degree > linesPos[1] && currentWidth > 50) {
+        newWidth = currentWidth - 50; // status line decrease
+        $(".materialInfo .collect-status").css("width", newWidth );
       }
     }
   }
