@@ -300,13 +300,13 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
     };
 }
 //set game areas
-var forest = new GameArea(true, false, ["berries", "potato"], ["branch", "wood"], ["medical berries", "herb"], ["elk",
+var forest = new GameArea(true, false, ["branch", "wood"], ["medical berries", "herb"], ["elk",
     "wild boar", "wolf"
 ]);
   forest.getMaterials();
-var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", "bear", "wild boar"]);
+var river = new GameArea(true, false, ["rock"], [], ["wolf", "bear", "wild boar"]);
   river.getMaterials();
-var swamp = new GameArea(true, false, ["rise", "water"], ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
+var swamp = new GameArea(true, false, ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
   swamp.getMaterials();
 var cave = new GameArea(false, false, [], [], [], [], []);
 var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["leather"], ["medical berries"], []);
@@ -630,7 +630,7 @@ function collectGame(linesPos) {
           return true
         }
         else {
-          newWidth = currentWidth + 100; // status line grows
+          newWidth = currentWidth + 150; // status line grows
           $(".materialInfo .collect-status").css("width", newWidth );
         }
       }
@@ -646,7 +646,7 @@ function collectGame(linesPos) {
           return true
         }
         else {
-          newWidth = currentWidth + 100; // status line grows
+          newWidth = currentWidth + 150; // status line grows
           $(".materialInfo .collect-status").css("width", newWidth );
         }
       }
@@ -982,7 +982,7 @@ function chooseAreaAction(area) {
         case "forest":
             $("#content .areaAction").addClass("forestActions");
             $("#content .areaAction").css("background-image", "url(" + _imgPath + "forestMain.png)");
-            $("#content .forestActions").append("<div class='hunt'></div><div class='healingHerbs'></div><div class='lookForFood'></div><div class='searchMaterials'></div>");
+            $("#content .forestActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
             break;
         case "river":
             break;
