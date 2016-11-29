@@ -116,6 +116,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	text-shadow: 8px 0px 15px rgba(255,255,255,0.35);
 }
 #content .playerInfo{
+	z-index: 2;
 	font-family: 'Inconsolata';
 	opacity: 0;
 	border: 1px solid rgba(255,255,255,0.7);
@@ -196,7 +197,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: 50%;
 	margin-left: -125px;
 	top: 400px;
-	clip: rect(0px 250px 122px 0px);
+	clip: rect(auto, auto, 124px, auto);
 }
 #content .hiting-circle #line {
 	width: 2px;
@@ -344,6 +345,10 @@ p, a, h1, h2, h3 ,h4, h5{
 	margin-left: 190px;
 	margin-top: 200px;
 }
+.riverActions .hunt {
+	margin-left: 305px;
+  margin-top: 260px;
+}
 .healingHerbs{
 	background-image: url(images/herb.png);
 	background-size: 100% !important;
@@ -420,6 +425,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	position: relative;
 }
 #content .enemyInfo, #content .materialInfo{
+	z-index: 2;
 	font-family: 'Inconsolata';
 	opacity: 0;
 	border: 1px solid rgba(255,255,255,0.7);
@@ -528,9 +534,10 @@ p, a, h1, h2, h3 ,h4, h5{
 	top: 45%;
 }
 #content .materialInfo .collect-status {
-	height: 10px;
+	height: 7px;
+	background-color: #961818;
+	margin-top: 5px;
 	width: 15%;
-	background-color: red;
 	transition: all 0.5s linear;
 }
 /************** hitPoints Animation ************/
@@ -733,6 +740,15 @@ p, a, h1, h2, h3 ,h4, h5{
 }
 .playerInfo .player-inventory .meat {
 	background-image: url(images/meat.jpg);
+}
+.playerInfo .player-inventory .wood {
+	background-image: url(images/woodInv.png);
+}
+.playerInfo .player-inventory .branch {
+	background-image: url(images/branchInv.png);
+}
+.playerInfo .player-inventory .rock {
+	background-image: url(images/rockInv.png);
 }
 .heat:after {
 	background: #FFEE44;
