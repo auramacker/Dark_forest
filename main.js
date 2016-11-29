@@ -909,28 +909,6 @@ function collectMaterialInterface(material, player) {
     result = [firstLine, secondLine];
     return result
 }
-function choosePath() { // choose path from the start point
-    if (cave.available == true) {
-        document.write("You can see the forest, river, swamp and the cave. Where are you going to go?");
-        var choise = window.prompt("Forest, river, swamp or cave?");
-        return choise;
-    } else if (shelter.available == true) {
-        document.write("You can see the forest, river, swamp and the shelter. Where are you going to go?");
-        var choise = window.prompt("Forest, river, swamp or shelter?");
-        return choise;
-    } else if (hovel.available == true) {
-        document.write("You can see the forest, river, swamp and the hovel. Where are you going to go?");
-        var choise = window.prompt("Forest, river, swamp or hovel?");
-        return choise;
-    } else {
-        $("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>");
-        var height = $(window).height();
-        $("#choise .forest, #choise .river, #choise .swamp, #choise .buildHovel, #choise").css("height", height);
-        setTimeout(function() {
-            $("#content #choise").css("opacity", 1);
-        }, 2700);
-    }
-}
 
 function chooseAreaAction(area) {
     $("#content .areaAction").remove();
