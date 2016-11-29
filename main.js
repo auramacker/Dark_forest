@@ -671,10 +671,6 @@ function deleteInvenotryElem(element, player) { // 3rd argument of this function
     return result;
 }
 
-function choseHovelActions(player) {
-    var result = window.prompt("You can sleep, eat, heal, create weapon or exit. What are you going to do?");
-    return result;
-}
 
 function searchInventoryElem(element, player) { // returns qt of searched elements
     var result = 0;
