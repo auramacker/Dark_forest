@@ -300,13 +300,13 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
     };
 }
 //set game areas
-var forest = new GameArea(true, false, ["branch", "wood"], ["medical berries", "herb"], ["elk",
+var forest = new GameArea(true, false, ["berries", "potato"], ["branch", "wood"], ["medical berries", "herb"], ["elk",
     "wild boar", "wolf"
 ]);
   forest.getMaterials();
-var river = new GameArea(true, false, ["rock"], [], ["wolf", "bear", "wild boar"]);
+var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", "bear", "wild boar"]);
   river.getMaterials();
-var swamp = new GameArea(true, false, ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
+var swamp = new GameArea(true, false, ["rise", "water"], ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
   swamp.getMaterials();
 var cave = new GameArea(false, false, [], [], [], [], []);
 var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["leather"], ["medical berries"], []);
@@ -397,204 +397,161 @@ function mainGameLoop(player) {
               }, 2500);
             })
         });
+      $("#content .river").click(function() {
+        $("#content #choise").css("opacity", 0);
+        setTimeout(function() {
+            $("#content #choise").remove();
 
-        switch (chosenPath) {
+        }, 500);
+        weatherInit(river, player);
+        getWeatherEffects(river, player);
+        $("#content").css("background-image", "url(" + _imgPath + "riverBg.png)");
+        chooseAreaAction("river");
+        $(".riverActions .hunt").click(function(){
+          var randChance = Math.random();
+          if (randChance <= 0.75) {
+              var randEnemyIndex = getRandomInt(0, river.enemies.length - 1);
+              var randEnemy = river.enemies[randEnemyIndex];
+              var enemy = new CreateEnemy(randEnemy, randEnemy, player);
+              enemy.getEnemyProp();
+              showEnemyStats(enemy);
+              battleInterface(enemy, player);
+              $("#content .choiseAttack").click(function() { // if coise attack enemy
+                  if (player.health > 0) {
+                      attack(enemy, player);
+                  }
+                  isDead(player, enemy);
+              })
+              $("#content .run").click(function(){ // if coise run from battle area
+                printNotification("You have successfully escaped");
+                delete enemy;
+                setTimeout(function(){
+                  mainGameLoop(player);
+                }, 3000);
+              })
+          } else {
+              printNotification("Hunting failed! You could not find any animal ...");
+              setTimeout(function(){
+                mainGameLoop(player);
+              }, 3000);
+          }
+        })
+        $(".riverActions .searchMaterials").click(function(){
+          var collectingTimer, collectingResult, changeLines;
+          var randMaterialIndex = getRandomInt(0, river.materials.length-1);
+          showMaterial(river.materials[randMaterialIndex]);
+          var linesPosition = collectMaterialInterface(river.materials[randMaterialIndex], player);
+          setTimeout(function(){
+            printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
+            $("#materialHelp .ok").click(function(){
+              printNotification();
+              setGameTime(30);
+              changeLines = setInterval(function(){
+                linesPosition = changeLinesPos();
+              }, 3000);
+              setTimeout(function(){
+                clearInterval(collectingTimer);
+                clearInterval(changeLines);
+                printNotification("Time is over!");
+                setTimeout(function(){
+                  mainGameLoop(player);
+                }, 2000);
+              }, 30000);
+              collectingTimer = setInterval(function(){
+                  if (!collectingResult) {
+                    collectingResult = collectGame(linesPosition);
+                  }
+                  else {
+                    addToPlayer(river.materials[randMaterialIndex], player);
+                    hideMaterial();
+                    randMaterialIndex = getRandomInt(0, river.materials.length-1);
+                    showMaterial(river.materials[randMaterialIndex]);
+                    collectingResult = undefined;
+                  }
+              }, 100);
+            })
+          }, 2500);
+        })
+      })
+      $("#content .swamp").click(function(){
+        $("#content #choise").css("opacity", 0);
+        setTimeout(function() {
+            $("#content #choise").remove();
 
-            case "river":
-                weatherInit(river, player);
-                getWeatherEffects(river, player);
-                var areaAction = chooseAreaAction();
-                switch (areaAction) {
-                    case "hunt":
-                        var randChance = Math.random();
-                        if (randChance <= 0.75) {
-                            var randEnemyIndex = getRandomInt(0, river.enemies.length - 1);
-                            var randEnemy = river.enemies[randEnemyIndex];
-                            switch (randEnemy) {
-                                case "wolf":
-                                    var riverWolf = new CreateEnemy("river wolf", "wolf", player);
-                                    riverWolf.getEnemyProp();
-                                    showEnemyStats(riverWolf);
-                                    battle(riverWolf, player, true);
-                                    break;
-                                case "bear":
-                                    var riverBear = new CreateEnemy("river bear", "bear", player);
-                                    riverBear.getEnemyProp();
-                                    showEnemyStats(riverBear);
-                                    battle(riverBear, player, true);
-                                    break;
-                                case "wild boar":
-                                    var riverBoar = new CreateEnemy("river boar", "wild boar", player);
-                                    riverBoar.getEnemyProp();
-                                    showEnemyStats(riverBoar);
-                                    battle(riverBoar, player, true);
-                                    break;
-                            }
-                        } else {
-                            document.write("<br />Hunting failed! You can not find any animal.");
-                            mainGameLoop(player)
-                        }
-                        break;
-                    case "look for food":
-                        searchFood(river, player);
-                        mainGameLoop(player);
-                        break;
-                    case "search healing herbs":
-                        searchHerbs(river, player);
-                        mainGameLoop(player);
-                        break;
-                    case "search materials":
-                        searchMaterials(river, player);
-                        mainGameLoop(player);
-                        break;
-                }
-                break;
-            case "swamp":
-                weatherInit(swamp, player);
-                getWeatherEffects(swamp, player);
-                var areaAction = chooseAreaAction();
-                switch (areaAction) {
-                    case "hunt":
-                        var randChance = Math.random();
-                        if (randChance <= 0.75) {
-                            var randEnemyIndex = getRandomInt(0, swamp.enemies.length - 1);
-                            var randEnemy = swamp.enemies[randEnemyIndex];
-                            switch (randEnemy) {
-                                case "elk":
-                                    var swampElk = new CreateEnemy("swamp elk", "elk", player);
-                                    swampElk.getEnemyProp();
-                                    showEnemyStats(swampElk);
-                                    battle(swampElk, player);
-                                    break;
-                            }
-                        } else {
-                            document.write("<br />Hunting failed! You can not find any animal.");
-                            mainGameLoop(player);
-                        }
-                        break;
-                    case "look for food":
-                        searchFood(swamp, player);
-                        mainGameLoop(player);
-                        break;
-                    case "search healing herbs":
-                        searchHerbs(swamp, player);
-                        mainGameLoop(player);
-                        break;
-                    case "search materials":
-                        searchMaterials(swamp, player);
-                        mainGameLoop(player);
-                        break;
-                }
-                break;
-            case "cave":
+        }, 500);
+        weatherInit(swamp, player);
+        getWeatherEffects(swamp, player);
+        $("#content").css("background-image", "url(" + _imgPath + "swampBg.png)");
+        chooseAreaAction("swamp");
+        $(".swampActions .hunt").click(function(){
+          var randChance = Math.random();
+          if (randChance <= 0.75) {
+              var randEnemyIndex = getRandomInt(0, swamp.enemies.length - 1);
+              var randEnemy = swamp.enemies[randEnemyIndex];
+              var enemy = new CreateEnemy(randEnemy, randEnemy, player);
+              enemy.getEnemyProp();
+              showEnemyStats(enemy);
+              battleInterface(enemy, player);
+              $("#content .choiseAttack").click(function() { // if coise attack enemy
+                  if (player.health > 0) {
+                      attack(enemy, player);
+                  }
+                  isDead(player, enemy);
+              })
+              $("#content .run").click(function(){ // if coise run from battle area
+                printNotification("You have successfully escaped");
+                delete enemy;
+                setTimeout(function(){
+                  mainGameLoop(player);
+                }, 3000);
+              })
+          } else {
+              printNotification("Hunting failed! You could not find any animal ...");
+              setTimeout(function(){
+                mainGameLoop(player);
+              }, 3000);
+          }
+        })
+        $(".swampActions .searchMaterials").click(function(){
+          var collectingTimer, collectingResult, changeLines;
+          var randMaterialIndex = getRandomInt(0, swamp.materials.length-1);
+          showMaterial(swamp.materials[randMaterialIndex]);
+          var linesPosition = collectMaterialInterface(swamp.materials[randMaterialIndex], player);
+          setTimeout(function(){
+            printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
+            $("#materialHelp .ok").click(function(){
+              printNotification();
+              setGameTime(30);
+              changeLines = setInterval(function(){
+                linesPosition = changeLinesPos();
+              }, 3000);
+              setTimeout(function(){
+                clearInterval(collectingTimer);
+                clearInterval(changeLines);
+                printNotification("Time is over!");
+                setTimeout(function(){
+                  mainGameLoop(player);
+                }, 2000);
+              }, 30000);
+              collectingTimer = setInterval(function(){
+                  if (!collectingResult) {
+                    collectingResult = collectGame(linesPosition);
+                  }
+                  else {
+                    addToPlayer(swamp.materials[randMaterialIndex], player);
+                    hideMaterial();
+                    randMaterialIndex = getRandomInt(0, swamp.materials.length-1);
+                    showMaterial(swamp.materials[randMaterialIndex]);
+                    collectingResult = undefined;
+                  }
+              }, 100);
+            })
+          }, 2500);
+        })
+      })
+    })
+    $("#content .hovel").click(function(){
 
-                break;
-            case "shelter":
-
-                break;
-            case "build a hovel":
-                var qtOfWood = searchInventoryElem("wood", player);
-                var qtOfleather = searchInventoryElem("leather", player);
-                console.log(qtOfWood, qtOfleather);
-                if (qtOfleather >= 4 && qtOfWood >= 6) {
-                    hovel.available = true;
-                    alert("You've built a hovel!");
-                    mainGameLoop(player);
-                } else {
-                    alert("You need 4 leather and 6 wood to build a hovel!");
-                    mainGameLoop(player);
-                }
-                break;
-            case "hovel":
-                weatherInit(hovel, player);
-                var choise = choseHovelActions(player);
-                switch (choise) {
-                    case "sleep":
-                        if (hovel.temperature <= 0 && hovel.safety !== true) {
-                            player.health -= 20;
-                            alert("It was very cold night. Your health has decreased...")
-                            if (player.health <= 0) {
-                                alert("You dead!");
-                                startNewGame();
-                            }
-                        } else {
-                            player.health = player.maxHealth; // set health to maxhealth
-                            alert("You slept very well. Health fully restored!");
-                        }
-                        hovel.safety = false;
-                        mainGameLoop(player);
-                        break;
-                    case "eat":
-                        var eatResult = deleteInvenotryElem("meat", player);
-                        if (eatResult !== 0) {
-                            player.health += 30;
-                            if (player.health > player.maxHealth) player.health = player.maxHealth;
-                            alert("Your health has been increaced!");
-                            showPlayerStats(player);
-                        } else {
-                            alert("You have not enought meat...");
-                        }
-                        console.log(player);
-                        mainGameLoop(player);
-                        break;
-                    case "heal":
-                        var healResult = deleteInvenotryElem("medical berries", player);
-                        if (healResult == 0) {
-                            var herbResult = deleteInvenotryElem("herb", player);
-                            if (herbResult !== 0) {
-                                player.health += 40;
-                                if (player.health > player.maxHealth) player.health = player.maxHealth;
-                            } else alert("You have nothing to be threated...")
-                        } else {
-                            player.health += 40;
-                            if (player.health > player.maxHealth) player.health = player.maxHealth;
-                        }
-                        break;
-                    case "create weapon":
-                        var createWeapon = choiseWeaponToCreate(player);
-                        if (player.playerClass == "warrior" && createWeapon == "Y") {
-                            var qtOfRocks = searchInventoryElem("rock", player);
-                            var qtOfWood = searchInventoryElem("wood", player)
-                            if (qtOfWood >= 2 && qtOfRocks >= 2) {
-                                //for (var i = 0; i < 2; i++){
-                                deleteInvenotryElem("rock", player, 2);
-                                deleteInvenotryElem("wood", player);
-                                //}
-                                player.weapon = "ax";
-                                player.getPlayerWeapon();
-                                alert("You made the ax! Your streight increaced!");
-                                console.log(player);
-                                mainGameLoop(player);
-                            } else {
-                                alert("You have not enought materials! To create the ax you need: rock x2 and wood x2.");
-                                mainGameLoop(player);
-                            }
-
-                        } else if (player.playerClass == "archer" && createWeapon == "Y") {
-                            var qtOfWood = searchInventoryElem("wood", player);
-                            var qtOfleather = searchInventoryElem("leather", player);
-                            if (qtOfWood >= 3 && qtOfleather >= 4) {
-                                var i = 0;
-                                var j = 0;
-                                deleteInvenotryElem("wood", player, 3);
-                                deleteInvenotryElem("leather", player, 4);
-                                player.weapon = "bow";
-                                player.getPlayerWeapon();
-                                alert("You made the bow! Your streight increaced!");
-                                console.log(player);
-                                mainGameLoop(player);
-                            } else {
-                                alert("You have not enought materials! To create the bow you need: wood x3 and leather x4. ");
-                                mainGameLoop(player);
-                            }
-                        }
-                        break;
-                    case "exit":
-                        mainGameLoop(player);
-                        break;
-                }
-                break;
-        }
     })
 };
 function hideMaterial(){
@@ -985,8 +942,14 @@ function chooseAreaAction(area) {
             $("#content .forestActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
             break;
         case "river":
+            $("#content .areaAction").addClass("riverActions");
+            $("#content .areaAction").css("background-image", "url(" + _imgPath + "riverMain.png)");
+            $("#content .riverActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
             break;
         case "swamp":
+            $("#content .areaAction").addClass("swampActions");
+            $("#content .areaAction").css("background-image", "url(" + _imgPath + "swampMain.png)");
+            $("#content .swampActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
             break;
         case "buildHovel":
             break;
