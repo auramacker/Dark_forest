@@ -671,6 +671,10 @@ function deleteInvenotryElem(element, player) { // 3rd argument of this function
     return result;
 }
 
+function choseHovelActions(player) {
+    var result = window.prompt("You can sleep, eat, heal, create weapon or exit. What are you going to do?");
+    return result;
+}
 
 function searchInventoryElem(element, player) { // returns qt of searched elements
     var result = 0;
@@ -904,6 +908,14 @@ function collectMaterialInterface(material, player) {
     $(".choiseAttack").css("opacity", 1);
     result = [firstLine, secondLine];
     return result
+}
+function choosePath() { // choose path from the start point
+    $("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>");
+    var height = $(window).height();
+    $("#choise .forest, #choise .river, #choise .swamp, #choise .buildHovel, #choise").css("height", height);
+    setTimeout(function() {
+        $("#content #choise").css("opacity", 1);
+    }, 2700);
 }
 
 function chooseAreaAction(area) {
