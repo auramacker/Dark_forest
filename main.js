@@ -116,6 +116,26 @@ function printNotification(text, id) { // function print notification
         }, 100);
     } else $("#content .notify").fadeOut(100); // empty arguments hide this block;
 }
+function printNotifyButtons(text, id, buttons) { // function print notification
+  var i = 0, length = buttons.length;
+    if (arguments[0] !== undefined) {
+      $("#content .notify").remove();
+      if (id === undefined) {
+        $("#content").append("<div class='notify'><p>" + text); // create new
+        for (;i < length; i++) {
+          $("#content .notify").append("<p id='" + buttons[i] + "'>" + buttons[i] + "</p>" );
+        }
+      }
+      else {
+        $("#content").append("<div class='notify'><p>" + text); // create new
+        for (;i < length; i++) {
+          $("#content .notify").append("<p class='variant' id='" + buttons[i] + "'>" + buttons[i] + "</p>" );
+        }      }
+        setInterval(function() {
+            $("#content .notify").css("opacity", "1");
+        }, 100);
+    } else $("#content .notify").fadeOut(100); // empty arguments hide this block;
+}
 // ********************** end visualization **********************
 
 function getRandomInt(min, max) {
@@ -308,8 +328,6 @@ var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", 
   river.getMaterials();
 var swamp = new GameArea(true, false, ["rise", "water"], ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
   swamp.getMaterials();
-var cave = new GameArea(false, false, [], [], [], [], []);
-var shelter = new GameArea(false, true, ["water", "potato", "meat"], ["leather"], ["medical berries"], []);
 var hovel = new GameArea(false, true, [], [], [], [], []);
 
 
@@ -549,10 +567,20 @@ function mainGameLoop(player) {
           }, 2500);
         })
       })
+      $("#content .buildHovel").click(function(){
+        if (hovel.avavailable) {
+          console.log("ok")
+        }
+        else {
+          printNotifyButtons("You need 4 wood, 3 rocks and 5 branches to build a hovel. Try to build?", "build", ["yes", "no"]);
+          $("#yes").click(function(){
+            var hovelResult = deleteInvElem("wood", 1, player);
+            console.log(hovelResult);
+          })
+        }
+      })
     })
-    $("#content .hovel").click(function(){
 
-    })
 };
 function hideMaterial(){
     $("#content .materialInfo").remove();
@@ -643,32 +671,27 @@ function choiseWeaponToCreate(player) {
     return result;
 }
 
-function deleteInvenotryElem(element, player) { // 3rd argument of this function is qt of deleted element
-    var result = 0;
-    var re = new RegExp(element, "g");
-    for (var i = 0; i < player.inventory.length; i++) {
-        if (player.inventory[i].toString().search(re) !== -1) { // find element and check number
-            var lastElem = player.inventory[i];
-            var qtOfElements = +lastElem[lastElem.length - 1];
-            qtOfElements--; // dec last element and save
-            if (qtOfElements == 0) { // if qtOf element is 0 delete element from array
-                player.inventory.splice([i], 1);
-            } else {
-                qtOfElements.toString(); // if QtOfElement greater than 0 replace number
-                var str = player.inventory[i].slice(0, -1);
-                var repl = str + qtOfElements;
-                player.inventory[i] = repl;
-                result++;
-                break;
-            }
+function deleteInvElem(element, qt, player) {
+  var el = element, i = 0, lenght = player.inventory.length, result;
+  if (lenght > 0) {
+    for (; i < lenght; i++) {
+      if (player.inventory[i].name == element ) {
+        if (player.inventory[i].number >= qt) {
+          player.inventory[i].number -= qt;
+          result = true;
         }
+        else {
+          printNotification("You have not enought elements ...");
+          result = false;
+        }
+      }
     }
-    var qt = arguments[2];
-    if (qt !== undefined && qt > 1) { // recursion
-        qt--;
-        deleteInvenotryElem(element, player, qt);
-    }
-    return result;
+  }
+  else {
+    printNotification("You have not enought elements ...");
+    result = false;
+  }
+  return result
 }
 
 function choseHovelActions(player) {
@@ -677,15 +700,13 @@ function choseHovelActions(player) {
 }
 
 function searchInventoryElem(element, player) { // returns qt of searched elements
-    var result = 0;
-    var re = new RegExp(element, "g");
-    for (var i = 0; i < player.inventory.length; i++) {
-        if (player.inventory[i].toString().search(re) !== -1) {
-            var lastElem = player.inventory[i].toString();
-            result += +lastElem[lastElem.length - 1];
-        }
+    var elemName = element, i = 0, length = player.inventory.length, qtResult ;
+    for (;i < length; i++) {
+      if (player.inventory[i].name == element) {
+        qtResult = player.inventory[i].number;
+      }
     }
-    return result;
+    return qtResult
 }
 
 function weatherInit(area, player) {
@@ -910,6 +931,9 @@ function collectMaterialInterface(material, player) {
     return result
 }
 function choosePath() { // choose path from the start point
+    if (hovel.available) {
+      $("#content .buildHovel").addClass("available");
+    }
     $("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>");
     var height = $(window).height();
     $("#choise .forest, #choise .river, #choise .swamp, #choise .buildHovel, #choise").css("height", height);

@@ -71,7 +71,11 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 1.5s ease-in;
 	-o-transition: all 1.5s ease-in;
 }
-#content .get-text .ok, #content .notify .ok{
+#content .notify .variant {
+	display: inline-block !important;
+	margin: 10px !important;
+}
+#content .get-text .ok, #content .notify .ok, #content .notify .variant{
 	font-family: 'Inconsolata';
 	width: 40px;
 	border: 1px solid #fff;
