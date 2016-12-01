@@ -39,7 +39,7 @@ p, a, h1, h2, h3 ,h4, h5{
 #content .notify{
 	background-color: #000;
 	color: #fff;
-	z-index: 1;
+	z-index: 5;
 	position: absolute;
 	text-align: center;
 	font-size: 17px;
@@ -74,6 +74,9 @@ p, a, h1, h2, h3 ,h4, h5{
 #content .notify .variant {
 	display: inline-block !important;
 	margin: 10px !important;
+}
+#content .builded {
+	background-image: url(images/hovel.png) !important;
 }
 #content .get-text .ok, #content .notify .ok, #content .notify .variant{
 	font-family: 'Inconsolata';
@@ -243,6 +246,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	-o-transition: all 0.5s ease-in;
 }
 #choise div {
+	transition: all 0.5s linear;
 	width: 24%;
 	transform: rotateZ(-5deg);
 	float: left;
@@ -262,7 +266,10 @@ p, a, h1, h2, h3 ,h4, h5{
 #choise .buildHovel:after{
 	content: 'Try to build a hovel';
 }
-.forest:after, .river:after, .swamp:after, .buildHovel:after{
+#choise .builded:after{
+	content: 'Go to the hovel' !important;
+}
+.forest:after, .river:after, .swamp:after, .buildHovel:after, .builded:after{
 	display: block;
 	opacity: 0;
 	padding: 70% 0%;

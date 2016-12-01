@@ -211,7 +211,7 @@ function CreatePlayer(name, playerClass) { // player constructor function
     this.weapon = "none";
     this.maxHealth = 0;
     this.playerClass = playerClass;
-    this.inventory = [];
+    this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 2, src: "url(images/woodInv.png)"}];
     this.getPlayerWeapon = function() {
         if (this.weapon == "ax") {
             this.streight += 4;
@@ -568,19 +568,38 @@ function mainGameLoop(player) {
         })
       })
       $("#content .buildHovel").click(function(){
-        if (hovel.avavailable) {
-          console.log("ok")
+        if (hovel.available) { // enter available
+          $("#content #choise").css("opacity", 0);
+          setTimeout(function() {
+              $("#content #choise").remove();
+
+          }, 500);
+          weatherInit(hovel, player);
+          getWeatherEffects(hovel, player);
+          $("#content").css("background-image", "url(" + _imgPath + "hovelBg.png)");
+          chooseAreaAction("hovel");
         }
-        else {
+        else { // try to build
           printNotifyButtons("You need 4 wood, 3 rocks and 5 branches to build a hovel. Try to build?", "build", ["yes", "no"]);
           $("#yes").click(function(){
             var hovelResult = deleteInvElem("wood", 1, player);
-            console.log(hovelResult);
+            if (hovelResult) {
+              printNotification("Hovel built successfully!");
+              $("#content .ok").click(function(){
+                printNotification();
+                $("#content .buildHovel").addClass("builded");
+                hovel.available = true;
+              })
+            }
+            else {
+              setTimeout(function(){
+                printNotification();
+              }, 2500);
+            }
           })
         }
       })
     })
-
 };
 function hideMaterial(){
     $("#content .materialInfo").remove();
@@ -931,12 +950,12 @@ function collectMaterialInterface(material, player) {
     return result
 }
 function choosePath() { // choose path from the start point
-    if (hovel.available) {
-      $("#content .buildHovel").addClass("available");
-    }
     $("#content").append("<div id='choise'> <div class='forest'></div><div class='river'></div><div class='swamp'></div><div class='buildHovel'></div></div>");
     var height = $(window).height();
     $("#choise .forest, #choise .river, #choise .swamp, #choise .buildHovel, #choise").css("height", height);
+    if (hovel.available) {
+      $("#content .buildHovel").addClass("builded");
+    }
     setTimeout(function() {
         $("#content #choise").css("opacity", 1);
     }, 2700);
@@ -961,7 +980,10 @@ function chooseAreaAction(area) {
             $("#content .areaAction").css("background-image", "url(" + _imgPath + "swampMain.png)");
             $("#content .swampActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
             break;
-        case "buildHovel":
+        case "hovel":
+            $("#content .areaAction").addClass("hovelActions");
+            $("#content .areaAction").css("background-image", "url(" + _imgPath + "hovelMain.png)");
+            $("#content .hovelActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
             break;
     }
 }
