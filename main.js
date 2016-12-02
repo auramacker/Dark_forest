@@ -578,6 +578,9 @@ function mainGameLoop(player) {
           getWeatherEffects(hovel, player);
           $("#content").css("background-image", "url(" + _imgPath + "hovelBg.png)");
           chooseAreaAction("hovel");
+          $("#content").prepend("<canvas></canvas>");
+          Bonfire();
+
         }
         else { // try to build
           printNotifyButtons("You need 4 wood, 3 rocks and 5 branches to build a hovel. Try to build?", "build", ["yes", "no"]);
@@ -983,7 +986,8 @@ function chooseAreaAction(area) {
         case "hovel":
             $("#content .areaAction").addClass("hovelActions");
             $("#content .areaAction").css("background-image", "url(" + _imgPath + "hovelMain.png)");
-            $("#content .hovelActions").append("<div class='hunt'></div><div class='searchMaterials'></div>");
+            $("#content .hovelActions").append("<div class='create'></div><div class='rest'></div><div class='exit'></div>");
+            $("#content").append("<canvas></canvas>");
             break;
     }
 }

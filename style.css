@@ -36,6 +36,9 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.3s ease-in;
 	-o-transition: all 0.3s ease-in;
 }
+canvas {
+	position: absolute;
+}
 #content .notify{
 	background-color: #000;
 	color: #fff;
@@ -336,7 +339,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	transform: rotateX(-30deg);
 	transform: rotateY(180deg);
 }
-.hunt, .healingHerbs, .lookForFood, .searchMaterials{
+.hunt, .healingHerbs, .lookForFood, .searchMaterials, .create, .rest, .exit{
 	position: absolute;
 	border-radius: 100px;
 	background-color: rgba(0,0,0,0.8);
@@ -376,6 +379,21 @@ p, a, h1, h2, h3 ,h4, h5{
 	margin-left: 650px;
 	margin-top: 150px;
 }
+.create {
+	background-image: url(images/create.png);
+	margin-left: 190px;
+	margin-top: 200px;
+}
+.rest {
+	background-image: url(images/rest.png);
+	margin-left: 650px;
+	margin-top: 150px;
+}
+.exit {
+	background-image: url(images/exit.png);
+	margin-left: 550px;
+	margin-top: 350px;
+}
 #content .choiseAttack{
 	opacity: 0;
 	width: 200px;
@@ -389,7 +407,7 @@ p, a, h1, h2, h3 ,h4, h5{
 	-moz-transition: all 0.3s ease-in;
 	-o-transition: all 0.3s ease-in;
 }
-.hunt:after, .healingHerbs:after, .lookForFood:after, .searchMaterials:after{
+.hunt:after, .healingHerbs:after, .lookForFood:after, .searchMaterials:after, .create:after, .exit:after, .rest:after{
 	display: block;
 	opacity: 0;
 	margin-left: 100px;
@@ -416,11 +434,20 @@ p, a, h1, h2, h3 ,h4, h5{
 .searchMaterials:after{
 	content: 'Search some materials';
 }
+.create:after {
+	content: 'Create items';
+}
+.rest:after {
+	content: 'Take a rest';
+}
+.exit:after {
+	content: 'Go to the forest';
+}
 
-.hunt:hover, .healingHerbs:hover, .lookForFood:hover, .searchMaterials:hover {
+.hunt:hover, .healingHerbs:hover, .lookForFood:hover, .searchMaterials:hover, .create:hover, .exit:hover, .rest:hover {
 	box-shadow: 0px 0px 34px 1px rgba(0,0,0,0.9);
 }
-.hunt:hover:after, .healingHerbs:hover:after, .lookForFood:hover:after, .searchMaterials:hover:after{
+.hunt:hover:after, .healingHerbs:hover:after, .lookForFood:hover:after, .searchMaterials:hover:after, .create:hover:after, .exit:hover:after, .rest:hover:after{
 	opacity: 1;
 }
 #content .playerInfo .name{
