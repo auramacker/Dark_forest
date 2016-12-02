@@ -578,6 +578,97 @@ canvas {
 	width: 15%;
 	transition: all 0.5s linear;
 }
+ #workshop {
+	width: 680px;
+	height: 450px;
+	margin: 0 auto;
+	background-color: #000;
+}
+ #workshop .top {
+	width: 100%;
+	height: 270px;
+	margin-top: 10px;
+	text-align: center;
+}
+ #workshop .top .creating,  #workshop .top .player-items {
+	border: 1px solid #fff;
+	display: inline-block;
+	position: relative;
+	width: 250px;
+	height: 221px;
+	padding: 20px;
+  background-color: black;
+	margin-top: 15px;
+}
+#workshop .top .creating:before, #workshop .top .player-items:before {
+	content: 'Creating';
+	display: block;
+	position: absolute;
+	width: 130px;
+	background-color: #000;
+	color: #fff;
+	font-family: 'Inconsolata';
+	left: 50%;
+	margin-left: -65px;
+	margin-top: -30px;
+}
+#workshop .top .player-items:before {
+	content: 'Your items' !important;
+}
+#workshop .top .creating div, #workshop .top .player-items div {
+	width: 70px;
+	height: 70px;
+	background-color: #000;
+	display: inline-block;
+	border: 1px solid #fff;
+}
+#workshop .middle {
+	width: 100%;
+	height: 150px;
+	margin-top: 10px;
+	text-align: center;
+	position: relative;
+}
+#workshop .middle .result-item {
+	width: 100px;
+	height: 100px;
+	background-color: #000;
+	border: 1px solid #fff;
+	position: relative;
+	margin: 0 auto;
+  margin-top: 20px;
+}
+#workshop .middle .result-item:before {
+	content: 'Result';
+	display: block;
+	position: absolute;
+	width: 100px;
+	background-color: #000;
+	color: #fff;
+	font-family: 'Inconsolata';
+	left: 50%;
+	margin-left: -50px;
+	margin-top: -12px;
+}
+#workshop .middle .buttons {
+	text-align: center;
+	width: 200px;
+	height: 100px;
+	position: absolute;
+	margin-left: 80px;
+}
+#workshop .middle .buttons a {
+	display: block;
+	margin: 0 auto;
+	width: 120px;
+	height: 25px;
+	border: 1px solid #fff;
+	background-color: #000;
+	margin: 0 auto;
+	margin-top: 5px;
+	line-height: 23px;
+	cursor: pointer;
+}
 /************** hitPoints Animation ************/
 @keyframes rotateHitLine {
 	0% {

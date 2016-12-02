@@ -580,7 +580,9 @@ function mainGameLoop(player) {
           chooseAreaAction("hovel");
           $("#content").prepend("<canvas></canvas>");
           Bonfire();
-
+          $("#content .create").click(function(){
+            creatingInterface(player);
+          })
         }
         else { // try to build
           printNotifyButtons("You need 4 wood, 3 rocks and 5 branches to build a hovel. Try to build?", "build", ["yes", "no"]);
@@ -604,6 +606,49 @@ function mainGameLoop(player) {
       })
     })
 };
+function creatingInterface(player) {
+  $("#content .areaAction, canvas").fadeOut(); // clean content
+  setTimeout(function(){
+    $("#content .areaAction").remove();
+    $("canvas").remove();
+    $("#content").append("<div id='workshop'> \
+      <div class='top'> \
+        <div class='creating'>\
+        <div class='1.1'></div> \
+        <div class='1.2'></div> \
+        <div class='1.3'></div> \
+        <div class='2.1'></div> \
+        <div class='2.2'></div> \
+        <div class='2.3'></div> \
+        <div class='3.1'></div> \
+        <div class='3.2'></div> \
+        <div class='3.3'></div> \
+        </div>\
+      <div class='player-items'>\
+        <div class='1.1'></div> \
+        <div class='1.2'></div> \
+        <div class='1.3'></div> \
+        <div class='2.1'></div> \
+        <div class='2.2'></div> \
+        <div class='2.3'></div> \
+        <div class='3.1'></div> \
+        <div class='3.2'></div> \
+        <div class='3.3'></div> \
+      </div>\
+      </div>\
+      <div class='middle'> \
+      <div class='buttons'>\
+        <a class='close-creator'>Quit creator</a> \
+        <a class='cancel'>Cancel</a>\
+        <a class='apply'>Create!</a>\
+      </div>\
+        <div class='result-item'>\
+        </div>\
+      </div>\
+    </div>")
+  }, 200);
+
+}
 function hideMaterial(){
     $("#content .materialInfo").remove();
 }
@@ -985,7 +1030,6 @@ function chooseAreaAction(area) {
             break;
         case "hovel":
             $("#content .areaAction").addClass("hovelActions");
-            $("#content .areaAction").css("background-image", "url(" + _imgPath + "hovelMain.png)");
             $("#content .hovelActions").append("<div class='create'></div><div class='rest'></div><div class='exit'></div>");
             $("#content").append("<canvas></canvas>");
             break;
