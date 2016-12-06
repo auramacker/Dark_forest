@@ -582,6 +582,7 @@ function mainGameLoop(player) {
           Bonfire();
           $("#content .create").click(function(){
             creatingInterface(player);
+
           })
         }
         else { // try to build
@@ -607,6 +608,7 @@ function mainGameLoop(player) {
     })
 };
 function creatingInterface(player) {
+  var i = 0, length = player.inventory.length, iCount = 1, jCount = 1;
   $("#content .areaAction, canvas").fadeOut(); // clean content
   setTimeout(function(){
     $("#content .areaAction").remove();
@@ -614,26 +616,26 @@ function creatingInterface(player) {
     $("#content").append("<div id='workshop'> \
       <div class='top'> \
         <div class='creating'>\
-        <div class='1.1'></div> \
-        <div class='1.2'></div> \
-        <div class='1.3'></div> \
-        <div class='2.1'></div> \
-        <div class='2.2'></div> \
-        <div class='2.3'></div> \
-        <div class='3.1'></div> \
-        <div class='3.2'></div> \
-        <div class='3.3'></div> \
+        <div class='1_1'></div> \
+        <div class='1_2'></div> \
+        <div class='1_3'></div> \
+        <div class='2_1'></div> \
+        <div class='2_2'></div> \
+        <div class='2_3'></div> \
+        <div class='3_1'></div> \
+        <div class='3_2'></div> \
+        <div class='3_3'></div> \
         </div>\
       <div class='player-items'>\
-        <div class='1.1'></div> \
-        <div class='1.2'></div> \
-        <div class='1.3'></div> \
-        <div class='2.1'></div> \
-        <div class='2.2'></div> \
-        <div class='2.3'></div> \
-        <div class='3.1'></div> \
-        <div class='3.2'></div> \
-        <div class='3.3'></div> \
+        <div class='1_1'></div> \
+        <div class='1_2'></div> \
+        <div class='1_3'></div> \
+        <div class='2_1'></div> \
+        <div class='2_2'></div> \
+        <div class='2_3'></div> \
+        <div class='3_1'></div> \
+        <div class='3_2'></div> \
+        <div class='3_3'></div> \
       </div>\
       </div>\
       <div class='middle'> \
@@ -646,6 +648,17 @@ function creatingInterface(player) {
         </div>\
       </div>\
     </div>")
+    for (; i < length; i++) {
+      $(".player-items ." + iCount + "_" + jCount).append("<div class='item-block'><div class='" + player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number + "</div></div></div>");
+      jCount ++;
+      if (jCount == 4) {
+        jCount = 1;
+        iCount ++;
+      }
+    }
+  //   $(".player-items").draggable({
+  //   addClasses: false
+  // });
   }, 200);
 
 }

@@ -615,7 +615,13 @@ canvas {
 #workshop .top .player-items:before {
 	content: 'Your items' !important;
 }
-#workshop .top .creating div, #workshop .top .player-items div {
+#workshop .player-items .item-block {
+	height: 40px;
+	width: 40px;
+	position: absolute;
+}
+#workshop .top .creating div, #workshop .top .player-items > div {
+	position: relative;
 	width: 70px;
 	height: 70px;
 	background-color: #000;
