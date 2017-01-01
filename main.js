@@ -733,12 +733,12 @@ function creatingInterface(player) {
       }
     });
   }, 200);
-
+//test
 }
 function checkDroppArray(arr) {
   var i = 0, length = arr.length;
   for (; i < length; i++) {
-    if (arr[i].dragged == "wood" && arr[i].dropped == "1_1") {
+    if (arr[i].dragged == "wood" && arr[i].dropped == "1_1" ) {
       if ($(".result-item").children().length < 1) {
         $("#content .result-item").append("<div class='wood'></div>");
       }
