@@ -620,13 +620,21 @@ canvas {
 	width: 40px;
 	position: absolute;
 }
-#workshop .top .creating div, #workshop .top .player-items > div {
+#workshop .top .creating > div, #workshop .top .player-items > div {
 	position: relative;
 	width: 70px;
 	height: 70px;
 	background-color: #000;
 	display: inline-block;
 	border: 1px solid #fff;
+}
+#workshop .top .creating > div > div {
+	position: absolute !important;
+	transform:translate3d(20%, 20%, 0);
+	background-size: contain;
+	background-color: #fff;
+	height: 50px;
+	width: 50px;
 }
 #workshop .middle {
 	width: 100%;
@@ -834,12 +842,16 @@ canvas {
 	top: 45px;
 	right: -25px;
 }
-.playerInfo .player-inventory .item-block {
+.playerInfo .player-inventory .item-block, #workshop .item-block {
 	margin-top: 25px;
 	width: 50px;
 	height: 50px;
 	position: relative;
 	background-size: 100%;
+}
+#workshop .item-block {
+	margin-top: 10px !important;
+	margin-left: 9px !important;
 }
 .playerInfo .player-inventory .item-block .description {
 	position: absolute;
@@ -853,14 +865,14 @@ canvas {
 	height: auto;
 	transition: all 0.5s linear;
 }
-.playerInfo .player-inventory .item-block > div {
+.playerInfo .player-inventory .item-block > div, #workshop .item-block > div {
 	background-size: 100%;
 	background-color: #fff;
 	border: 1px solid #fff;
 	width: 50px;
 	height: 50px;
 }
-.playerInfo .player-inventory .number {
+.playerInfo .player-inventory .number{
 	position: absolute;
 	background-color: #000;
 	border: 1px solid;
@@ -870,19 +882,19 @@ canvas {
 	right: -15px;
 	line-height: 25px;
 }
-.playerInfo .player-inventory .leather {
+.playerInfo .player-inventory .leather, #workshop .leather {
 	background-image: url(images/leather.png);
 }
-.playerInfo .player-inventory .meat {
+.playerInfo .player-inventory .meat, #workshop .meat {
 	background-image: url(images/meat.jpg);
 }
-.playerInfo .player-inventory .wood {
+.playerInfo .player-inventory .wood, #workshop .wood {
 	background-image: url(images/woodInv.png);
 }
-.playerInfo .player-inventory .branch {
+.playerInfo .player-inventory .branch, #workshop .branch {
 	background-image: url(images/branchInv.png);
 }
-.playerInfo .player-inventory .rock {
+.playerInfo .player-inventory .rock, #workshop .rock {
 	background-image: url(images/rockInv.png);
 }
 .heat:after {

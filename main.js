@@ -211,7 +211,8 @@ function CreatePlayer(name, playerClass) { // player constructor function
     this.weapon = "none";
     this.maxHealth = 0;
     this.playerClass = playerClass;
-    this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 2, src: "url(images/woodInv.png)"}];
+    this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 2, src: "url(images/woodInv.png)"},
+  {image: "url(images/rock.png)", name: "rock" , number: 3, src: "url(images/rockInv.png)"}];
     this.getPlayerWeapon = function() {
         if (this.weapon == "ax") {
             this.streight += 4;
@@ -608,7 +609,7 @@ function mainGameLoop(player) {
     })
 };
 function creatingInterface(player) {
-  var i = 0, length = player.inventory.length, iCount = 1, jCount = 1;
+  var i = 0, length = player.inventory.length, iCount = 1, jCount = 1, droppArray = [], checkInterval;
   $("#content .areaAction, canvas").fadeOut(); // clean content
   setTimeout(function(){
     $("#content .areaAction").remove();
@@ -648,7 +649,7 @@ function creatingInterface(player) {
         </div>\
       </div>\
     </div>")
-    for (; i < length; i++) {
+    for (; i < length; i++) { // adding player inventory in to the draggable block
       $(".player-items ." + iCount + "_" + jCount).append("<div class='item-block'><div class='" + player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number + "</div></div></div>");
       jCount ++;
       if (jCount == 4) {
@@ -656,15 +657,97 @@ function creatingInterface(player) {
         iCount ++;
       }
     }
-  //   $(".player-items").draggable({
-  //   addClasses: false
-  // });
+    $(".player-items .item-block > div").draggable({
+    addClasses: false,
+    revert: true,
+  });
+    $(".creating > div").droppable({
+      drop: function(event, ui) {
+          var dragResult, dropResult, resultObj;
+          if ($(this).children().length == 0) {
+            if (ui.draggable.children().text() == 1) {
+                ui.draggable.clone().appendTo(this);
+                $(this).children().css("left", "0px").css("top", "0px");
+                ui.draggable.remove();
+            }
+            else {
+              ui.draggable.clone().appendTo(this);
+              $(this).children().css("left", "0px").css("top", "0px");
+              $(this).children().find(".number").text("1");
+              var draggableCounter = ui.draggable.text() - 1;
+              ui.draggable.find(".number").text(draggableCounter);
+              ui.draggable.css("left", "0px").css("top", "0px");
+            }
+          }
+          else {
+            if (ui.draggable.children().text() > 1)  {
+              if (ui.draggable.attr("class").split(" ")[0] == $(this).children().attr("class") ){
+                var draggableCounter = ui.draggable.children().text(), droppCounter = $(this).children().find(".number").text();
+                console.log(draggableCounter, droppCounter);
+                ui.draggable.children().text(draggableCounter - 1);
+                $(this).children().find(".number").text(+droppCounter + 1);
+                ui.draggable.css("left", "0px").css("top", "0px");
+              }
+            }
+            else {
+              if (ui.draggable.attr("class").split(" ")[0] == $(this).children().attr("class") ){
+                var droppCounterLast = $(this).children().find(".number").text();
+                $(this).children().find(".number").text(+droppCounterLast + 1);
+                ui.draggable.remove();
+              }
+            }
+          }
+          dragResult = ui.draggable.attr("class").split(" ")[0];
+          dropResult = $(this).attr("class").split(" ")[0];
+          number = $(this).children().text();
+          $(this).children().attr("class", $(this).children().attr("class").split(" ")[0]);
+          resultObj = {
+            dropped: dropResult,
+            dragged: dragResult,
+            num: number
+          }
+          if (droppArray.length == 0) {
+            droppArray.push(resultObj);
+          }
+          else {
+            var isIsset = false;
+            for (var i = 0; i < droppArray.length; i++) {
+              if (droppArray[i].dropped == resultObj.dropped && droppArray[i].dragged == resultObj.dragged) {
+                droppArray.splice(i, 1);
+                droppArray.push(resultObj);
+                isIsset = true ;
+                break;
+              }
+            }
+            if (!isIsset) {
+              droppArray.push(resultObj);
+            }
+          }
+          console.log(droppArray);
+          checkInterval = setInterval(function(){
+            checkDroppArray(droppArray);
+          }, 50);
+          $(".buttons .cancel").click(function(){
+            stopInterval(checkInterval);
+          });
+      }
+    });
   }, 200);
 
 }
+function checkDroppArray(arr) {
+  var i = 0, length = arr.length;
+  for (; i < length; i++) {
+    if (arr[i].dragged == "wood" && arr[i].dropped == "1_1") {
+      if ($(".result-item").children().length < 1) {
+        $("#content .result-item").append("<div class='wood'></div>");
+      }
+    }
+  }
+};
 function hideMaterial(){
     $("#content .materialInfo").remove();
-}
+};
 function addToPlayer(loot, player) {
   var i = 0, j = player.inventory.length, analogFound;
   for (i; i < j; i++) {
@@ -676,7 +759,7 @@ function addToPlayer(loot, player) {
   if (!analogFound) {
     player.inventory.push(loot);
   }
-}
+};
 function collectGame(linesPos) {
   var currentWidth = $(".materialInfo .collect-status").width(), minimWidth, currentWidth, tansform, degree; // collect indicator position
   if (currentWidth > 0 ) {
@@ -721,7 +804,7 @@ function collectGame(linesPos) {
       }
     }
   }
-}
+};
 function setGameTime(seconds) {
   var sec = seconds;
   var time = "00:" + sec;
