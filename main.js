@@ -212,7 +212,9 @@ function CreatePlayer(name, playerClass) { // player constructor function
     this.maxHealth = 0;
     this.playerClass = playerClass;
     this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 5, src: "url(images/woodInv.png)"},
-  {image: "url(images/rock.png)", name: "rock" , number: 5, src: "url(images/rockInv.png)"}];
+  {image: "url(images/rock.png)", name: "rock" , number: 5, src: "url(images/rockInv.png)"},
+{image: "url(images/meat.png)", name: "meat" , number: 5, src: "url(images/meatInv.png)"},
+{image: "url(images/branch.png)", name: "branch" , number: 5, src: "url(images/branchInv.png)"}];
     this.getPlayerWeapon = function() {
         if (this.weapon == "ax") {
             this.streight += 4;
@@ -590,6 +592,7 @@ function mainGameLoop(player) {
           printNotifyButtons("You need 4 wood, 3 rocks and 5 branches to build a hovel. Try to build?", "build", ["yes", "no"]);
           $("#yes").click(function(){
             var hovelResult = deleteInvElem("wood", 1, player);
+            showPlayerStats(player);
             if (hovelResult) {
               printNotification("Hovel built successfully!");
               $("#content .ok").click(function(){
@@ -732,26 +735,52 @@ function creatingInterface(player) {
     });
     $(".buttons .cancel").on("click", function(){
       $(".creating div").children().remove();
-    });
-    $(".buttons .apply").on("click", function(){
-      var result = $(".result-item").children();
-      if (result.length > 0) {
-        if (result.attr("class") == "ax") {
-          // delete elements
-          player.weapon = "ax";
-          player.getPlayerWeapon();
-          for (var i = 0; i < droppArray.length; i++) {
-            deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
-          }
-          $(".creating div").children().remove();
-          showPlayerStats(player);
-        }
-        else if (result.attr("class") == "bow") {
-          // delete elements
-          player.weapon = "bow";
-          player.getPlayerWeapon();
+      $(".player-items div").children().remove();
+      var i = 0, length = player.inventory.length, iCount = 1, jCount = 1;
+      for (; i < length; i++) { // adding player inventory in to the draggable block
+        $(".player-items ." + iCount + "_" + jCount).append("<div class='item-block'><div class='" + player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number + "</div></div></div>");
+        jCount ++;
+        if (jCount == 4) {
+          jCount = 1;
+          iCount ++;
         }
       }
+      $(".player-items .item-block > div").draggable({
+      addClasses: false,
+      revert: true,
+    });
+    });
+    $(".buttons .apply").on("click", function(){
+      if ($(".result-item").children().length > 0) {
+        var result = $(".result-item").children().attr("class");
+        switch (result) {
+          case "ax":
+            player.weapon = "ax";
+            player.getPlayerWeapon();
+            for (var i = 0; i < droppArray.length; i++) {
+              deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
+            }
+            $(".creating div").children().remove();
+            showPlayerStats(player);
+            droppArray.splice(0, droppArray.length);
+          break;
+          case "bow":
+            player.weapon = "bow";
+            player.getPlayerWeapon()
+          break;
+          case "roasted-meat":
+            for (var i = 0; i < droppArray.length; i++) {
+              deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
+            }
+            player.inventory.push({image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 1, src: "url(images/roasted-meat.png)"});
+            $(".creating div").children().remove();
+            showPlayerStats(player)
+          break;
+        }
+      }
+    });
+    $(".buttons .close-creator").on("click", function(){
+      mainGameLoop(player);
     });
   }, 200);
 }
@@ -774,6 +803,12 @@ function checkCreating(){
     && (!getCrClass("3_3")) ) {
     if ($("#content .result-item").children().length == 0) {
       $("#content .result-item").append("<div class='bow'></div>");
+    }
+  }
+  else if ((getCrClass("3_2") == "branch") && (getCrClass("3_1") == "rock") // for bow
+    && (getCrClass("3_3") == "rock") && (getCrClass("2_2") == "meat") ) {
+    if ($("#content .result-item").children().length == 0) {
+      $("#content .result-item").append("<div class='roasted-meat'></div>");
     }
   }
   else if ($("#content .result-item").children().length > 0) {
@@ -876,6 +911,10 @@ function deleteInvElem(element, qt, player) {
       if (player.inventory[i].name == element ) {
         if (player.inventory[i].number >= qt) {
           player.inventory[i].number -= qt;
+          if (player.inventory[i].number == 0) {
+            player.inventory.splice(i, 1);
+            break
+          }
           result = true;
         }
       }
