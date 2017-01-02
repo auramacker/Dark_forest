@@ -211,8 +211,8 @@ function CreatePlayer(name, playerClass) { // player constructor function
     this.weapon = "none";
     this.maxHealth = 0;
     this.playerClass = playerClass;
-    this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 2, src: "url(images/woodInv.png)"},
-  {image: "url(images/rock.png)", name: "rock" , number: 3, src: "url(images/rockInv.png)"}];
+    this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 5, src: "url(images/woodInv.png)"},
+  {image: "url(images/rock.png)", name: "rock" , number: 5, src: "url(images/rockInv.png)"}];
     this.getPlayerWeapon = function() {
         if (this.weapon == "ax") {
             this.streight += 4;
@@ -725,25 +725,66 @@ function creatingInterface(player) {
           }
           console.log(droppArray);
           checkInterval = setInterval(function(){
-            checkDroppArray(droppArray);
+            checkCreating();
           }, 50);
-          $(".buttons .cancel").click(function(){
-            stopInterval(checkInterval);
-          });
+      }
+    });
+    $(".buttons .cancel").on("click", function(){
+      $(".creating div").children().remove();
+    });
+    $(".buttons .apply").on("click", function(){
+      var result = $(".result-item").children();
+      if (result.length > 0) {
+        if (result.attr("class") == "ax") {
+          // delete elements
+          player.weapon = "ax";
+          player.getPlayerWeapon();
+          showPlayerStats(player);
+          console.log(player);
+        }
+        else if (result.attr("class") == "bow") {
+          // delete elements
+          player.weapon = "bow";
+          player.getPlayerWeapon();
+        }
       }
     });
   }, 200);
-//test
 }
-function checkDroppArray(arr) {
-  var i = 0, length = arr.length;
-  for (; i < length; i++) {
-    if (arr[i].dragged == "wood" && arr[i].dropped == "1_1" ) {
-      if ($(".result-item").children().length < 1) {
-        $("#content .result-item").append("<div class='wood'></div>");
-      }
+function checkCreating(){
+  var cr = $(".creating");
+  function getCrClass(position){
+    return cr.find("." + position).children().attr("class")
+  }
+  if ((getCrClass("3_2") == "wood") && (getCrClass("2_2") == "wood") // for ax
+    && (getCrClass("1_2") == "rock") && (getCrClass("1_3") == "rock")
+    && (getCrClass("2_3") == "rock") && (!getCrClass("1_1")) && (!getCrClass("2_1")) && (!getCrClass("3_1"))
+    && (!getCrClass("3_3")) ) {
+    if ($("#content .result-item").children().length == 0) {
+      $("#content .result-item").append("<div class='ax'></div>");
     }
   }
+  else if ((getCrClass("3_2") == "branch") && (getCrClass("2_3") == "branch") // for bow
+    && (getCrClass("1_2") == "branch") && (getCrClass("2_2") == "rope")
+    && (getCrClass("1_3") == "rock") && (!getCrClass("1_1")) && (!getCrClass("2_1")) && (!getCrClass("3_1"))
+    && (!getCrClass("3_3")) ) {
+    if ($("#content .result-item").children().length == 0) {
+      $("#content .result-item").append("<div class='bow'></div>");
+    }
+  }
+  else if ($("#content .result-item").children().length > 0) {
+    $("#content .result-item").children().remove();
+  }
+}
+function deleteFromPlayer(arr) {
+  // var i = 0, length = arr.length;
+  // for (; i < length; i++) {
+  //   if () {
+  //     if ($(".result-item").children().length < 1) {
+  //       $("#content .result-item").append("<div class='wood'></div>");
+  //     }
+  //   }
+  // }
 };
 function hideMaterial(){
     $("#content .materialInfo").remove();
@@ -983,32 +1024,41 @@ function getWeatherEffects(area, player) {
 }
 
 function showPlayerStats(player) {
-    var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2);
-    $("#content").append("<div class='playerInfo'><div class='playerPicture'></div><div class='stats'>" +
-        "<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + " " +
-        player.level + "<span> level</span></span>" +
-        "<div class='health'></div></div><p class='text-health'>" + player.health + " HP</p><span class='streight'> Streight: " +
-        player.streight + "</span><br /><span class='weapon'> Weapon: " +
-        player.weapon + "</span></div></div>");
-    $(".health").css("width", healthPercents + "%");
-    if (player.inventory.length > 0) {
-        $(".playerInfo .player-inventory").remove();
-        $(".playerInfo").append("<div class='player-inventory'></div>");
-        for (var i = 0; i < player.inventory.length; i++) {
-            $(".playerInfo .player-inventory").append("<div class='item-block'><div class='" +
-                player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number +
-                "</div></div></div></div>")
-        }
-    };
-    setTimeout(function() {
-        $("#content .playerInfo").css("opacity", "1");
-    }, 500);
-    setTimeout(function() {
-        $(".playerInfo").css("top", '60%');
-        $(".playerInfo").addClass("playerInfoScale");
-    }, 2000)
+    var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2), timer = 0;
+    if ($(".playerInfo").length) {
+      timer = 300;
+      $(".playerInfo").fadeOut();
+      setTimeout(function(){
+        $("playerInfo").remove();
+      }, 250);
+    }
+    setTimeout(function(){
+      $("#content").append("<div class='playerInfo'><div class='playerPicture'></div><div class='stats'>" +
+          "<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + " " +
+          player.level + "<span> level</span></span>" +
+          "<div class='health'></div></div><p class='text-health'>" + player.health + " HP</p><span class='streight'> Streight: " +
+          player.streight + "</span><br /><span class='weapon'> Weapon: " +
+          player.weapon + "</span></div></div>");
+      $(".health").css("width", healthPercents + "%");
+      if (player.inventory.length > 0) {
+          $(".playerInfo .player-inventory").remove();
+          $(".playerInfo").append("<div class='player-inventory'></div>");
+          for (var i = 0; i < player.inventory.length; i++) {
+              $(".playerInfo .player-inventory").append("<div class='item-block'><div class='" +
+                  player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number +
+                  "</div></div></div></div>")
+          }
+      };
+      setTimeout(function() {
+          $("#content .playerInfo").css("opacity", "1");
+      }, 500);
+      setTimeout(function() {
+          $(".playerInfo").css("top", '60%');
+          $(".playerInfo").addClass("playerInfoScale");
+      }, 2000)
+    }, timer);
 
-}
+};
 
 function showEnemyStats(enemy) {
     $("#content").append("<div class='enemyInfo'><div class='enemyPicture'></div><div class='stats'><span class='name'>" + enemy.name +
