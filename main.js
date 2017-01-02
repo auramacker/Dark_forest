@@ -662,6 +662,7 @@ function creatingInterface(player) {
     revert: true,
   });
     $(".creating > div").droppable({
+      hoverClass: "creating-hover",
       drop: function(event, ui) {
           var dragResult, dropResult, resultObj;
           if ($(this).children().length == 0) {
@@ -779,16 +780,6 @@ function checkCreating(){
     $("#content .result-item").children().remove();
   }
 }
-function deleteFromPlayer(arr) {
-  // var i = 0, length = arr.length;
-  // for (; i < length; i++) {
-  //   if () {
-  //     if ($(".result-item").children().length < 1) {
-  //       $("#content .result-item").append("<div class='wood'></div>");
-  //     }
-  //   }
-  // }
-};
 function hideMaterial(){
     $("#content .materialInfo").remove();
 };
