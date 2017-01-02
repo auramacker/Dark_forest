@@ -739,8 +739,11 @@ function creatingInterface(player) {
           // delete elements
           player.weapon = "ax";
           player.getPlayerWeapon();
+          for (var i = 0; i < droppArray.length; i++) {
+            deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
+          }
+          $(".creating div").children().remove();
           showPlayerStats(player);
-          console.log(player);
         }
         else if (result.attr("class") == "bow") {
           // delete elements
@@ -876,17 +879,13 @@ function choiseWeaponToCreate(player) {
 }
 
 function deleteInvElem(element, qt, player) {
-  var el = element, i = 0, lenght = player.inventory.length, result;
-  if (lenght > 0) {
-    for (; i < lenght; i++) {
+  var el = element, i = 0, length = player.inventory.length, result;
+  if (length > 0) {
+    for (; i < length; i++) {
       if (player.inventory[i].name == element ) {
         if (player.inventory[i].number >= qt) {
           player.inventory[i].number -= qt;
           result = true;
-        }
-        else {
-          printNotification("You have not enought elements ...");
-          result = false;
         }
       }
     }
