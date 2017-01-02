@@ -636,6 +636,20 @@ canvas {
 	height: 50px;
 	width: 50px;
 }
+#workshop .result-item div {
+	height:65px;
+	width:65px;
+	position:absolute;
+	background-color: #fff;
+	transform:translate3d(27%, 26%, 0);
+	background-size: contain;
+}
+#workshop .result-item .ax {
+	background-image: url(images/ax.png);
+}
+#workshop .result-item .bow {
+	background-image: url(images/bow.png);
+}
 #workshop .middle {
 	width: 100%;
 	height: 150px;
