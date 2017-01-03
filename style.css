@@ -644,6 +644,19 @@ canvas {
 	transform:translate3d(27%, 26%, 0);
 	background-size: contain;
 }
+#workshop .result-item div:hover span {
+	display: block;
+}
+#workshop .result-item div span {
+	display: block;
+	background-color: #000;
+	color: #fff;
+	border: 1px solid #fff;
+	padding: 5px;
+	margin-top: 10px;
+	font-size: 15px;
+	display: none;
+}
 #workshop .creating-hover {
 	background-color: rgba(255, 255, 255, 0.55) !important;
 }
@@ -921,7 +934,7 @@ canvas {
 .playerInfo .player-inventory .rock, #workshop .rock {
 	background-image: url(images/rockInv.png);
 }
-.playerInfo .player-inventory .roasted-meat {
+.playerInfo .player-inventory .roasted-meat, #workshop .roasted-meat {
 	background-image: url(images/roasted-meat.png);
 }
 .heat:after {

@@ -794,7 +794,7 @@ function checkCreating(){
     && (getCrClass("2_3") == "rock") && (!getCrClass("1_1")) && (!getCrClass("2_1")) && (!getCrClass("3_1"))
     && (!getCrClass("3_3")) ) {
     if ($("#content .result-item").children().length == 0) {
-      $("#content .result-item").append("<div class='ax'></div>");
+      $("#content .result-item").append("<div class='ax'><span>Ax</span></div>");
     }
   }
   else if ((getCrClass("3_2") == "branch") && (getCrClass("2_3") == "branch") // for bow
@@ -802,13 +802,13 @@ function checkCreating(){
     && (getCrClass("1_3") == "rock") && (!getCrClass("1_1")) && (!getCrClass("2_1")) && (!getCrClass("3_1"))
     && (!getCrClass("3_3")) ) {
     if ($("#content .result-item").children().length == 0) {
-      $("#content .result-item").append("<div class='bow'></div>");
+      $("#content .result-item").append("<div class='bow'><span>Bow</span></div>");
     }
   }
   else if ((getCrClass("3_2") == "branch") && (getCrClass("3_1") == "rock") // for bow
     && (getCrClass("3_3") == "rock") && (getCrClass("2_2") == "meat") ) {
     if ($("#content .result-item").children().length == 0) {
-      $("#content .result-item").append("<div class='roasted-meat'></div>");
+      $("#content .result-item").append("<div class='roasted-meat'><span>Roasted meat</span></div>");
     }
   }
   else if ($("#content .result-item").children().length > 0) {
