@@ -332,9 +332,23 @@ var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", 
 var swamp = new GameArea(true, false, ["rise", "water"], ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
   swamp.getMaterials();
 var hovel = new GameArea(false, true, [], [], [], [], []);
-
+// triggers
+var meatClicked = false;
 
 function mainGameLoop(player) {
+
+  // actions on player info
+  setInterval(function(){
+    $(".playerInfo .roasted-meat").on("click", function(){
+      meatClicked = true;
+    });
+    if (meatClicked) {
+      increaseHP(50, player);
+      meatClicked = false;
+    }
+  }, 50);
+  // ---------------------
+
     $("#content div").remove();
     $("#content").css("backgroundImage", "url(" + _imgPath + "mainBackground.png)");
     printNotification("You need to find some food and find accommodation...");
@@ -611,6 +625,16 @@ function mainGameLoop(player) {
       })
     })
 };
+function increaseHP(points, player) {
+  var currentHp = player.health, maxHp = player.maxHealth, bufHp;
+  bufHp = currentHp + points;
+  if (bufHp > maxHp) {
+    player.health = maxHp;
+  }
+  else player.health = bufHp;
+  var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2);
+  $(".playerInfo .health").css("width", healthPercents + "%");
+}
 function creatingInterface(player) {
   var i = 0, length = player.inventory.length, iCount = 1, jCount = 1, droppArray = [], checkInterval;
   $("#content .areaAction, canvas").fadeOut(); // clean content
@@ -772,7 +796,7 @@ function creatingInterface(player) {
             for (var i = 0; i < droppArray.length; i++) {
               deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
             }
-            player.inventory.push({image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 1, src: "url(images/roasted-meat.png)"});
+            addToPlayer({image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 1, src: "url(images/roasted-meat.png)"}, player)
             $(".creating div").children().remove();
             showPlayerStats(player)
           break;
