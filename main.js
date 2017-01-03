@@ -257,12 +257,14 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: "3",
-                    src: _imgPath + "leather.png"
+                    src: _imgPath + "leather.png",
+                    useful: false
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: "2",
-                    src: _imgPath + "meat.png"
+                    src: _imgPath + "meat.png",
+                    useful: false
                 }
                 break;
             case "wolf":
@@ -274,12 +276,14 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: 3,
-                    src: _imgPath + "leather.png"
+                    src: _imgPath + "leather.png",
+                    useful: false
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: 3,
-                    src: _imgPath + "meat.png"
+                    src: _imgPath + "meat.png",
+                    useful: false
                 }
                 break;
             case "wild boar":
@@ -291,12 +295,14 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: 3,
-                    src: _imgPath + "leather.png"
+                    src: _imgPath + "leather.png",
+                    useful: false
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: 2,
-                    src: _imgPath + "meat.png"
+                    src: _imgPath + "meat.png",
+                    useful: false
                 }
                 break;
             case "elk":
@@ -308,12 +314,14 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory[0] = {
                     name: "leather",
                     number: 3,
-                    src: _imgPath + "leather.png"
+                    src: _imgPath + "leather.png",
+                    useful: false
                 }
                 this.inventory[1] = {
                     name: "meat",
                     number: 2,
-                    src: _imgPath + "meat.png"
+                    src: _imgPath + "meat.png",
+                    useful: false
                 }
                 break;
             default:
@@ -591,8 +599,6 @@ function mainGameLoop(player) {
               $("#content #choise").remove();
 
           }, 500);
-          weatherInit(hovel, player);
-          getWeatherEffects(hovel, player);
           $("#content").css("background-image", "url(" + _imgPath + "hovelBg.png)");
           chooseAreaAction("hovel");
           $("#content").prepend("<canvas></canvas>");
@@ -796,9 +802,9 @@ function creatingInterface(player) {
             for (var i = 0; i < droppArray.length; i++) {
               deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
             }
-            addToPlayer({image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 1, src: "url(images/roasted-meat.png)"}, player)
+            addToPlayer({image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 1, src: "url(images/roasted-meat.png)", useful: true}, player)
             $(".creating div").children().remove();
-            showPlayerStats(player)
+            showPlayerStats(player);
           break;
         }
       }
@@ -1096,10 +1102,18 @@ function showPlayerStats(player) {
       if (player.inventory.length > 0) {
           $(".playerInfo .player-inventory").remove();
           $(".playerInfo").append("<div class='player-inventory'></div>");
+          $(".playerInfo").append("<div class='useful'></div>");
           for (var i = 0; i < player.inventory.length; i++) {
+            if (player.inventory[i].useful) {
+              $(".playerInfo .useful").append("<div class='item-block'><div class='" +
+                  player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number +
+                  "</div></div></div></div>")
+            }
+            else {
               $(".playerInfo .player-inventory").append("<div class='item-block'><div class='" +
                   player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number +
                   "</div></div></div></div>")
+            }
           }
       };
       setTimeout(function() {

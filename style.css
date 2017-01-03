@@ -777,8 +777,8 @@ canvas {
 .weather .info{
 	background-color: #000;
 	margin-left:-20px;
-	margin-top:-15px;
-	padding: 10px;
+	margin-top:-25px;
+	padding: 5px 10px;
 	border: 1px solid #fff;
 }
 .sunny {
@@ -870,12 +870,16 @@ canvas {
 .enemyInfo .inventory-block .meat {
 	background-image: url(images/meat.jpg);
 }
-.playerInfo .player-inventory {
+.playerInfo .player-inventory, .playerInfo .useful {
 	position: absolute;
 	top: 45px;
 	right: -25px;
 }
-.playerInfo .player-inventory .item-block, #workshop .item-block {
+.playerInfo .useful {
+	left: -25px !important;
+	top: 120px !important;
+}
+.playerInfo .player-inventory .item-block, .playerInfo .useful .item-block,  #workshop .item-block {
 	margin-top: 25px;
 	width: 50px;
 	height: 50px;
@@ -898,7 +902,7 @@ canvas {
 	height: auto;
 	transition: all 0.5s linear;
 }
-.playerInfo .player-inventory .item-block > div, #workshop .item-block > div {
+.playerInfo .player-inventory .item-block > div, .playerInfo .useful .item-block > div, #workshop .item-block > div {
 	background-size: 100%;
 	background-color: #fff;
 	border: 1px solid #fff;
@@ -906,7 +910,7 @@ canvas {
 	height: 50px;
 	cursor: pointer;
 }
-.playerInfo .player-inventory .number, .player-items .number, .creating .number{
+.playerInfo .player-inventory .number, .playerInfo .useful .number, .player-items .number, .creating .number{
 	position: absolute;
 	background-color: #000;
 	border: 1px solid;
@@ -935,7 +939,7 @@ canvas {
 .playerInfo .player-inventory .rock, #workshop .rock {
 	background-image: url(images/rockInv.png);
 }
-.playerInfo .player-inventory .roasted-meat, #workshop .roasted-meat {
+.playerInfo .player-inventory .roasted-meat, .playerInfo .useful .roasted-meat, #workshop .roasted-meat {
 	background-image: url(images/roasted-meat.png);
 }
 .heat:after {
