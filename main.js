@@ -627,7 +627,10 @@ function mainGameLoop(player) {
                 printNotification();
               }, 2500);
             }
-          })
+          });
+        $("#no").click(function(){
+          printNotification();
+        })
         }
       })
     })
