@@ -257,13 +257,13 @@ function CreateEnemy(name, enemyClass, player) { // enemies constructor
                 this.inventory = [];
                 this.inventory[0] = {
                     name: "leather",
-                    number: "3",
+                    number: 3,
                     src: _imgPath + "leather.png",
                     useful: false
                 }
                 this.inventory[1] = {
                     name: "meat",
-                    number: "2",
+                    number: 2,
                     src: _imgPath + "meat.png",
                     useful: false
                 }
@@ -336,7 +336,7 @@ var forest = new GameArea(true, false, ["berries", "potato"], ["branch", "wood"]
     "wild boar", "wolf"
 ]);
   forest.getMaterials();
-var river = new GameArea(true, false, ["fish", "water"], ["rock"], [], ["wolf", "bear", "wild boar"]);
+var river = new GameArea(true, false, ["fish", "water"], ["rock", "rope"], [], ["wolf", "bear", "wild boar"]);
   river.getMaterials();
 var swamp = new GameArea(true, false, ["rise", "water"], ["branch", "wood"], ["medical berries", "herb"], ["elk"]);
   swamp.getMaterials();
@@ -641,6 +641,7 @@ function increaseHP(points, player) {
   else player.health = bufHp;
   var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2), result = false;
   $(".playerInfo .health").css("width", healthPercents + "%");
+  $(".playerInfo .text-health").text(player.health + " HP");
   deleteInvElem("roasted-meat", 1, player);
   for (var i = 0; i < player.inventory.length; i++) {
     if (player.inventory[i].name == "roasted-meat") {
@@ -807,7 +808,13 @@ function creatingInterface(player) {
           break;
           case "bow":
             player.weapon = "bow";
-            player.getPlayerWeapon()
+            player.getPlayerWeapon();
+            for (var i = 0; i < droppArray.length; i++) {
+              deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
+            }
+            $(".creating div").children().remove();
+            showPlayerStats(player);
+            droppArray.splice(0, droppArray.length);
           break;
           case "roasted-meat":
             for (var i = 0; i < droppArray.length; i++) {
@@ -840,7 +847,7 @@ function checkCreating(){
   }
   else if ((getCrClass("3_2") == "branch") && (getCrClass("2_3") == "branch") // for bow
     && (getCrClass("1_2") == "branch") && (getCrClass("2_2") == "rope")
-    && (getCrClass("1_3") == "rock") && (!getCrClass("1_1")) && (!getCrClass("2_1")) && (!getCrClass("3_1"))
+    && (!getCrClass("1_3")) && (!getCrClass("1_1")) && (!getCrClass("2_1")) && (!getCrClass("3_1"))
     && (!getCrClass("3_3")) ) {
     if ($("#content .result-item").children().length == 0) {
       $("#content .result-item").append("<div class='bow'><span>Bow</span></div>");

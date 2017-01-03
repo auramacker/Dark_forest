@@ -886,6 +886,21 @@ canvas {
 	position: relative;
 	background-size: 100%;
 }
+.playerInfo .roasted-meat:after{
+	content: "";
+	display: block;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	opacity: 0;
+	background-image: url(images/healing.png);
+	background-size: contain;
+	transition: all 0.2s linear;
+	background-color: rgba(36, 25, 27, 0.81);
+}
+.playerInfo .roasted-meat:hover:after{
+	opacity: 1;
+}
 #workshop .item-block {
 	margin-top: 10px !important;
 	margin-left: 9px !important;
@@ -917,6 +932,7 @@ canvas {
 	width: 25px;
 	height: 25px;
 	top: -15px;
+	z-index:100;
 	right: -15px;
 	line-height: 25px;
 }
@@ -941,6 +957,9 @@ canvas {
 }
 .playerInfo .player-inventory .roasted-meat, .playerInfo .useful .roasted-meat, #workshop .roasted-meat {
 	background-image: url(images/roasted-meat.png);
+}
+.playerInfo .player-inventory .rope, #workshop .rope {
+	background-image: url(images/ropeInv.png);
 }
 .heat:after {
 	background: #FFEE44;
