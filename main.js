@@ -214,7 +214,8 @@ function CreatePlayer(name, playerClass) { // player constructor function
     this.inventory = [{image: "url(images/wood.png)", name: "wood" , number: 5, src: "url(images/woodInv.png)"},
   {image: "url(images/rock.png)", name: "rock" , number: 5, src: "url(images/rockInv.png)"},
 {image: "url(images/meat.png)", name: "meat" , number: 5, src: "url(images/meatInv.png)"},
-{image: "url(images/branch.png)", name: "branch" , number: 5, src: "url(images/branchInv.png)"}];
+{image: "url(images/branch.png)", name: "branch" , number: 5, src: "url(images/branchInv.png)"},
+{image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 5, src: "url(images/roasted-meat.png)", useful: true}];
     this.getPlayerWeapon = function() {
         if (this.weapon == "ax") {
             this.streight += 4;
@@ -638,8 +639,18 @@ function increaseHP(points, player) {
     player.health = maxHp;
   }
   else player.health = bufHp;
-  var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2);
+  var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2), result = false;
   $(".playerInfo .health").css("width", healthPercents + "%");
+  deleteInvElem("roasted-meat", 1, player);
+  for (var i = 0; i < player.inventory.length; i++) {
+    if (player.inventory[i].name == "roasted-meat") {
+      $(".playerInfo .roasted-meat .number").text(player.inventory[i].number);
+      result = true;
+    }
+  }
+  if (!result) {
+    $(".playerInfo .roasted-meat").remove();
+  }
 }
 function creatingInterface(player) {
   var i = 0, length = player.inventory.length, iCount = 1, jCount = 1, droppArray = [], checkInterval;
