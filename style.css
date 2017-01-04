@@ -12,6 +12,7 @@ html, body{
 p, a, h1, h2, h3 ,h4, h5{
 	font-family: 'Inconsolata';
 	color: white;
+	font-weight: bold;
 }
 #content{
 	width: 100%;
@@ -154,7 +155,7 @@ canvas {
 	-o-transition: all 0.7s ease-in-out;
 }
 #content .playerInfoScale:hover{
-	top: 40% !important;
+	top: 35% !important;
 }
 #content .inBattle{
 	top: 15% !important;

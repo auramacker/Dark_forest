@@ -613,7 +613,7 @@ function mainGameLoop(player) {
           printNotifyButtons("You need 4 wood, 3 rocks and 5 branches to build a hovel. Try to build?", "build", ["yes", "no"]);
           $("#yes").click(function(){
             var hovelResult = deleteInvElem("wood", 1, player);
-            showPlayerStats(player);
+            updatePlayerStats(player);
             if (hovelResult) {
               printNotification("Hovel built successfully!");
               $("#content .ok").click(function(){
@@ -806,7 +806,7 @@ function creatingInterface(player) {
               deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
             }
             $(".creating div").children().remove();
-            showPlayerStats(player);
+            updatePlayerStats(player);
             droppArray.splice(0, droppArray.length);
           break;
           case "bow":
@@ -816,7 +816,7 @@ function creatingInterface(player) {
               deleteInvElem(droppArray[i].dragged, droppArray[i].num, player);
             }
             $(".creating div").children().remove();
-            showPlayerStats(player);
+            updatePlayerStats(player);
             droppArray.splice(0, droppArray.length);
           break;
           case "roasted-meat":
@@ -825,7 +825,7 @@ function creatingInterface(player) {
             }
             addToPlayer({image: "url(images/roasted-meat.png)", name: "roasted-meat" , number: 1, src: "url(images/roasted-meat.png)", useful: true}, player)
             $(".creating div").children().remove();
-            showPlayerStats(player);
+            updatePlayerStats(player);
           break;
         }
       }
@@ -1102,7 +1102,34 @@ function getWeatherEffects(area, player) {
         startNewGame();
     }
 }
-
+function updatePlayerStats(player) {
+  var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2), i = 0, length = player.inventory.length;
+  $(".playerInfo .health").css("width", healthPercents + "%");
+  $(".playerInfo .level").text(+player.level);
+  $(".playerInfo .text-health").text(player.health + " HP");
+  $(".playerInfo .streight").text("Streight: " + player.streight);
+  $(".playerInfo .weapon").text("Weapon: " + player.weapon);
+  console.log("infunction");
+  if (length > 0) {
+      $(".playerInfo .player-inventory").remove();
+      $(".playerInfo .useful").remove();
+      $(".playerInfo").append("<div class='player-inventory'></div>");
+      $(".playerInfo").append("<div class='useful'></div>");
+      console.log("working");
+      for (var i = 0; i < player.inventory.length; i++) {
+        if (player.inventory[i].useful) {
+          $(".playerInfo .useful").append("<div class='item-block'><div class='" +
+              player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number +
+              "</div></div></div></div>")
+        }
+        else {
+          $(".playerInfo .player-inventory").append("<div class='item-block'><div class='" +
+              player.inventory[i].name + "'><div class='number'>" + player.inventory[i].number +
+              "</div></div></div></div>")
+        }
+      }
+  };
+};
 function showPlayerStats(player) {
     var healthPercents = Math.round(((player.health / player.maxHealth) * 100), 2), timer = 0;
     if ($(".playerInfo").length) {
@@ -1114,12 +1141,12 @@ function showPlayerStats(player) {
     }
     setTimeout(function(){
       $("#content").append("<div class='playerInfo'><div class='playerPicture'></div><div class='stats'>" +
-          "<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + " " +
-          player.level + "<span> level</span></span>" +
+          "<span class='name'>" + player.name + "</span><br />" + "<span class='playerClass'>" + player.playerClass + " <span class='level'>" +
+           player.level + "</span>" + "<span> level</span></span>" +
           "<div class='health'></div></div><p class='text-health'>" + player.health + " HP</p><span class='streight'> Streight: " +
           player.streight + "</span><br /><span class='weapon'> Weapon: " +
           player.weapon + "</span></div></div>");
-      $(".health").css("width", healthPercents + "%");
+      $(".playerInfo .health").css("width", healthPercents + "%");
       if (player.inventory.length > 0) {
           $(".playerInfo .player-inventory").remove();
           $(".playerInfo").append("<div class='player-inventory'></div>");
