@@ -391,11 +391,15 @@ function mainGameLoop(player) {
                         isDead(player, enemy);
                     })
                     $("#content .run").click(function(){ // if coise run from battle area
-                      printNotification("You have successfully escaped");
-                      delete enemy;
-                      setTimeout(function(){
-                        mainGameLoop(player);
-                      }, 3000);
+                      var isPlayerDead = isDead(player, enemy);
+                      console.log(isPlayerDead);
+                      if (!isPlayerDead){
+                        printNotification("You have successfully escaped");
+                        delete enemy;
+                        setTimeout(function(){
+                          mainGameLoop(player);
+                        }, 3000);
+                      }
                     })
                 } else {
                     printNotification("Hunting failed! You could not find any animal ...");
