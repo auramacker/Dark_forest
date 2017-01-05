@@ -28,7 +28,7 @@ $(document).ready(function() {
             press.play(); // audio effect
             bg.pause();
             $("#content").css("backgroundImage", "url(" + _imgPath + "clear.png)");
-            setTimeout('printNotification("You woke up in the woods with a terrible pain in the head. Trying to recall something failed.")', 1700);
+            setTimeout('printNotification("You woke up in the woods with a terrible pain in the head. Trying to recall something failed.", "both")', 1700);
             setTimeout('startNewGame("What is your name?:")', 4500); // print intro and start game
             gameStarted = true;
         }
@@ -58,9 +58,6 @@ function startNewGame(text) {
         var prev = showInputBlock("get-text", text);
         var inputBlock = $("#content .get-text .ok");
         inputBlock.click(function() {
-            //var playerName = window.prompt("What is your name?");
-            //document.write( playerName+ " But you remembered that you know how to ...<br />");
-            //var playerClass = window.prompt("Are you warrior or archer?");
             playerName = $("#content .get-text input").val();
             console.log(playerName);
             hideInputBlock(prev);
@@ -102,11 +99,15 @@ function hideInputBlock(block) {
 
 }
 
-function printNotification(text, id) { // function print notification
+function printNotification(text, buttons, id, ) { // function print notification
+  var buttonsText = "<div class='notify'><p>" + text + "</p><div class='ok'>ok</div></div>";
     if (arguments[0] !== undefined) {
+      if (arguments[1] == "both") {
+        buttonsText = "<div class='notify'><p>" + text + "</p></div>";
+      }
       $("#content .notify").remove();
       if (id === undefined) {
-        $("#content").append("<div class='notify'><p>" + text + "</p><div class='ok'>ok</div></div>"); // create new
+        $("#content").append(buttonsText); // create new
       }
       else {
         $("#content").append("<div class='notify' id='" + id + "'><p>" + text + "</p><div class='ok'>ok</div></div>"); // create new
@@ -393,7 +394,7 @@ function mainGameLoop(player) {
                     $("#content .run").click(function(){ // if coise run from battle area
                       var isPlayerDead = isDead(player);
                       if (!isPlayerDead){
-                        printNotification("You have successfully escaped");
+                        printNotification("You have successfully escaped", "both");
                         delete enemy;
                         setTimeout(function(){
                           mainGameLoop(player);
@@ -401,7 +402,7 @@ function mainGameLoop(player) {
                       }
                     })
                 } else {
-                    printNotification("Hunting failed! You could not find any animal ...");
+                    printNotification("Hunting failed! You could not find any animal ...", "both");
                     setTimeout(function(){
                       mainGameLoop(player);
                     }, 3000);
@@ -413,7 +414,7 @@ function mainGameLoop(player) {
               showMaterial(forest.materials[randMaterialIndex]);
               var linesPosition = collectMaterialInterface(forest.materials[randMaterialIndex], player);
               setTimeout(function(){
-                printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
+                printNotification("To collect material press \"SPACE\" when white line will be in the green area", "ok" , "materialHelp");
                 $("#materialHelp .ok").click(function(){
                   printNotification();
                   setGameTime(30);
@@ -423,7 +424,7 @@ function mainGameLoop(player) {
                   setTimeout(function(){
                     clearInterval(collectingTimer);
                     clearInterval(changeLines);
-                    printNotification("Time is over!");
+                    printNotification("Time is over!", "both");
                     setTimeout(function(){
                       mainGameLoop(player);
                     }, 2000);
@@ -472,7 +473,7 @@ function mainGameLoop(player) {
               $("#content .run").click(function(){ // if coise run from battle area
                 var isPlayerDead = isDead(player);
                 if (!isPlayerDead){
-                  printNotification("You have successfully escaped");
+                  printNotification("You have successfully escaped", "both");
                   delete enemy;
                   setTimeout(function(){
                     mainGameLoop(player);
@@ -480,7 +481,7 @@ function mainGameLoop(player) {
                 }
               })
           } else {
-              printNotification("Hunting failed! You could not find any animal ...");
+              printNotification("Hunting failed! You could not find any animal ...", "both");
               setTimeout(function(){
                 mainGameLoop(player);
               }, 3000);
@@ -492,7 +493,7 @@ function mainGameLoop(player) {
           showMaterial(river.materials[randMaterialIndex]);
           var linesPosition = collectMaterialInterface(river.materials[randMaterialIndex], player);
           setTimeout(function(){
-            printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
+            printNotification("To collect material press \"SPACE\" when white line will be in the green area", "ok","materialHelp");
             $("#materialHelp .ok").click(function(){
               printNotification();
               setGameTime(30);
@@ -502,7 +503,7 @@ function mainGameLoop(player) {
               setTimeout(function(){
                 clearInterval(collectingTimer);
                 clearInterval(changeLines);
-                printNotification("Time is over!");
+                printNotification("Time is over!", "both");
                 setTimeout(function(){
                   mainGameLoop(player);
                 }, 2000);
@@ -559,7 +560,7 @@ function mainGameLoop(player) {
                 }
               })
           } else {
-              printNotification("Hunting failed! You could not find any animal ...");
+              printNotification("Hunting failed! You could not find any animal ...", "both");
               setTimeout(function(){
                 mainGameLoop(player);
               }, 3000);
@@ -571,7 +572,7 @@ function mainGameLoop(player) {
           showMaterial(swamp.materials[randMaterialIndex]);
           var linesPosition = collectMaterialInterface(swamp.materials[randMaterialIndex], player);
           setTimeout(function(){
-            printNotification("To collect material press \"SPACE\" when white line will be in the green area", "materialHelp");
+            printNotification("To collect material press \"SPACE\" when white line will be in the green area", "ok","materialHelp");
             $("#materialHelp .ok").click(function(){
               printNotification();
               setGameTime(30);
@@ -581,7 +582,7 @@ function mainGameLoop(player) {
               setTimeout(function(){
                 clearInterval(collectingTimer);
                 clearInterval(changeLines);
-                printNotification("Time is over!");
+                printNotification("Time is over!", "both");
                 setTimeout(function(){
                   mainGameLoop(player);
                 }, 2000);
@@ -609,13 +610,12 @@ function mainGameLoop(player) {
               $("#content #choise").remove();
 
           }, 500);
-          $("#content").css("background-image", "url(" + _imgPath + "hovelBg.png)");
+          $("#content").css("background", "#000");
           chooseAreaAction("hovel");
           $("#content").prepend("<canvas></canvas>");
           Bonfire();
           $("#content .create").click(function(){
             creatingInterface(player);
-
           })
         }
         else { // try to build
@@ -981,7 +981,7 @@ function deleteInvElem(element, qt, player) {
     }
   }
   else {
-    printNotification("You have not enought elements ...");
+    printNotification("You have not enought elements ...", "both");
     result = false;
   }
   return result
@@ -1198,10 +1198,11 @@ function showMaterial(material) {
   $("#content").append("<div class='materialInfo'><div class='materialPicture'></div><div class='stats'><span class='name'>" + material.name +
       "</span><br /><div class='collect-status' ></div></div><div class='backface'>COLLECTED!</div></div></div>");
   $(".materialInfo .materialPicture").css("background-image", material.image);
-  $(".materialInfo").css("opacity", 1);
-  setTimeout(function() {
-      $(".materialInfo").css("left", "10%");
-  }, 2000);
+  $(".materialInfo").css("left", "10%");
+  $(".materialInfo").css("opacity", 0);
+  setTimeout(function(){
+    $(".materialInfo").css("opacity", 1);
+  }, 500);
 }
 function changeLinesPos() {
   var rndDeg, firstLine, secondLine, firstLineDeg, secondLineDeg,result;
@@ -1451,12 +1452,12 @@ function isDead(player, enemy) {
         $(".enemyInfo").css("transform", "perspective(900px) rotate3d(0,1,0,-180deg)");
         player.getNewLevel();
         console.log(player);
-        printNotification("You defeated opponent!");
+        printNotification("You defeated opponent!", "both");
         setTimeout(function(){
           mainGameLoop(player)
         }, 3000);
     } else if (player.health <= 0) {
-      printNotification("You are unable to survive");
+      printNotification("You are unable to survive", "both");
       setTimeout(function(){
         gameStarted = false;
         location.reload();

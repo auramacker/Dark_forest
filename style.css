@@ -24,7 +24,6 @@ p, a, h1, h2, h3 ,h4, h5{
 	left: 0;
 	background-image: url(images/mainBackground.png);
 	background-repeat: no-repeat;
-	background-size: 100%;
 	background-color: #000;
 	transition: all 1.5s linear;
 	-webkit-transition: all 1.5s linear;
