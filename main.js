@@ -1080,16 +1080,7 @@ function getWeatherEffects(area, player) {
     var damagePercents;
     if (area.temperature <= 0 && area.weather == "snow") {
         player.health -= 20;
-        if (player.health > 0) {
-            $(".playerInfo .text-health").empty();
-            $(".playerInfo .text-health").append(player.health + " HP");
-        } else {
-            $(".playerInfo .text-health").empty();
-            $(".playerInfo .text-health").append("0 HP");
-        }
-        damagePercents = Math.round(((player.health / player.maxHealth) * 100), 2);
-        $("#content .playerInfo").css("top", "40%");
-        $("#content .health").css("width", damagePercents + "%");
+        updatePlayerStats(player);
         setInterval(function() {
             $("#content .playerInfo").css("top", "60%");
         }, 2000);
@@ -1097,9 +1088,7 @@ function getWeatherEffects(area, player) {
         return demage;
     } else if (area.temperature >= 20 && area.weather == "heat") {
         player.health -= 20;
-        damagePercents = Math.round(((player.health / player.maxHealth) * 100), 2);
-        $("#content .playerInfo").css("top", "40%");
-        $("#content .health").css("width", damagePercents + "%");
+        updatePlayerStats(player);
         setInterval(function() {
             $("#content .playerInfo").css("top", "60%");
         }, 2000);
