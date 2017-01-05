@@ -391,8 +391,7 @@ function mainGameLoop(player) {
                         isDead(player, enemy);
                     })
                     $("#content .run").click(function(){ // if coise run from battle area
-                      var isPlayerDead = isDead(player, enemy);
-                      console.log(isPlayerDead);
+                      var isPlayerDead = isDead(player);
                       if (!isPlayerDead){
                         printNotification("You have successfully escaped");
                         delete enemy;
@@ -471,11 +470,14 @@ function mainGameLoop(player) {
                   isDead(player, enemy);
               })
               $("#content .run").click(function(){ // if coise run from battle area
-                printNotification("You have successfully escaped");
-                delete enemy;
-                setTimeout(function(){
-                  mainGameLoop(player);
-                }, 3000);
+                var isPlayerDead = isDead(player);
+                if (!isPlayerDead){
+                  printNotification("You have successfully escaped");
+                  delete enemy;
+                  setTimeout(function(){
+                    mainGameLoop(player);
+                  }, 3000);
+                }
               })
           } else {
               printNotification("Hunting failed! You could not find any animal ...");
@@ -547,11 +549,14 @@ function mainGameLoop(player) {
                   isDead(player, enemy);
               })
               $("#content .run").click(function(){ // if coise run from battle area
-                printNotification("You have successfully escaped");
-                delete enemy;
-                setTimeout(function(){
-                  mainGameLoop(player);
-                }, 3000);
+                var isPlayerDead = isDead(player);
+                if (!isPlayerDead){
+                  printNotification("You have successfully escaped");
+                  delete enemy;
+                  setTimeout(function(){
+                    mainGameLoop(player);
+                  }, 3000);
+                }
               })
           } else {
               printNotification("Hunting failed! You could not find any animal ...");
@@ -1460,37 +1465,3 @@ function isDead(player, enemy) {
 }
 
 //*************** end attack block ****************//
-
-// //*************** run block *******************//
-
-// 	 else if (choise == "run"){
-// 	 	var chanceToRun = 0;
-// 	 	var randRun = Math.random();
-// 	 	if (player.playerClass == "warrior"){ // set chance to run for warrior
-// 	 		chanceToRun = 0.70;
-// 	 	}
-// 	 	else if (player.playerClass == "archer"){ // set chance to run for archer
-// 	 		chanceToRun = 0.80;
-// 	 	}
-// 	 	if (randRun <= chanceToRun){
-// 	 		document.write("You have successfully escaped!<br />")
-// 	 		mainGameLoop(player);
-// 	 	}
-// 	 	else {
-// 	 		var enemyRunHitPoints = enemy.streight * getRandomInt(4, 5);
-// 	 		player.health -= enemyRunHitPoints;
-// 	 		if (player.health <= 0){
-// 	 			alert("You dead!");
-// 	 			startNewGame();
-// 	 		}
-// 	 		else{
-// 	 		document.write("The enemy caught up with you!<br />")
-// 	 		showPlayerStats(player);
-// 	 		battle(enemy, player);
-// 	 		}
-// 	 	}
-// 	}
-
-
-
-//*************** end run block *******************//
