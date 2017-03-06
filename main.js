@@ -392,7 +392,7 @@ function mainGameLoop(player) {
                         isDead(player, enemy);
                     })
                     $("#content .run").click(function(){ // if coise run from battle area
-                      var isPlayerDead = isDead(player);
+                      var isPlayerDead = isDead(player, enemy);
                       if (!isPlayerDead){
                         printNotification("You have successfully escaped", "both");
                         delete enemy;
@@ -471,7 +471,7 @@ function mainGameLoop(player) {
                   isDead(player, enemy);
               })
               $("#content .run").click(function(){ // if coise run from battle area
-                var isPlayerDead = isDead(player);
+                var isPlayerDead = isDead(player, enemy);
                 if (!isPlayerDead){
                   printNotification("You have successfully escaped", "both");
                   delete enemy;
@@ -550,7 +550,7 @@ function mainGameLoop(player) {
                   isDead(player, enemy);
               })
               $("#content .run").click(function(){ // if coise run from battle area
-                var isPlayerDead = isDead(player);
+                var isPlayerDead = isDead(player, enemy);
                 if (!isPlayerDead){
                   printNotification("You have successfully escaped");
                   delete enemy;
